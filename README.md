@@ -4,3 +4,5 @@ To download this repository, go to terminal, cd into the directory you want to c
 ```
 git clone --recursive https://github.com/RoboticsTeam4904/Blinky.git
 ```
+
+Test build
