@@ -79,18 +79,18 @@ public class RobotMap {
     }
 
     public static class DriveConstants { // TODO: Define all of these.
-		public static final boolean kGyroReversed = false;
-		public static final double ksVolts = 1.08;
-		public static final double kvVoltSecondsPerMeter = 5.54;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.257;
-        public static final double kTrackwidthMeters = 0.5969;
+		// public static final boolean kGyroReversed = true;
+		public static final double ksVolts = 0.645;
+		public static final double kvVoltSecondsPerMeter = 5.74;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.366;
+        public static final double kTrackwidthMeters = 0.605;
 		public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);;
-		public static final double kPDriveVel = 8.63;
+		public static final double kPDriveVel = 11.8;
     }
 
     public static class AutoConstants {
-		public static final double kMaxSpeedMetersPerSecond = 3;
-		public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+		public static final double kMaxSpeedMetersPerSecond = 2;
+		public static final double kMaxAccelerationMetersPerSecondSquared = 2;
 		public static final double kRamseteB = 2;
 		public static final double kRamseteZeta = 0.7;
     }
@@ -142,6 +142,7 @@ public class RobotMap {
         Component._canCoderConfiguration = new CANCoderConfiguration();
         Component.leftWheelEncoder.configAllSettings(Component._canCoderConfiguration);
         Component.rightWheelEncoder.configAllSettings(Component._canCoderConfiguration);
+        Component.leftWheelEncoder.configSensorDirection(true);
         Component.leftWheelEncoder.configFeedbackCoefficient(RobotMap.Metrics.Chassis.METERS_PER_TICK, "meters", SensorTimeBase.PerSecond);
         Component.rightWheelEncoder.configFeedbackCoefficient(RobotMap.Metrics.Chassis.METERS_PER_TICK, "meters", SensorTimeBase.PerSecond);
 		// Component.chassisEncoders = new EncoderPair(Component.leftWheelEncoder, Component.rightWheelEncoder); // TODO: Update for cancoders
@@ -155,6 +156,5 @@ public class RobotMap {
 		// General Chassis
 		Component.chassis = new TankDrive("2019-Chassis", Component.leftWheelA, Component.leftWheelB,
             Component.rightWheelA, Component.rightWheelB);
-        Component.nikhilChassis = new DriveSubsystem(Component.chassis, Component.leftWheelEncoder, Component.rightWheelEncoder, Component.navx);
     }
 }

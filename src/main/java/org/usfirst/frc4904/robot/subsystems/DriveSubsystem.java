@@ -10,6 +10,7 @@ package org.usfirst.frc4904.robot.subsystems;
 import com.ctre.phoenix.sensors.CANCoder;
 
 import org.usfirst.frc4904.robot.RobotMap;
+import org.usfirst.frc4904.standard.LogKitten;
 import org.usfirst.frc4904.standard.custom.sensors.CustomEncoder;
 import org.usfirst.frc4904.standard.custom.sensors.IMU;
 import org.usfirst.frc4904.standard.subsystems.chassis.TankDrive;
@@ -21,6 +22,7 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
 public class DriveSubsystem implements Subsystem { // Based largely on https://github.com/wpilibsuite/allwpilib/blob/master/wpilibjExamples/src/main/java/edu/wpi/first/wpilibj/examples/ramsetecommand/subsystems/DriveSubsystem.java
@@ -40,6 +42,7 @@ public class DriveSubsystem implements Subsystem { // Based largely on https://g
 
     resetEncoders();
     odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+    CommandScheduler.getInstance().registerSubsystem(this);
   }
 
   @Override
@@ -53,6 +56,7 @@ public class DriveSubsystem implements Subsystem { // Based largely on https://g
    * @return The pose.
    */
   public Pose2d getPose() {
+    LogKitten.wtf(odometry.getPoseMeters());
     return odometry.getPoseMeters();
   }
 
@@ -91,6 +95,7 @@ public class DriveSubsystem implements Subsystem { // Based largely on https://g
       driveBase.getMotors()[1].setVoltage(leftVolts);
       driveBase.getMotors()[2].setVoltage(rightVolts);
       driveBase.getMotors()[3].setVoltage(rightVolts);
+      // LogKitten.wtf("left: " + leftVolts + ", right: " + rightVolts);
     }
   }
 
@@ -107,7 +112,7 @@ public class DriveSubsystem implements Subsystem { // Based largely on https://g
    * @return the robot's heading in degrees, from 180 to 180
    */
   public double getHeading() {
-    return gyro.getYaw(); // TODO: Generalize from just yaw.
+    return gyro.getYaw() * -1; // TODO: Generalize from just yaw.
     // return Math.toDegrees(Math.acos((leftEncoder.getPosition() - rightEncoder.getPosition()) / RobotMap.DriveConstants.kTrackwidthMeters));
   }
 }

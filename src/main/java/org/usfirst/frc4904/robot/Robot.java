@@ -20,12 +20,15 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
+import org.usfirst.frc4904.robot.subsystems.DriveSubsystem;
 
 import org.usfirst.frc4904.standard.LogKitten;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
 
 public class Robot extends CommandRobotBase {
     private RobotMap map = new RobotMap();
+    private double maxL = 0;
+    private double maxR = 0;
     // new CANCoder
 
     @Override
@@ -50,12 +53,14 @@ public class Robot extends CommandRobotBase {
     @Override
     public void autonomousInitialize() {
         RobotMap.Component.navx.zeroYaw();
-        double yaw = RobotMap.Component.navx.getYaw();
+        RobotMap.Component.nikhilChassis = new DriveSubsystem(RobotMap.Component.chassis, RobotMap.Component.leftWheelEncoder, RobotMap.Component.rightWheelEncoder, RobotMap.Component.navx);
         Command autoCommand = new SimpleSplines(RobotMap.Component.nikhilChassis, 
         new Pose2d(0, 0, Rotation2d.fromDegrees(0)), 
-        new Pose2d(1, 0, Rotation2d.fromDegrees(-90)), 
+        new Pose2d(2, -1, Rotation2d.fromDegrees(-90)), 
         List.of(
-            new Translation2d(.5, 0)
+            // new Translation2d(1.5, 0.5)
+            // new Translation2d(1, 1),
+            // new Translation2d(2, -1)
         ));
         if (autoCommand != null) {
             autoCommand.schedule();
@@ -68,6 +73,7 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void disabledInitialize() {
+        LogKitten.wtf("maxL: " + maxL + ", maxR: " + maxR);
     }
 
     @Override
@@ -84,8 +90,18 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void alwaysExecute() {
-        LogKitten.wtf(RobotMap.Component.nikhilChassis.getHeading());
-        LogKitten.wtf(RobotMap.Component.navx.getYaw());
+        // LogKitten.wtf(RobotMap.Component.nikhilChassis.getHeading());
+        // LogKitten.wtf(RobotMap.Component.navx.getYaw());
+        // LogKitten.wtf(RobotMap.Component.nikhilChassis.getPose());
+        // LogKitten.wtf(RobotMap.Component.leftWheelEncoder.getVelocity());
+        if (RobotMap.Component.leftWheelEncoder.getVelocity() > maxL){
+            maxL = RobotMap.Component.leftWheelEncoder.getVelocity();
+        }
+        if (RobotMap.Component.rightWheelEncoder.getVelocity() > maxR){
+            maxR = RobotMap.Component.rightWheelEncoder.getVelocity();
+        }
+        // LogKitten.wtf("Left " + RobotMap.Component.leftWheelEncoder.getPosition());
+        // LogKitten.wtf("Right " + RobotMap.Component.rightWheelEncoder.getPosition());
     }
 
 }
