@@ -80,17 +80,17 @@ public class RobotMap {
 
     public static class DriveConstants { // TODO: Define all of these.
 		// public static final boolean kGyroReversed = true;
-		public static final double ksVolts = 0.645;
-		public static final double kvVoltSecondsPerMeter = 5.74;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.366;
-        public static final double kTrackwidthMeters = 0.605;
+		public static final double ksVolts = 0.847;
+		public static final double kvVoltSecondsPerMeter = 5.66;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.293;
+        public static final double kTrackwidthMeters = 0.608;
 		public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);;
-		public static final double kPDriveVel = 11.8;
+		public static final double kPDriveVel = 9.74;
     }
 
     public static class AutoConstants {
-		public static final double kMaxSpeedMetersPerSecond = 2;
-		public static final double kMaxAccelerationMetersPerSecondSquared = 2;
+		public static final double kMaxSpeedMetersPerSecond = 3;
+		public static final double kMaxAccelerationMetersPerSecondSquared = 3;
 		public static final double kRamseteB = 2;
 		public static final double kRamseteZeta = 0.7;
     }

@@ -20,6 +20,8 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.util.Units;
+
 import org.usfirst.frc4904.robot.subsystems.DriveSubsystem;
 
 import org.usfirst.frc4904.standard.LogKitten;
@@ -56,10 +58,9 @@ public class Robot extends CommandRobotBase {
         RobotMap.Component.nikhilChassis = new DriveSubsystem(RobotMap.Component.chassis, RobotMap.Component.leftWheelEncoder, RobotMap.Component.rightWheelEncoder, RobotMap.Component.navx);
         Command autoCommand = new SimpleSplines(RobotMap.Component.nikhilChassis, 
         new Pose2d(0, 0, Rotation2d.fromDegrees(0)), 
-        new Pose2d(2, -1, Rotation2d.fromDegrees(-90)), 
+        new Pose2d(Units.feetToMeters(10), -1 * Units.feetToMeters(5), Rotation2d.fromDegrees(0)), 
         List.of(
-            // new Translation2d(1.5, 0.5)
-            // new Translation2d(1, 1),
+            // new Transation2d(1, 1),
             // new Translation2d(2, -1)
         ));
         if (autoCommand != null) {
