@@ -12,6 +12,7 @@ import java.util.List;
 import org.usfirst.frc4904.robot.RobotMap;
 import org.usfirst.frc4904.robot.RobotMap.DriveConstants;
 import org.usfirst.frc4904.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc4904.standard.LogKitten;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -42,7 +43,7 @@ public class SimpleSplines extends SequentialCommandGroup {
             // Add kinematics to ensure max speed is actually obeyed
             .setKinematics(RobotMap.DriveConstants.kDriveKinematics)
             // Apply the voltage constraint
-            .addConstraint(RobotMap.autoVoltageConstraint);
+            .addConstraint(autoVoltageConstraint);
 
   public SimpleSplines(DriveSubsystem robotDrive, Pose2d init_pos, Pose2d final_pos, List inter_points){
     super(new RamseteCommand(
@@ -60,6 +61,7 @@ public class SimpleSplines extends SequentialCommandGroup {
         robotDrive::tankDriveVolts,
         robotDrive
     ), new InstantCommand(() -> robotDrive.tankDriveVolts(0, 0)));
+    LogKitten.wtf("uwu");
     // SequentialCommandGroup ramseteThenStop = .andThen();
   }
 }

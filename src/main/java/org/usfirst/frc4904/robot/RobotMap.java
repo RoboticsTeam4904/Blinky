@@ -6,6 +6,10 @@ import edu.wpi.first.wpilibj.trajectory.constraint.TrajectoryConstraint;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj.SerialPort;
 
+import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix.sensors.CANCoderConfiguration;
+import com.ctre.phoenix.sensors.SensorTimeBase;
+
 import org.usfirst.frc4904.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc4904.standard.custom.PCMPort;
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
@@ -16,6 +20,7 @@ import org.usfirst.frc4904.standard.custom.sensors.EncoderPair;
 import org.usfirst.frc4904.standard.custom.sensors.NavX;
 import org.usfirst.frc4904.standard.custom.sensors.PDP;
 import org.usfirst.frc4904.standard.subsystems.chassis.SolenoidShifters;
+import org.usfirst.frc4904.standard.subsystems.chassis.TankDrive;
 import org.usfirst.frc4904.standard.subsystems.chassis.TankDriveShifting;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 
@@ -27,18 +32,18 @@ public class RobotMap {
         }
 
         public static class CANMotor {
-            public static int rightDriveA;
-            public static int rightDriveB;
-            public static int leftDriveA;
-            public static int leftDriveB;
+            public static int rightDriveA = 2;
+            public static int rightDriveB = 3;
+            public static int leftDriveA = 4;
+            public static int leftDriveB = 5;
         }
 
         public static class PWM {
         }
 
         public static class CAN {
-            public static final int leftWheelEncoder = -1; // TODO: Update values
-			public static final int rightWheelEncoder = -1;
+            public static final int leftWheelEncoder = 7; // TODO: Update values
+			public static final int rightWheelEncoder = 6;
         }
 
         public static class Pneumatics {
@@ -51,15 +56,17 @@ public class RobotMap {
 
     public static class Metrics {
         public static class Chassis {
-            public static final double TICKS_PER_REVOLUTION = -1; // TODO: CHANGE CONSTS
-            public static final double DIAMETER_METERS = -1;
-            public static final double CIRCUMFERENCE_METERS = Metrics.Chassis.DIAMETER_METERS * Math.PI;
-            public static final double TICKS_PER_METER = Metrics.Chassis.TICKS_PER_REVOLUTION
-                    / Metrics.Chassis.CIRCUMFERENCE_METERS;
+            public static final double DEGREES_PER_TICK = 0.087890625;
+            public static final double METERS_PER_TICK = 0.1016 * Math.PI * DEGREES_PER_TICK / 360.0; 
+            // public static final double TICKS_PER_REVOLUTION = -1; // TODO: CHANGE CONSTS
+            // public static final double DIAMETER_METERS = -1;
+            // public static final double CIRCUMFERENCE_METERS = Metrics.Chassis.DIAMETER_METERS * Math.PI;
+            // public static final double TICKS_PER_METER = Metrics.Chassis.TICKS_PER_REVOLUTION
+                    // / Metrics.Chassis.CIRCUMFERENCE_METERS;
             public static final double DISTANCE_FRONT_BACK = -1;
             public static final double DISTANCE_SIDE_SIDE = -1;
-            public static final double METERS_PER_TICK = Metrics.Chassis.CIRCUMFERENCE_METERS
-                    / Metrics.Chassis.TICKS_PER_REVOLUTION;
+            // public static final double METERS_PER_TICK = Metrics.Chassis.CIRCUMFERENCE_METERS
+                    // / Metrics.Chassis.TICKS_PER_REVOLUTION;
         }
     }
 
@@ -73,33 +80,35 @@ public class RobotMap {
 
     public static class DriveConstants { // TODO: Define all of these.
 		public static final boolean kGyroReversed = false;
-		public static final double ksVolts = -1;
-		public static final double kvVoltSecondsPerMeter = -1;
-		public static final double kaVoltSecondsSquaredPerMeter = -1;
-		public static final DifferentialDriveKinematics kDriveKinematics = null;
-		public static final double kPDriveVel = 0;
+		public static final double ksVolts = 1.08;
+		public static final double kvVoltSecondsPerMeter = 5.54;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.257;
+        public static final double kTrackwidthMeters = 0.5969;
+		public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);;
+		public static final double kPDriveVel = 8.63;
     }
 
     public static class AutoConstants {
-		public static final double kMaxSpeedMetersPerSecond = 0;
-		public static final double kMaxAccelerationMetersPerSecondSquared = 0;
-		public static final double kRamseteB = 0;
-		public static final double kRamseteZeta = 0;
+		public static final double kMaxSpeedMetersPerSecond = 3;
+		public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+		public static final double kRamseteB = 2;
+		public static final double kRamseteZeta = 0.7;
     }
 
     public static class Component {
         public static PDP pdp;
         public static NavX navx;
-        public static CANEncoder leftWheelEncoder;
-        public static CANEncoder rightWheelEncoder;
+        public static CANCoder leftWheelEncoder;
+        public static CANCoder rightWheelEncoder;
         public static EncoderPair chassisEncoders;
         public static Motor rightWheelA;
         public static Motor rightWheelB;
         public static Motor leftWheelA;
         public static Motor leftWheelB;
         public static SolenoidShifters shifter;
-        public static TankDriveShifting chassis;
+        public static TankDrive chassis;
         public static DriveSubsystem nikhilChassis;
+        public static CANCoderConfiguration _canCoderConfiguration;
     }
 
     public static class Input {
@@ -115,8 +124,6 @@ public class RobotMap {
         }
     }
 
-	public static final TrajectoryConstraint autoVoltageConstraint = null;
-
     public RobotMap() {
         HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.xboxController);
 		HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
@@ -128,19 +135,26 @@ public class RobotMap {
 		Component.navx = new NavX(SerialPort.Port.kMXP); // TODO: Update port
 		/* Drive Train */
 		// Wheel Encoders
-		Component.leftWheelEncoder = new CANEncoder("LeftEncoder", Port.CAN.leftWheelEncoder, Metrics.Chassis.METERS_PER_TICK);
-		Component.rightWheelEncoder = new CANEncoder("RightEncoder", Port.CAN.rightWheelEncoder, Metrics.Chassis.METERS_PER_TICK);
-		Component.chassisEncoders = new EncoderPair(Component.leftWheelEncoder, Component.rightWheelEncoder); // TODO: Update for cancoders
+		// Component.leftWheelEncoder = new CANCoder("LeftEncoder", Port.CAN.leftWheelEncoder, Metrics.Chassis.METERS_PER_TICK);
+        // Component.rightWheelEncoder = new CANEncoder("RightEncoder", Port.CAN.rightWheelEncoder, Metrics.Chassis.METERS_PER_TICK);
+        Component.leftWheelEncoder = new CANCoder(Port.CAN.leftWheelEncoder);
+        Component.rightWheelEncoder = new CANCoder(Port.CAN.rightWheelEncoder);
+        Component._canCoderConfiguration = new CANCoderConfiguration();
+        Component.leftWheelEncoder.configAllSettings(Component._canCoderConfiguration);
+        Component.rightWheelEncoder.configAllSettings(Component._canCoderConfiguration);
+        Component.leftWheelEncoder.configFeedbackCoefficient(RobotMap.Metrics.Chassis.METERS_PER_TICK, "meters", SensorTimeBase.PerSecond);
+        Component.rightWheelEncoder.configFeedbackCoefficient(RobotMap.Metrics.Chassis.METERS_PER_TICK, "meters", SensorTimeBase.PerSecond);
+		// Component.chassisEncoders = new EncoderPair(Component.leftWheelEncoder, Component.rightWheelEncoder); // TODO: Update for cancoders
 		// Wheels
-		Component.rightWheelA = new Motor("rightWheelA", false, new CANTalonSRX(Port.CANMotor.rightDriveA));
-		Component.rightWheelB = new Motor("rightWheelB", false, new CANTalonSRX(Port.CANMotor.rightDriveB));
+		Component.rightWheelA = new Motor("rightWheelA", true, new CANTalonSRX(Port.CANMotor.rightDriveA));
+		Component.rightWheelB = new Motor("rightWheelB", true, new CANTalonSRX(Port.CANMotor.rightDriveB));
 		Component.leftWheelA = new Motor("leftWheelA", false, new CANTalonSRX(Port.CANMotor.leftDriveA));
-		Component.leftWheelB = new Motor("leftWheelB", false, new CANTalonSRX(Port.CANMotor.leftDriveB));
+		Component.leftWheelB = new Motor("leftWheelB", true, new CANTalonSRX(Port.CANMotor.leftDriveB));
 		// Shifter
-		Component.shifter = new SolenoidShifters(Port.Pneumatics.shifter.buildDoubleSolenoid());
+		// Component.shifter = new SolenoidShifters(Port.Pneumatics.shifter.buildDoubleSolenoid());
 		// General Chassis
-		Component.chassis = new TankDriveShifting("2019-Chassis", Component.leftWheelA, Component.leftWheelB,
-            Component.rightWheelA, Component.rightWheelB, Component.shifter);
+		Component.chassis = new TankDrive("2019-Chassis", Component.leftWheelA, Component.leftWheelB,
+            Component.rightWheelA, Component.rightWheelB);
         Component.nikhilChassis = new DriveSubsystem(Component.chassis, Component.leftWheelEncoder, Component.rightWheelEncoder, Component.navx);
     }
 }

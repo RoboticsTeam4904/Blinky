@@ -7,9 +7,12 @@
 
 package org.usfirst.frc4904.robot.subsystems;
 
+import com.ctre.phoenix.sensors.CANCoder;
+
 import org.usfirst.frc4904.robot.RobotMap;
 import org.usfirst.frc4904.standard.custom.sensors.CustomEncoder;
 import org.usfirst.frc4904.standard.custom.sensors.IMU;
+import org.usfirst.frc4904.standard.subsystems.chassis.TankDrive;
 import org.usfirst.frc4904.standard.subsystems.chassis.TankDriveShifting;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 
@@ -21,15 +24,15 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
 public class DriveSubsystem implements Subsystem { // Based largely on https://github.com/wpilibsuite/allwpilib/blob/master/wpilibjExamples/src/main/java/edu/wpi/first/wpilibj/examples/ramsetecommand/subsystems/DriveSubsystem.java
-  private final TankDriveShifting driveBase;
-  private final CustomEncoder leftEncoder;
-  private final CustomEncoder rightEncoder;
+  private final TankDrive driveBase;
+  private final CANCoder leftEncoder;
+  private final CANCoder rightEncoder;
   private final IMU gyro;
   private final DifferentialDriveOdometry odometry;
   /**
    * Creates a new DriveSubsystem.
    */
-  public DriveSubsystem(TankDriveShifting driveBase, CustomEncoder leftEncoder, CustomEncoder rightEncoder, IMU gyro) {
+  public DriveSubsystem(TankDrive driveBase, CANCoder leftEncoder, CANCoder rightEncoder, IMU gyro) {
     this.driveBase = driveBase;
     this.leftEncoder = leftEncoder;
     this.rightEncoder = rightEncoder;
@@ -41,7 +44,7 @@ public class DriveSubsystem implements Subsystem { // Based largely on https://g
 
   @Override
   public void periodic() {
-    odometry.update(Rotation2d.fromDegrees(getHeading()), leftEncoder.getDistance(), rightEncoder.getDistance());
+    odometry.update(Rotation2d.fromDegrees(getHeading()), leftEncoder.getPosition(), rightEncoder.getPosition());
   }
 
   /**
@@ -59,7 +62,7 @@ public class DriveSubsystem implements Subsystem { // Based largely on https://g
    * @return The current wheel speeds.
    */
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(leftEncoder.getRate(), rightEncoder.getRate());
+    return new DifferentialDriveWheelSpeeds(leftEncoder.getVelocity(), rightEncoder.getVelocity());
   }
 
   /**
@@ -95,8 +98,8 @@ public class DriveSubsystem implements Subsystem { // Based largely on https://g
    * Resets the drive encoders to currently read a position of 0.
    */
   public void resetEncoders() {
-    leftEncoder.reset();
-    rightEncoder.reset();
+    leftEncoder.setPosition(0);
+    rightEncoder.setPosition(0);
   }
   /**
    * Returns the heading of the robot.
@@ -104,6 +107,7 @@ public class DriveSubsystem implements Subsystem { // Based largely on https://g
    * @return the robot's heading in degrees, from 180 to 180
    */
   public double getHeading() {
-    return Math.IEEEremainder(gyro.getYaw(), 360) * (RobotMap.DriveConstants.kGyroReversed ? -1.0 : 1.0); // TODO: Generalize from just yaw.
+    return gyro.getYaw(); // TODO: Generalize from just yaw.
+    // return Math.toDegrees(Math.acos((leftEncoder.getPosition() - rightEncoder.getPosition()) / RobotMap.DriveConstants.kTrackwidthMeters));
   }
 }
