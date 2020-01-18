@@ -10,7 +10,6 @@ import java.util.List;
 
 import com.ctre.phoenix.sensors.SensorTimeBase;
 
-import org.usfirst.frc4904.robot.commands.SimpleSplines;
 import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
 import org.usfirst.frc4904.standard.CommandRobotBase;
 // import edu.wpi.first.wpilibj.command.Command;
@@ -22,10 +21,10 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.util.Units;
 
-import org.usfirst.frc4904.robot.subsystems.DriveSubsystem;
-
 import org.usfirst.frc4904.standard.LogKitten;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
+import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
+import org.usfirst.frc4904.standard.subsystems.chassis.SensorDrive;
 
 public class Robot extends CommandRobotBase {
     private RobotMap map = new RobotMap();
@@ -55,13 +54,13 @@ public class Robot extends CommandRobotBase {
     @Override
     public void autonomousInitialize() {
         RobotMap.Component.navx.zeroYaw();
-        RobotMap.Component.nikhilChassis = new DriveSubsystem(RobotMap.Component.chassis, RobotMap.Component.leftWheelEncoder, RobotMap.Component.rightWheelEncoder, RobotMap.Component.navx);
+        RobotMap.Component.nikhilChassis = new SensorDrive(RobotMap.Component.chassis, RobotMap.Component.leftWheelEncoder, RobotMap.Component.rightWheelEncoder, RobotMap.Component.navx);
         Command autoCommand = new SimpleSplines(RobotMap.Component.nikhilChassis, 
         new Pose2d(0, 0, Rotation2d.fromDegrees(0)), 
-        new Pose2d(Units.feetToMeters(10), -1 * Units.feetToMeters(5), Rotation2d.fromDegrees(0)), 
+        new Pose2d(2, -1, Rotation2d.fromDegrees(-90)), 
         List.of(
-            // new Transation2d(1, 1),
-            // new Translation2d(2, -1)
+            // new Translation2d(Units.feetToMeters(3), Units.feetToMeters(3)),
+            // new Translation2d(Units.feetToMeters(0), Units.feetToMeters(6))
         ));
         if (autoCommand != null) {
             autoCommand.schedule();

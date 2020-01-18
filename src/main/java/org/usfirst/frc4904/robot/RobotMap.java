@@ -10,7 +10,6 @@ import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.CANCoderConfiguration;
 import com.ctre.phoenix.sensors.SensorTimeBase;
 
-import org.usfirst.frc4904.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc4904.standard.custom.PCMPort;
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
@@ -19,6 +18,7 @@ import org.usfirst.frc4904.standard.custom.sensors.CANEncoder;
 import org.usfirst.frc4904.standard.custom.sensors.EncoderPair;
 import org.usfirst.frc4904.standard.custom.sensors.NavX;
 import org.usfirst.frc4904.standard.custom.sensors.PDP;
+import org.usfirst.frc4904.standard.subsystems.chassis.SensorDrive;
 import org.usfirst.frc4904.standard.subsystems.chassis.SolenoidShifters;
 import org.usfirst.frc4904.standard.subsystems.chassis.TankDrive;
 import org.usfirst.frc4904.standard.subsystems.chassis.TankDriveShifting;
@@ -89,8 +89,8 @@ public class RobotMap {
     }
 
     public static class AutoConstants {
-		public static final double kMaxSpeedMetersPerSecond = 3;
-		public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+		public static final double kMaxSpeedMetersPerSecond = 5;
+		public static final double kMaxAccelerationMetersPerSecondSquared = 2;
 		public static final double kRamseteB = 2;
 		public static final double kRamseteZeta = 0.7;
     }
@@ -107,7 +107,7 @@ public class RobotMap {
         public static Motor leftWheelB;
         public static SolenoidShifters shifter;
         public static TankDrive chassis;
-        public static DriveSubsystem nikhilChassis;
+        public static SensorDrive nikhilChassis;
         public static CANCoderConfiguration _canCoderConfiguration;
     }
 
