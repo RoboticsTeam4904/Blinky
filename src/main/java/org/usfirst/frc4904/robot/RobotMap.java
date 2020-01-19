@@ -3,11 +3,13 @@ package org.usfirst.frc4904.robot;
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
 
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+
 public class RobotMap {
     public static class Port {
         public static class HumanInput {
             public static final int joystick = 0;
-			public static final int xboxController = 1;
+            public static final int xboxController = 1;
         }
 
         public static class CANMotor {
@@ -40,13 +42,28 @@ public class RobotMap {
         }
     }
 
+    public static class DriveConstants {
+        public static final boolean kGyroReversed = false;
+        public static final double ksVolts = -1;
+        public static final double kvVoltSecondsPerMeter = -1;
+        public static final double kaVoltSecondsSquaredPerMeter = -1;
+        public static final double kTrackwidthMeters = -1;
+        public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
+                kTrackwidthMeters);
+        public static final double kPDriveVel = -1;
+    }
+
+    public static class AutoConstants {
+        public static final double kMaxSpeedMetersPerSecond = -1;
+        public static final double kMaxAccelerationMetersPerSecondSquared = -1;
+        public static final double kRamseteB = -1;
+        public static final double kRamseteZeta = -1;
+    }
+
     public static class PID {
-        public static class Drive {
-        }
+        public static class Flywheel {
 
-        public static class Turn {
         }
-
     }
 
     public static class Component {
@@ -67,7 +84,7 @@ public class RobotMap {
 
     public RobotMap() {
         HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.xboxController);
-		HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
+        HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
 
     }
 }
