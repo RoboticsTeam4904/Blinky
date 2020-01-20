@@ -13,6 +13,7 @@ import com.ctre.phoenix.sensors.SensorTimeBase;
 import org.usfirst.frc4904.standard.custom.PCMPort;
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
+import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonFX;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonSRX;
 import org.usfirst.frc4904.standard.custom.sensors.CANEncoder;
 import org.usfirst.frc4904.standard.custom.sensors.EncoderPair;
@@ -80,17 +81,17 @@ public class RobotMap {
 
     public static class DriveConstants { // TODO: Define all of these.
 		// public static final boolean kGyroReversed = true;
-		public static final double ksVolts = 0.847;
-		public static final double kvVoltSecondsPerMeter = 5.66;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.293;
-        public static final double kTrackwidthMeters = 0.608;
+		public static final double ksVolts = 0.936;
+		public static final double kvVoltSecondsPerMeter = 4.01;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.038;
+        public static final double kTrackwidthMeters = 0.4;
 		public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);;
-		public static final double kPDriveVel = 9.74;
+		public static final double kPDriveVel = 0.544;
     }
 
     public static class AutoConstants {
-		public static final double kMaxSpeedMetersPerSecond = 5;
-		public static final double kMaxAccelerationMetersPerSecondSquared = 2;
+		public static final double kMaxSpeedMetersPerSecond = 3;
+		public static final double kMaxAccelerationMetersPerSecondSquared = 3;
 		public static final double kRamseteB = 2;
 		public static final double kRamseteZeta = 0.7;
     }
@@ -109,6 +110,8 @@ public class RobotMap {
         public static TankDrive chassis;
         public static SensorDrive nikhilChassis;
         public static CANCoderConfiguration _canCoderConfiguration;
+        public static CANTalonFX rightATalonFX;
+        public static CANTalonFX rightBTalonFX;
     }
 
     public static class Input {
@@ -128,7 +131,7 @@ public class RobotMap {
         HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.xboxController);
 		HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
 		HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.xboxController);
-		HumanInput.Driver.xbox.setDeadZone(0.1);
+		HumanInput.Driver.xbox.setDeadZone(0.0);
 		HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
 		/* General */
 		Component.pdp = new PDP();
@@ -146,11 +149,13 @@ public class RobotMap {
         Component.leftWheelEncoder.configFeedbackCoefficient(RobotMap.Metrics.Chassis.METERS_PER_TICK, "meters", SensorTimeBase.PerSecond);
         Component.rightWheelEncoder.configFeedbackCoefficient(RobotMap.Metrics.Chassis.METERS_PER_TICK, "meters", SensorTimeBase.PerSecond);
 		// Component.chassisEncoders = new EncoderPair(Component.leftWheelEncoder, Component.rightWheelEncoder); // TODO: Update for cancoders
-		// Wheels
-		Component.rightWheelA = new Motor("rightWheelA", true, new CANTalonSRX(Port.CANMotor.rightDriveA));
-		Component.rightWheelB = new Motor("rightWheelB", true, new CANTalonSRX(Port.CANMotor.rightDriveB));
-		Component.leftWheelA = new Motor("leftWheelA", false, new CANTalonSRX(Port.CANMotor.leftDriveA));
-		Component.leftWheelB = new Motor("leftWheelB", true, new CANTalonSRX(Port.CANMotor.leftDriveB));
+        // Wheels
+        Component.rightATalonFX = new CANTalonFX(Port.CANMotor.rightDriveA);
+        Component.rightBTalonFX = new CANTalonFX(Port.CANMotor.rightDriveB);
+		Component.rightWheelA = new Motor("rightWheelA", false, Component.rightATalonFX);
+		Component.rightWheelB = new Motor("rightWheelB", false, Component.rightBTalonFX);
+		Component.leftWheelA = new Motor("leftWheelA", true, new CANTalonFX(Port.CANMotor.leftDriveA));
+		Component.leftWheelB = new Motor("leftWheelB", true, new CANTalonFX(Port.CANMotor.leftDriveB));
 		// Shifter
 		// Component.shifter = new SolenoidShifters(Port.Pneumatics.shifter.buildDoubleSolenoid());
 		// General Chassis

@@ -8,6 +8,7 @@ package org.usfirst.frc4904.robot;
 
 import java.util.List;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.sensors.SensorTimeBase;
 
 import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
@@ -37,6 +38,7 @@ public class Robot extends CommandRobotBase {
         driverChooser.addDefault(new NathanGain());
         RobotMap.Component.navx.zeroYaw();
         // autoChooser.addDefault();
+        // RobotMap.Component.rightATalonFX.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, PIDIDX, 10);
     }
 
     @Override
@@ -94,14 +96,19 @@ public class Robot extends CommandRobotBase {
         // LogKitten.wtf(RobotMap.Component.navx.getYaw());
         // LogKitten.wtf(RobotMap.Component.nikhilChassis.getPose());
         // LogKitten.wtf(RobotMap.Component.leftWheelEncoder.getVelocity());
-        if (RobotMap.Component.leftWheelEncoder.getVelocity() > maxL){
-            maxL = RobotMap.Component.leftWheelEncoder.getVelocity();
-        }
-        if (RobotMap.Component.rightWheelEncoder.getVelocity() > maxR){
-            maxR = RobotMap.Component.rightWheelEncoder.getVelocity();
-        }
+        // if (RobotMap.Component.leftWheelEncoder.getVelocity() > maxL){
+        //     maxL = RobotMap.Component.leftWheelEncoder.getVelocity();
+        // }
+        // if (RobotMap.Component.rightWheelEncoder.getVelocity() > maxR){
+        //     maxR = RobotMap.Component.rightWheelEncoder.getVelocity();
+        // }
+        // LogKitten.wtf
+        // double magPos = RobotMap.Component.rightWheelEncoder.getPosition();
+        // double falcPos = RobotMap.Component.
+        // LogKitten.wtf()
         // LogKitten.wtf("Left " + RobotMap.Component.leftWheelEncoder.getPosition());
         // LogKitten.wtf("Right " + RobotMap.Component.rightWheelEncoder.getPosition());
+        // LogKitten.wtf(RobotMap.Component.pdp.getVoltage());
     }
 
 }
