@@ -35,39 +35,42 @@ public class Robot extends CommandRobotBase {
     @Override
     public void initialize() {
         driverChooser.setDefaultOption(new NathanGain());
-        // RobotMap.Component.navx.zeroYaw();
+        RobotMap.Component.navx.zeroYaw();
         // autoChooser.addDefault();
-        // RobotMap.Component.rightATalonFX.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, PIDIDX, 10);
+        // RobotMap.Component.rightATalonFX.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,
+        // PIDIDX, 10);
     }
 
     @Override
     public void teleopInitialize() {
-        LogKitten.wtf(driverChooser.getSelected());
-        // RobotMap.Component.leftWheelEncoder.setPosition(0);
-        // RobotMap.Component.rightWheelEncoder.setPosition(0);
+        RobotMap.Component.leftWheelEncoder.setPosition(0);
+        RobotMap.Component.rightWheelEncoder.setPosition(0);
         teleopCommand = new ChassisMove(RobotMap.Component.chassis, driverChooser.getSelected());
-        teleopCommand.schedule();
-        
+
     }
 
     @Override
     public void teleopExecute() {
+
     }
 
     @Override
     public void autonomousInitialize() {
         // RobotMap.Component.navx.zeroYaw();
         // LogKitten.wtf(RobotMap.Component.navx.getYaw());
-        // RobotMap.Component.nikhilDrive.resetEncoders(); // TODO: double check if adequate for repeated splines
+        // RobotMap.Component.nikhilDrive.resetEncoders(); // TODO: double check if
+        // adequate for repeated splines
         // LogKitten.wtf(RobotMap.Component.navx.getYaw());
-        // Trajectory trajectory = RobotMap.Component.nikhilDrive.generateSimpleTrajectory(
-        //     new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-        //     List.of(),
-        //     new Pose2d(1, 0, Rotation2d.fromDegrees(0))
+        // Trajectory trajectory =
+        // RobotMap.Component.nikhilDrive.generateSimpleTrajectory(
+        // new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
+        // List.of(),
+        // new Pose2d(1, 0, Rotation2d.fromDegrees(0))
         // );
-        // Command autoCommand = new SimpleSplines(RobotMap.Component.nikhilDrive, trajectory);
+        // Command autoCommand = new SimpleSplines(RobotMap.Component.nikhilDrive,
+        // trajectory);
         // if (autoCommand != null) {
-        //     autoCommand.schedule();
+        // autoCommand.schedule();
         // }
     }
 
@@ -99,10 +102,10 @@ public class Robot extends CommandRobotBase {
         // LogKitten.wtf(RobotMap.Component.nikhilChassis.getPose());
         // LogKitten.wtf(RobotMap.Component.leftWheelEncoder.getVelocity());
         // if (RobotMap.Component.leftWheelEncoder.getVelocity() > maxL){
-        //     maxL = RobotMap.Component.leftWheelEncoder.getVelocity();
+        // maxL = RobotMap.Component.leftWheelEncoder.getVelocity();
         // }
         // if (RobotMap.Component.rightWheelEncoder.getVelocity() > maxR){
-        //     maxR = RobotMap.Component.rightWheelEncoder.getVelocity();
+        // maxR = RobotMap.Component.rightWheelEncoder.getVelocity();
         // }
         // LogKitten.wtf
         // double magPos = RobotMap.Component.rightWheelEncoder.getPosition();
