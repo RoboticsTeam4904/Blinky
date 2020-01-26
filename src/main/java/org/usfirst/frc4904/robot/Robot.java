@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.util.Units;
 
 import org.usfirst.frc4904.standard.LogKitten;
@@ -35,18 +36,20 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void initialize() {
-        driverChooser.addDefault(new NathanGain());
-        RobotMap.Component.navx.zeroYaw();
+        driverChooser.setDefaultOption(new NathanGain());
+        // RobotMap.Component.navx.zeroYaw();
         // autoChooser.addDefault();
         // RobotMap.Component.rightATalonFX.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, PIDIDX, 10);
     }
 
     @Override
     public void teleopInitialize() {
-        RobotMap.Component.leftWheelEncoder.setPosition(0);
-        RobotMap.Component.rightWheelEncoder.setPosition(0);
+        LogKitten.wtf(driverChooser.getSelected());
+        // RobotMap.Component.leftWheelEncoder.setPosition(0);
+        // RobotMap.Component.rightWheelEncoder.setPosition(0);
         teleopCommand = new ChassisMove(RobotMap.Component.chassis, driverChooser.getSelected());
-		teleopCommand.start();
+        teleopCommand.schedule();
+        
     }
 
     @Override
@@ -55,18 +58,19 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void autonomousInitialize() {
-        RobotMap.Component.navx.zeroYaw();
-        RobotMap.Component.nikhilChassis = new SensorDrive(RobotMap.Component.chassis, RobotMap.Component.leftWheelEncoder, RobotMap.Component.rightWheelEncoder, RobotMap.Component.navx);
-        Command autoCommand = new SimpleSplines(RobotMap.Component.nikhilChassis, 
-        new Pose2d(0, 0, Rotation2d.fromDegrees(0)), 
-        new Pose2d(2, -1, Rotation2d.fromDegrees(-90)), 
-        List.of(
-            // new Translation2d(Units.feetToMeters(3), Units.feetToMeters(3)),
-            // new Translation2d(Units.feetToMeters(0), Units.feetToMeters(6))
-        ));
-        if (autoCommand != null) {
-            autoCommand.schedule();
-        }
+        // RobotMap.Component.navx.zeroYaw();
+        // LogKitten.wtf(RobotMap.Component.navx.getYaw());
+        // RobotMap.Component.nikhilDrive.resetEncoders(); // TODO: double check if adequate for repeated splines
+        // LogKitten.wtf(RobotMap.Component.navx.getYaw());
+        // Trajectory trajectory = RobotMap.Component.nikhilDrive.generateSimpleTrajectory(
+        //     new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
+        //     List.of(),
+        //     new Pose2d(1, 0, Rotation2d.fromDegrees(0))
+        // );
+        // Command autoCommand = new SimpleSplines(RobotMap.Component.nikhilDrive, trajectory);
+        // if (autoCommand != null) {
+        //     autoCommand.schedule();
+        // }
     }
 
     @Override
@@ -75,7 +79,7 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void disabledInitialize() {
-        LogKitten.wtf("maxL: " + maxL + ", maxR: " + maxR);
+        // LogKitten.wtf(RobotMap.Component.navx.getYaw());
     }
 
     @Override
@@ -109,6 +113,7 @@ public class Robot extends CommandRobotBase {
         // LogKitten.wtf("Left " + RobotMap.Component.leftWheelEncoder.getPosition());
         // LogKitten.wtf("Right " + RobotMap.Component.rightWheelEncoder.getPosition());
         // LogKitten.wtf(RobotMap.Component.pdp.getVoltage());
+        // LogKitten.wtf(RobotMap.Component.navx.getYaw());
     }
 
 }
