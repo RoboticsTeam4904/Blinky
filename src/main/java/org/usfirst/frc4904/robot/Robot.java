@@ -35,7 +35,7 @@ public class Robot extends CommandRobotBase {
     @Override
     public void initialize() {
         driverChooser.setDefaultOption(new NathanGain());
-        RobotMap.Component.navx.zeroYaw();
+        // RobotMap.Component.navx.zeroYaw();
         // autoChooser.addDefault();
         // RobotMap.Component.rightATalonFX.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,
         // PIDIDX, 10);
@@ -58,20 +58,19 @@ public class Robot extends CommandRobotBase {
     public void autonomousInitialize() {
         // RobotMap.Component.navx.zeroYaw();
         // LogKitten.wtf(RobotMap.Component.navx.getYaw());
-        // RobotMap.Component.nikhilDrive.resetEncoders(); // TODO: double check if
-        // adequate for repeated splines
+        // RobotMap.Component.nikhilDrive.resetEncoders(); // TODO: double check if adequate for repeated splines
         // LogKitten.wtf(RobotMap.Component.navx.getYaw());
-        // Trajectory trajectory =
-        // RobotMap.Component.nikhilDrive.generateSimpleTrajectory(
-        // new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-        // List.of(),
-        // new Pose2d(1, 0, Rotation2d.fromDegrees(0))
-        // );
-        // Command autoCommand = new SimpleSplines(RobotMap.Component.nikhilDrive,
-        // trajectory);
-        // if (autoCommand != null) {
-        // autoCommand.schedule();
-        // }
+        Trajectory trajectory =
+        RobotMap.Component.nikhilDrive.generateSimpleTrajectory(
+        new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
+        List.of(),
+        new Pose2d(1, 0, Rotation2d.fromDegrees(0))
+        );
+        Command autoCommand = new SimpleSplines(RobotMap.Component.nikhilDrive,
+        trajectory);
+        if (autoCommand != null) {
+        autoCommand.schedule();
+        }
     }
 
     @Override

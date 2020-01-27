@@ -87,17 +87,17 @@ public class RobotMap {
     }
 
     public static class SplineDriveConstants {
-        public static final double ksVolts = 0.319;
-        public static final double kvVoltSecondsPerMeter = 4.71;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.208;
-        public static final double kTrackwidthMeters = 0.6161858257789627; // 0.5842
-        public static final double kPDriveVel = 7.28;
+        public static final double ksVolts = 0.0169;
+        public static final double kvVoltSecondsPerMeter = 4.9;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.166;
+        public static final double kTrackwidthMeters = 0.6132614930; // 0.5842
+        public static final double kPDriveVel = 5.56;
         public static final DriveConstants driveConstants = new DriveConstants(ksVolts, kvVoltSecondsPerMeter,
                 kaVoltSecondsSquaredPerMeter, kTrackwidthMeters, kPDriveVel);
     }
 
     public static class SplineAutoConstants {
-        public static final double kMaxSpeedMetersPerSecond = 3;
+        public static final double kMaxSpeedMetersPerSecond = 2;
         public static final double kMaxAccelerationMetersPerSecondSquared = 2;
         public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;
