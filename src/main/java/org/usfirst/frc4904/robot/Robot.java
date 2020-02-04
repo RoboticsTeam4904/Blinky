@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.util.Units;
 
 import org.usfirst.frc4904.standard.LogKitten;
@@ -34,7 +35,7 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void initialize() {
-        driverChooser.addDefault(new NathanGain());
+        driverChooser.setDefaultOption(new NathanGain());
         RobotMap.Component.navx.zeroYaw();
         // autoChooser.addDefault();
     }
@@ -44,7 +45,7 @@ public class Robot extends CommandRobotBase {
         RobotMap.Component.leftWheelEncoder.setPosition(0);
         RobotMap.Component.rightWheelEncoder.setPosition(0);
         teleopCommand = new ChassisMove(RobotMap.Component.chassis, driverChooser.getSelected());
-		teleopCommand.start();
+		teleopCommand.schedule();
     }
 
     @Override
@@ -54,14 +55,12 @@ public class Robot extends CommandRobotBase {
     @Override
     public void autonomousInitialize() {
         RobotMap.Component.navx.zeroYaw();
-        RobotMap.Component.nikhilChassis = new SensorDrive(RobotMap.Component.chassis, RobotMap.Component.leftWheelEncoder, RobotMap.Component.rightWheelEncoder, RobotMap.Component.navx);
-        Command autoCommand = new SimpleSplines(RobotMap.Component.nikhilChassis, 
-        new Pose2d(0, 0, Rotation2d.fromDegrees(0)), 
-        new Pose2d(2, -1, Rotation2d.fromDegrees(-90)), 
-        List.of(
-            // new Translation2d(Units.feetToMeters(3), Units.feetToMeters(3)),
-            // new Translation2d(Units.feetToMeters(0), Units.feetToMeters(6))
-        ));
+        RobotMap.Component.nikhilChassis = new SensorDrive(RobotMap.Component.chassis, RobotMap.AutoConstants.autoConstants, RobotMap.DriveConstants.driveConstants, RobotMap.Component.leftWheelEncoder, RobotMap.Component.rightWheelEncoder, RobotMap.Component.navx);
+        Trajectory traj = RobotMap.Component.nikhilChassis.generateQuinticTrajectory(List.of(
+            new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
+            // new Pose2d(1, 0, Rotation2d.fromDegrees(0)),
+            new Pose2d(Units.feetToMeters(10), Units.feetToMeters(-2), Rotation2d.fromDegrees(0))));
+        Command autoCommand = new SimpleSplines(RobotMap.Component.nikhilChassis, traj);
         if (autoCommand != null) {
             autoCommand.schedule();
         }

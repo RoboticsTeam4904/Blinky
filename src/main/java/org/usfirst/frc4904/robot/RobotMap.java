@@ -13,7 +13,7 @@ import com.ctre.phoenix.sensors.SensorTimeBase;
 import org.usfirst.frc4904.standard.custom.PCMPort;
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
-import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonSRX;
+import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonFX;
 import org.usfirst.frc4904.standard.custom.sensors.CANEncoder;
 import org.usfirst.frc4904.standard.custom.sensors.EncoderPair;
 import org.usfirst.frc4904.standard.custom.sensors.NavX;
@@ -23,6 +23,8 @@ import org.usfirst.frc4904.standard.subsystems.chassis.SolenoidShifters;
 import org.usfirst.frc4904.standard.subsystems.chassis.TankDrive;
 import org.usfirst.frc4904.standard.subsystems.chassis.TankDriveShifting;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
+import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines.SplineAutoConstants;
+import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines.SplineDriveConstants;
 
 public class RobotMap {
     public static class Port {
@@ -78,22 +80,47 @@ public class RobotMap {
         }
     }
 
-    public static class DriveConstants { // TODO: Define all of these.
-		// public static final boolean kGyroReversed = true;
-		public static final double ksVolts = 0.847;
-		public static final double kvVoltSecondsPerMeter = 5.66;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.293;
-        public static final double kTrackwidthMeters = 0.608;
-		public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);;
-		public static final double kPDriveVel = 9.74;
+    // public static class DriveConstants { // TODO: Define all of these.
+	// 	// public static final boolean kGyroReversed = true;
+	// 	public static final double ksVolts = 0.847;
+	// 	public static final double kvVoltSecondsPerMeter = 5.66;
+    //     public static final double kaVoltSecondsSquaredPerMeter = 0.293;
+    //     public static final double kTrackwidthMeters = 0.608;
+	// 	public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);;
+	// 	public static final double kPDriveVel = 9.74;
+    // }
+
+    // public static class AutoConstants {
+	// 	public static final double kMaxSpeedMetersPerSecond = 5;
+	// 	public static final double kMaxAccelerationMetersPerSecondSquared = 2;
+	// 	public static final double kRamseteB = 2;
+	// 	public static final double kRamseteZeta = 0.7;
+    // }
+    public static class DriveConstants {
+        // Field Carpet
+        // public static final double ksVolts = 0.0018;
+        // public static final double kvVoltSecondsPerMeter = 4.9;
+        // public static final double kaVoltSecondsSquaredPerMeter = 0.184;
+        // public static final double kTrackwidthMeters = .61; //0.5842
+        // public static final double kPDriveVel = 6.27;
+        // School Carpet
+        public static final double ksVolts = 0.0169;
+        public static final double kvVoltSecondsPerMeter = 4.9;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.166;
+        public static final double kTrackwidthMeters = 0.6132614930; // 0.5842
+        public static final double kPDriveVel = 5.56;
+        public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
+        public static final SplineDriveConstants driveConstants = new SplineDriveConstants(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter, kTrackwidthMeters, kPDriveVel);
     }
 
     public static class AutoConstants {
-		public static final double kMaxSpeedMetersPerSecond = 5;
-		public static final double kMaxAccelerationMetersPerSecondSquared = 2;
-		public static final double kRamseteB = 2;
-		public static final double kRamseteZeta = 0.7;
+        public static final double kMaxSpeedMetersPerSecond = 2.3;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 2;
+        public static final double kRamseteB = 2;
+        public static final double kRamseteZeta = 0.7;
+        public static final SplineAutoConstants autoConstants = new SplineAutoConstants(kMaxSpeedMetersPerSecond, kMaxAccelerationMetersPerSecondSquared, kRamseteB, kRamseteZeta);
     }
+
 
     public static class Component {
         public static PDP pdp;
@@ -147,10 +174,10 @@ public class RobotMap {
         Component.rightWheelEncoder.configFeedbackCoefficient(RobotMap.Metrics.Chassis.METERS_PER_TICK, "meters", SensorTimeBase.PerSecond);
 		// Component.chassisEncoders = new EncoderPair(Component.leftWheelEncoder, Component.rightWheelEncoder); // TODO: Update for cancoders
 		// Wheels
-		Component.rightWheelA = new Motor("rightWheelA", true, new CANTalonSRX(Port.CANMotor.rightDriveA));
-		Component.rightWheelB = new Motor("rightWheelB", true, new CANTalonSRX(Port.CANMotor.rightDriveB));
-		Component.leftWheelA = new Motor("leftWheelA", false, new CANTalonSRX(Port.CANMotor.leftDriveA));
-		Component.leftWheelB = new Motor("leftWheelB", true, new CANTalonSRX(Port.CANMotor.leftDriveB));
+		Component.rightWheelA = new Motor("rightWheelA", false, new CANTalonFX(Port.CANMotor.rightDriveA));
+		Component.rightWheelB = new Motor("rightWheelB", false, new CANTalonFX(Port.CANMotor.rightDriveB));
+		Component.leftWheelA = new Motor("leftWheelA", true, new CANTalonFX(Port.CANMotor.leftDriveA));
+		Component.leftWheelB = new Motor("leftWheelB", true, new CANTalonFX(Port.CANMotor.leftDriveB));
 		// Shifter
 		// Component.shifter = new SolenoidShifters(Port.Pneumatics.shifter.buildDoubleSolenoid());
 		// General Chassis
