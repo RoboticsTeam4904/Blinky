@@ -10,13 +10,10 @@ import com.ctre.phoenix.sensors.CANCoderConfiguration;
 import com.ctre.phoenix.sensors.SensorTimeBase;
 
 import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
-import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines.AutoConstants;
-import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines.DriveConstants;
 import org.usfirst.frc4904.standard.custom.PCMPort;
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonFX;
-import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonSRX;
 import org.usfirst.frc4904.standard.custom.sensors.CANEncoder;
 import org.usfirst.frc4904.standard.custom.sensors.EncoderPair;
 import org.usfirst.frc4904.standard.custom.sensors.NavX;
@@ -26,6 +23,8 @@ import org.usfirst.frc4904.standard.subsystems.chassis.SolenoidShifters;
 import org.usfirst.frc4904.standard.subsystems.chassis.TankDrive;
 import org.usfirst.frc4904.standard.subsystems.chassis.TankDriveShifting;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
+import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines.SplineAutoConstants;
+import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines.SplineDriveConstants;
 
 public class RobotMap {
     public static class Port {
@@ -81,22 +80,47 @@ public class RobotMap {
         }
     }
 
-    public static class SplineDriveConstants {
-		public static final double ksVolts = 0.319;
-		public static final double kvVoltSecondsPerMeter = 4.71;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.208;
-        public static final double kTrackwidthMeters = 0.6161858257789627; //0.5842
-        public static final double kPDriveVel = 7.28;
-        public static final DriveConstants driveConstants = new DriveConstants(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter, kTrackwidthMeters, kPDriveVel);
+    // public static class DriveConstants { // TODO: Define all of these.
+	// 	// public static final boolean kGyroReversed = true;
+	// 	public static final double ksVolts = 0.847;
+	// 	public static final double kvVoltSecondsPerMeter = 5.66;
+    //     public static final double kaVoltSecondsSquaredPerMeter = 0.293;
+    //     public static final double kTrackwidthMeters = 0.608;
+	// 	public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);;
+	// 	public static final double kPDriveVel = 9.74;
+    // }
+
+    // public static class AutoConstants {
+	// 	public static final double kMaxSpeedMetersPerSecond = 5;
+	// 	public static final double kMaxAccelerationMetersPerSecondSquared = 2;
+	// 	public static final double kRamseteB = 2;
+	// 	public static final double kRamseteZeta = 0.7;
+    // }
+    public static class DriveConstants {
+        // Field Carpet
+        // public static final double ksVolts = 0.0018;
+        // public static final double kvVoltSecondsPerMeter = 4.9;
+        // public static final double kaVoltSecondsSquaredPerMeter = 0.184;
+        // public static final double kTrackwidthMeters = .61; //0.5842
+        // public static final double kPDriveVel = 6.27;
+        // School Carpet
+        public static final double ksVolts = 0.0169;
+        public static final double kvVoltSecondsPerMeter = 4.9;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.166;
+        public static final double kTrackwidthMeters = 0.6132614930; // 0.5842
+        public static final double kPDriveVel = 5.56;
+        public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
+        public static final SplineDriveConstants driveConstants = new SplineDriveConstants(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter, kTrackwidthMeters, kPDriveVel);
     }
 
-    public static class SplineAutoConstants {
-		public static final double kMaxSpeedMetersPerSecond = 3;
-		public static final double kMaxAccelerationMetersPerSecondSquared = 2;
-		public static final double kRamseteB = 2;
+    public static class AutoConstants {
+        public static final double kMaxSpeedMetersPerSecond = 2.3;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 2;
+        public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;
-        public static final AutoConstants autoConstants = new AutoConstants(kMaxSpeedMetersPerSecond, kMaxAccelerationMetersPerSecondSquared, kRamseteB, kRamseteZeta);
+        public static final SplineAutoConstants autoConstants = new SplineAutoConstants(kMaxSpeedMetersPerSecond, kMaxAccelerationMetersPerSecondSquared, kRamseteB, kRamseteZeta);
     }
+
 
     public static class Component {
         public static PDP pdp;
@@ -113,7 +137,7 @@ public class RobotMap {
         public static CANCoderConfiguration _canCoderConfiguration;
         public static CANTalonFX rightATalonFX;
         public static CANTalonFX rightBTalonFX;
-        public static SensorDrive nikhilDrive;
+		public static SensorDrive nikhilChassis;
     }
 
     public static class Input {
@@ -151,7 +175,7 @@ public class RobotMap {
         Component.leftWheelEncoder.configFeedbackCoefficient(RobotMap.Metrics.Chassis.METERS_PER_TICK, "meters", SensorTimeBase.PerSecond);
         Component.rightWheelEncoder.configFeedbackCoefficient(RobotMap.Metrics.Chassis.METERS_PER_TICK, "meters", SensorTimeBase.PerSecond);
 		// Component.chassisEncoders = new EncoderPair(Component.leftWheelEncoder, Component.rightWheelEncoder); // TODO: Update for cancoders
-        // Wheels
+		// Wheels
 		Component.rightWheelA = new Motor("rightWheelA", false, new CANTalonFX(Port.CANMotor.rightDriveA));
 		Component.rightWheelB = new Motor("rightWheelB", false, new CANTalonFX(Port.CANMotor.rightDriveB));
 		Component.leftWheelA = new Motor("leftWheelA", true, new CANTalonFX(Port.CANMotor.leftDriveA));
@@ -161,6 +185,5 @@ public class RobotMap {
 		// General Chassis
 		Component.chassis = new TankDrive("Blinky-Chassis", Component.leftWheelA, Component.leftWheelB,
             Component.rightWheelA, Component.rightWheelB);
-        Component.nikhilDrive = new SensorDrive(Component.chassis, SplineAutoConstants.autoConstants, SplineDriveConstants.driveConstants, Component.leftWheelEncoder, Component.rightWheelEncoder, Component.navx);
     }
 }

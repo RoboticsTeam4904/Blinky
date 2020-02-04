@@ -35,7 +35,7 @@ public class Robot extends CommandRobotBase {
     @Override
     public void initialize() {
         driverChooser.setDefaultOption(new NathanGain());
-        // RobotMap.Component.navx.zeroYaw();
+        RobotMap.Component.navx.zeroYaw();
         // autoChooser.addDefault();
         // RobotMap.Component.rightATalonFX.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, PIDIDX, 10);
     }
@@ -56,19 +56,16 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void autonomousInitialize() {
-        // RobotMap.Component.navx.zeroYaw();
-        // LogKitten.wtf(RobotMap.Component.navx.getYaw());
-        // RobotMap.Component.nikhilDrive.resetEncoders(); // TODO: double check if adequate for repeated splines
-        // LogKitten.wtf(RobotMap.Component.navx.getYaw());
-        // Trajectory trajectory = RobotMap.Component.nikhilDrive.generateSimpleTrajectory(
-        //     new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-        //     List.of(),
-        //     new Pose2d(1, 0, Rotation2d.fromDegrees(0))
-        // );
-        // Command autoCommand = new SimpleSplines(RobotMap.Component.nikhilDrive, trajectory);
-        // if (autoCommand != null) {
-        //     autoCommand.schedule();
-        // }
+        RobotMap.Component.navx.zeroYaw();
+        RobotMap.Component.nikhilChassis = new SensorDrive(RobotMap.Component.chassis, RobotMap.AutoConstants.autoConstants, RobotMap.DriveConstants.driveConstants, RobotMap.Component.leftWheelEncoder, RobotMap.Component.rightWheelEncoder, RobotMap.Component.navx);
+        Trajectory traj = RobotMap.Component.nikhilChassis.generateQuinticTrajectory(List.of(
+            new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
+            // new Pose2d(1, 0, Rotation2d.fromDegrees(0)),
+            new Pose2d(Units.feetToMeters(10), Units.feetToMeters(-2), Rotation2d.fromDegrees(0))));
+        Command autoCommand = new SimpleSplines(RobotMap.Component.nikhilChassis, traj);
+        if (autoCommand != null) {
+            autoCommand.schedule();
+        }
     }
 
     @Override
