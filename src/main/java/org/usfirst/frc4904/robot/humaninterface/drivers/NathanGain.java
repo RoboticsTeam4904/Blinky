@@ -2,6 +2,7 @@ package org.usfirst.frc4904.robot.humaninterface.drivers;
 
 import org.usfirst.frc4904.robot.RobotMap;
 import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
+import org.usfirst.frc4904.standard.commands.motor.MotorSet;
 import org.usfirst.frc4904.standard.humaninput.Driver;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -25,6 +26,7 @@ public class NathanGain extends Driver {
 
 	@Override
 	public void bindCommands() {
+		// RobotMap.HumanInput.Driver.xbox.y.whenPressed(new MotorSet("help me", RobotMap.Component.leftWheelA).set(0.5));
 	}
 
 	@Override
@@ -36,6 +38,7 @@ public class NathanGain extends Driver {
 	public double getY() {
 		double rawSpeed = RobotMap.HumanInput.Driver.xbox.rt.getX() - RobotMap.HumanInput.Driver.xbox.lt.getX();
 		double speed = scaleGain(rawSpeed, NathanGain.SPEED_GAIN, NathanGain.SPEED_EXP) * NathanGain.Y_SPEED_SCALE;
+		// return 0.5;
 		return speed;
 	}
 

@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.trajectory.constraint.TrajectoryConstraint;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj.SerialPort;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.CANCoderConfiguration;
 import com.ctre.phoenix.sensors.SensorTimeBase;
@@ -30,7 +32,7 @@ public class RobotMap {
     public static class Port {
         public static class HumanInput {
             public static final int joystick = 0;
-			public static final int xboxController = 1;
+            public static final int xboxController = 1;
         }
 
         public static class CANMotor {
@@ -45,7 +47,7 @@ public class RobotMap {
 
         public static class CAN {
             public static final int leftWheelEncoder = 7;
-			public static final int rightWheelEncoder = 6;
+            public static final int rightWheelEncoder = 6;
         }
 
         public static class Pneumatics {
@@ -59,16 +61,19 @@ public class RobotMap {
     public static class Metrics {
         public static class Chassis {
             public static final double DEGREES_PER_TICK = 0.087890625;
-            public static final double METERS_PER_TICK = 0.1016 * Math.PI * DEGREES_PER_TICK / 360.0; 
+            public static final double METERS_PER_TICK = 0.1016 * Math.PI * DEGREES_PER_TICK / 360.0;
             // public static final double TICKS_PER_REVOLUTION = -1; // TODO: CHANGE CONSTS
             // public static final double DIAMETER_METERS = -1;
-            // public static final double CIRCUMFERENCE_METERS = Metrics.Chassis.DIAMETER_METERS * Math.PI;
-            // public static final double TICKS_PER_METER = Metrics.Chassis.TICKS_PER_REVOLUTION
-                    // / Metrics.Chassis.CIRCUMFERENCE_METERS;
+            // public static final double CIRCUMFERENCE_METERS =
+            // Metrics.Chassis.DIAMETER_METERS * Math.PI;
+            // public static final double TICKS_PER_METER =
+            // Metrics.Chassis.TICKS_PER_REVOLUTION
+            // / Metrics.Chassis.CIRCUMFERENCE_METERS;
             public static final double DISTANCE_FRONT_BACK = -1;
             public static final double DISTANCE_SIDE_SIDE = -1;
-            // public static final double METERS_PER_TICK = Metrics.Chassis.CIRCUMFERENCE_METERS
-                    // / Metrics.Chassis.TICKS_PER_REVOLUTION;
+            // public static final double METERS_PER_TICK =
+            // Metrics.Chassis.CIRCUMFERENCE_METERS
+            // / Metrics.Chassis.TICKS_PER_REVOLUTION;
         }
     }
 
@@ -135,8 +140,6 @@ public class RobotMap {
         public static SolenoidShifters shifter;
         public static TankDrive chassis;
         public static CANCoderConfiguration _canCoderConfiguration;
-        public static CANTalonFX rightATalonFX;
-        public static CANTalonFX rightBTalonFX;
 		public static SensorDrive nikhilChassis;
     }
 
@@ -155,17 +158,19 @@ public class RobotMap {
 
     public RobotMap() {
         HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.xboxController);
-		HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
-		HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.xboxController);
-		HumanInput.Driver.xbox.setDeadZone(0.0);
-		HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
-		/* General */
-		Component.pdp = new PDP();
-        Component.navx = new NavX(SerialPort.Port.kMXP); // TODO: Update port
-		/* Drive Train */
-		// Wheel Encoders
-		// Component.leftWheelEncoder = new CANCoder("LeftEncoder", Port.CAN.leftWheelEncoder, Metrics.Chassis.METERS_PER_TICK);
-        // Component.rightWheelEncoder = new CANEncoder("RightEncoder", Port.CAN.rightWheelEncoder, Metrics.Chassis.METERS_PER_TICK);
+        HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
+        HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.xboxController);
+        HumanInput.Driver.xbox.setDeadZone(0.0);
+        HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.joystick);
+        /* General */
+        Component.pdp = new PDP();
+        Component.navx = new NavX(SerialPort.Port.kMXP);
+        /* Drive Train */
+        // Wheel Encoders
+        // Component.leftWheelEncoder = new CANCoder("LeftEncoder",
+        // Port.CAN.leftWheelEncoder, Metrics.Chassis.METERS_PER_TICK);
+        // Component.rightWheelEncoder = new CANEncoder("RightEncoder",
+        // Port.CAN.rightWheelEncoder, Metrics.Chassis.METERS_PER_TICK);
         Component.leftWheelEncoder = new CANCoder(Port.CAN.leftWheelEncoder);
         Component.rightWheelEncoder = new CANCoder(Port.CAN.rightWheelEncoder);
         Component._canCoderConfiguration = new CANCoderConfiguration();

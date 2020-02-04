@@ -37,21 +37,21 @@ public class Robot extends CommandRobotBase {
         driverChooser.setDefaultOption(new NathanGain());
         RobotMap.Component.navx.zeroYaw();
         // autoChooser.addDefault();
-        // RobotMap.Component.rightATalonFX.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, PIDIDX, 10);
+        // RobotMap.Component.rightATalonFX.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,
+        // PIDIDX, 10);
     }
 
     @Override
     public void teleopInitialize() {
-        LogKitten.wtf(driverChooser.getSelected());
-        // RobotMap.Component.leftWheelEncoder.setPosition(0);
-        // RobotMap.Component.rightWheelEncoder.setPosition(0);
+        RobotMap.Component.leftWheelEncoder.setPosition(0);
+        RobotMap.Component.rightWheelEncoder.setPosition(0);
         teleopCommand = new ChassisMove(RobotMap.Component.chassis, driverChooser.getSelected());
-        teleopCommand.schedule();
-        
+
     }
 
     @Override
     public void teleopExecute() {
+
     }
 
     @Override
@@ -96,10 +96,10 @@ public class Robot extends CommandRobotBase {
         // LogKitten.wtf(RobotMap.Component.nikhilChassis.getPose());
         // LogKitten.wtf(RobotMap.Component.leftWheelEncoder.getVelocity());
         // if (RobotMap.Component.leftWheelEncoder.getVelocity() > maxL){
-        //     maxL = RobotMap.Component.leftWheelEncoder.getVelocity();
+        // maxL = RobotMap.Component.leftWheelEncoder.getVelocity();
         // }
         // if (RobotMap.Component.rightWheelEncoder.getVelocity() > maxR){
-        //     maxR = RobotMap.Component.rightWheelEncoder.getVelocity();
+        // maxR = RobotMap.Component.rightWheelEncoder.getVelocity();
         // }
         // LogKitten.wtf
         // double magPos = RobotMap.Component.rightWheelEncoder.getPosition();
