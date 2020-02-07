@@ -109,11 +109,11 @@ public class RobotMap {
         // public static final double kTrackwidthMeters = .61; //0.5842
         // public static final double kPDriveVel = 6.27;
         // School Carpet
-        public static final double ksVolts = 0.0169;
+        public static final double ksVolts = 0.000665;
         public static final double kvVoltSecondsPerMeter = 4.9;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.166;
-        public static final double kTrackwidthMeters = 0.6132614930; // 0.5842
-        public static final double kPDriveVel = 5.56;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.0718;
+        public static final double kTrackwidthMeters = 0.60; // 0.5842 // 0.6063751884752512
+        public static final double kPDriveVel = 1.62;
         public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
         public static final SplineDriveConstants driveConstants = new SplineDriveConstants(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter, kTrackwidthMeters, kPDriveVel);
     }
