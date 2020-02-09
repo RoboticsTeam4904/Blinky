@@ -190,5 +190,6 @@ public class RobotMap {
 		// General Chassis
 		Component.chassis = new TankDrive("Blinky-Chassis", Component.leftWheelA, Component.leftWheelB,
             Component.rightWheelA, Component.rightWheelB);
+        Component.nikhilChassis = new SensorDrive(Component.chassis, AutoConstants.autoConstants, DriveConstants.driveConstants, Component.leftWheelEncoder, Component.rightWheelEncoder, Component.navx);
     }
 }

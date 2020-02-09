@@ -12,6 +12,8 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.sensors.SensorTimeBase;
 
 import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
+import org.usfirst.frc4904.robot.commands.SendSplines;
+
 import org.usfirst.frc4904.standard.CommandRobotBase;
 // import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -56,12 +58,12 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void autonomousInitialize() {
-        RobotMap.Component.navx.zeroYaw();
-        RobotMap.Component.nikhilChassis = new SensorDrive(RobotMap.Component.chassis, RobotMap.AutoConstants.autoConstants, RobotMap.DriveConstants.driveConstants, RobotMap.Component.leftWheelEncoder, RobotMap.Component.rightWheelEncoder, RobotMap.Component.navx);
         Trajectory traj = RobotMap.Component.nikhilChassis.generateQuinticTrajectory(List.of(
             new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
             // new Pose2d(1, 0, Rotation2d.fromDegrees(0)),
             new Pose2d(Units.feetToMeters(10), Units.feetToMeters(-2), Rotation2d.fromDegrees(0))));
+        // Command sendSplines = new SendSplines(traj);
+        // sendSplines.schedule();
         Command autoCommand = new SimpleSplines(RobotMap.Component.nikhilChassis, traj);
         if (autoCommand != null) {
             autoCommand.schedule();
