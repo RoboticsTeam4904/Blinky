@@ -17,9 +17,11 @@ import org.usfirst.frc4904.robot.commands.SendSplines;
 import org.usfirst.frc4904.standard.CommandRobotBase;
 // import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.util.Units;
 
@@ -111,6 +113,16 @@ public class Robot extends CommandRobotBase {
         // LogKitten.wtf("Right " + RobotMap.Component.rightWheelEncoder.getPosition());
         // LogKitten.wtf(RobotMap.Component.pdp.getVoltage());
         // LogKitten.wtf(RobotMap.Component.navx.getYaw());
+        // LogKitten.wtf(RobotMap.Component.nikhilChassis.getPose());
+        NetworkTableInstance inst = NetworkTableInstance.getDefault();
+        NetworkTable table = inst.getTable("navx");
+        SmartDashboard.putNumber("poseheading", RobotMap.Component.nikhilChassis.getHeading());
+        SmartDashboard.putNumber("X Translation", RobotMap.Component.nikhilChassis.getPose().getTranslation().getX());
+        SmartDashboard.putNumber("Left Encoder Position", RobotMap.Component.leftWheelEncoder.getPosition());
+        SmartDashboard.putNumber("Right Encoder Position", RobotMap.Component.rightWheelEncoder.getPosition());
+        table.getEntry("yaw").setDouble(RobotMap.Component.navx.getYaw());
+        table.getEntry("displacementX").setDouble(RobotMap.Component.navx.getDisplacementX());
+        table.getEntry("displacementY").setDouble(RobotMap.Component.navx.getDisplacementY());
     }
 
 }
