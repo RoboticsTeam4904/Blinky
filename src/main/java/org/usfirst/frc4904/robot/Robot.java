@@ -94,35 +94,6 @@ public class Robot extends CommandRobotBase {
     }
 
     @Override
-    public void alwaysExecute() {
-        // LogKitten.wtf(RobotMap.Component.nikhilChassis.getHeading());
-        // LogKitten.wtf(RobotMap.Component.navx.getYaw());
-        // LogKitten.wtf(RobotMap.Component.nikhilChassis.getPose());
-        // LogKitten.wtf(RobotMap.Component.leftWheelEncoder.getVelocity());
-        // if (RobotMap.Component.leftWheelEncoder.getVelocity() > maxL){
-        // maxL = RobotMap.Component.leftWheelEncoder.getVelocity();
-        // }
-        // if (RobotMap.Component.rightWheelEncoder.getVelocity() > maxR){
-        // maxR = RobotMap.Component.rightWheelEncoder.getVelocity();
-        // }
-        // LogKitten.wtf
-        // double magPos = RobotMap.Component.rightWheelEncoder.getPosition();
-        // double falcPos = RobotMap.Component.
-        // LogKitten.wtf()
-        // LogKitten.wtf("Left " + RobotMap.Component.leftWheelEncoder.getPosition());
-        // LogKitten.wtf("Right " + RobotMap.Component.rightWheelEncoder.getPosition());
-        // LogKitten.wtf(RobotMap.Component.pdp.getVoltage());
-        // LogKitten.wtf(RobotMap.Component.navx.getYaw());
-        // LogKitten.wtf(RobotMap.Component.nikhilChassis.getPose());
-        NetworkTableInstance inst = NetworkTableInstance.getDefault();
-        NetworkTable table = inst.getTable("navx");
-        SmartDashboard.putNumber("poseheading", RobotMap.Component.nikhilChassis.getHeading());
-        SmartDashboard.putNumber("X Translation", RobotMap.Component.nikhilChassis.getPose().getTranslation().getX());
-        SmartDashboard.putNumber("Left Encoder Position", RobotMap.Component.leftWheelEncoder.getPosition());
-        SmartDashboard.putNumber("Right Encoder Position", RobotMap.Component.rightWheelEncoder.getPosition());
-        table.getEntry("yaw").setDouble(RobotMap.Component.navx.getYaw());
-        table.getEntry("displacementX").setDouble(RobotMap.Component.navx.getDisplacementX());
-        table.getEntry("displacementY").setDouble(RobotMap.Component.navx.getDisplacementY());
-    }
+    public void alwaysExecute() {}
 
 }

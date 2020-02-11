@@ -3,6 +3,12 @@ package org.usfirst.frc4904.robot.humaninterface.drivers;
 import java.util.List;
 
 import org.usfirst.frc4904.robot.RobotMap;
+import org.usfirst.frc4904.standard.LogKitten;
+import org.usfirst.frc4904.standard.LogKitten.KittenLevel;
+import org.usfirst.frc4904.standard.commands.Cancel;
+import org.usfirst.frc4904.standard.commands.CancelCurrent;
+import org.usfirst.frc4904.standard.commands.KittenCommand;
+import org.usfirst.frc4904.standard.commands.RunIf;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
 import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
 import org.usfirst.frc4904.standard.humaninput.Driver;
@@ -36,13 +42,13 @@ public class NathanGain extends Driver {
 				RobotMap.Component.nikhilChassis, 
 				RobotMap.Component.nikhilChassis.generateQuinticTrajectory(List.of(
             		new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-					// new Pose2d(1, 0, Rotation2d.fromDegrees(0)),
 					new Pose2d(Units.feetToMeters(2), Units.feetToMeters(0), 
 					Rotation2d.fromDegrees(0))
 					)
 				)
 			)
 		); 
+		RobotMap.HumanInput.Driver.xbox.x.whenPressed(new CancelCurrent(RobotMap.Component.chassis));
 	}
 
 	@Override
