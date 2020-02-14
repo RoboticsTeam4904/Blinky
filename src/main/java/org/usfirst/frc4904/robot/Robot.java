@@ -40,9 +40,6 @@ public class Robot extends CommandRobotBase {
     public void initialize() {
         driverChooser.setDefaultOption(new NathanGain());
         RobotMap.Component.navx.zeroYaw();
-        // autoChooser.addDefault();
-        // RobotMap.Component.rightATalonFX.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,
-        // PIDIDX, 10);
     }
 
     @Override
@@ -50,7 +47,6 @@ public class Robot extends CommandRobotBase {
         RobotMap.Component.leftWheelEncoder.setPosition(0);
         RobotMap.Component.rightWheelEncoder.setPosition(0);
         teleopCommand = new ChassisMove(RobotMap.Component.chassis, driverChooser.getSelected());
-
     }
 
     @Override
@@ -60,16 +56,6 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void autonomousInitialize() {
-        Trajectory traj = RobotMap.Component.nikhilChassis.generateQuinticTrajectory(List.of(
-            new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-            // new Pose2d(1, 0, Rotation2d.fromDegrees(0)),
-            new Pose2d(Units.feetToMeters(10), Units.feetToMeters(-2), Rotation2d.fromDegrees(0))));
-        // Command sendSplines = new SendSplines(traj);
-        // sendSplines.schedule();
-        Command autoCommand = new SimpleSplines(RobotMap.Component.nikhilChassis, traj);
-        if (autoCommand != null) {
-            autoCommand.schedule();
-        }
     }
 
     @Override
@@ -78,7 +64,6 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void disabledInitialize() {
-        // LogKitten.wtf(RobotMap.Component.navx.getYaw());
     }
 
     @Override

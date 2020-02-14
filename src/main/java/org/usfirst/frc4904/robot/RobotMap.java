@@ -27,8 +27,6 @@ import org.usfirst.frc4904.standard.subsystems.chassis.SolenoidShifters;
 import org.usfirst.frc4904.standard.subsystems.chassis.TankDrive;
 import org.usfirst.frc4904.standard.subsystems.chassis.TankDriveShifting;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
-import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines.SplineAutoConstants;
-import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines.SplineDriveConstants;
 
 public class RobotMap {
     public static class Port {
@@ -117,7 +115,7 @@ public class RobotMap {
         public static final double kTrackwidthMeters = 0.60; // 0.5842 // 0.6063751884752512
         public static final double kPDriveVel = 1.62;
         // public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
-        public static final SplineDriveConstants driveConstants = new SplineDriveConstants(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter, kTrackwidthMeters, kPDriveVel);
+        // public static final SplineDriveConstants driveConstants = new SplineDriveConstants(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter, kTrackwidthMeters, kPDriveVel);
     }
 
     public static class AutoConstants {
@@ -125,7 +123,7 @@ public class RobotMap {
         public static final double kMaxAccelerationMetersPerSecondSquared = 2;
         public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;
-        public static final SplineAutoConstants autoConstants = new SplineAutoConstants(kMaxSpeedMetersPerSecond, kMaxAccelerationMetersPerSecondSquared, kRamseteB, kRamseteZeta);
+        // public static final SplineAutoConstants autoConstants = new SplineAutoConstants(kMaxSpeedMetersPerSecond, kMaxAccelerationMetersPerSecondSquared, kRamseteB, kRamseteZeta);
     }
 
 
@@ -181,18 +179,16 @@ public class RobotMap {
         Component.leftWheelEncoder.configSensorDirection(true);
         Component.leftWheelEncoder.configFeedbackCoefficient(RobotMap.Metrics.Chassis.METERS_PER_TICK, "meters", SensorTimeBase.PerSecond);
         Component.rightWheelEncoder.configFeedbackCoefficient(RobotMap.Metrics.Chassis.METERS_PER_TICK, "meters", SensorTimeBase.PerSecond);
-		// Component.chassisEncoders = new EncoderPair(Component.leftWheelEncoder, Component.rightWheelEncoder); // TODO: Update for cancoders
 		// Wheels
 		Component.rightWheelA = new Motor("rightWheelA", false, new CANTalonFX(Port.CANMotor.rightDriveA));
 		Component.rightWheelB = new Motor("rightWheelB", false, new CANTalonFX(Port.CANMotor.rightDriveB));
 		Component.leftWheelA = new Motor("leftWheelA", true, new CANTalonFX(Port.CANMotor.leftDriveA));
-		Component.leftWheelB = new Motor("leftWheelB", true, new CANTalonFX(Port.CANMotor.leftDriveB));
-		// Shifter
+        Component.leftWheelB = new Motor("leftWheelB", true, new CANTalonFX(Port.CANMotor.leftDriveB));
+ 		// Shifter
 		// Component.shifter = new SolenoidShifters(Port.Pneumatics.shifter.buildDoubleSolenoid());
 		// General Chassis
 		Component.chassis = new TankDrive("Blinky-Chassis", Component.leftWheelA, Component.leftWheelB,
             Component.rightWheelA, Component.rightWheelB);
         Component.chassis.setDefaultCommand(new ChassisMove(Component.chassis, new NathanGain()));
-        Component.nikhilChassis = new SensorDrive(Component.chassis, AutoConstants.autoConstants, DriveConstants.driveConstants, Component.leftWheelEncoder, Component.rightWheelEncoder, Component.navx);
     }
 }

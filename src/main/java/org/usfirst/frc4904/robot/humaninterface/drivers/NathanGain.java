@@ -6,7 +6,6 @@ import org.usfirst.frc4904.robot.RobotMap;
 import org.usfirst.frc4904.standard.LogKitten;
 import org.usfirst.frc4904.standard.LogKitten.KittenLevel;
 import org.usfirst.frc4904.standard.commands.Cancel;
-import org.usfirst.frc4904.standard.commands.CancelCurrent;
 import org.usfirst.frc4904.standard.commands.KittenCommand;
 import org.usfirst.frc4904.standard.commands.RunIf;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
@@ -36,19 +35,6 @@ public class NathanGain extends Driver {
 
 	@Override
 	public void bindCommands() {
-		// RobotMap.HumanInput.Driver.xbox.y.whenPressed(new MotorSet("help me", RobotMap.Component.leftWheelA).set(0.5));
-		RobotMap.HumanInput.Driver.xbox.y.whenPressed(
-			new SimpleSplines(
-				RobotMap.Component.nikhilChassis, 
-				RobotMap.Component.nikhilChassis.generateQuinticTrajectory(List.of(
-            		new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-					new Pose2d(Units.feetToMeters(2), Units.feetToMeters(0), 
-					Rotation2d.fromDegrees(0))
-					)
-				)
-			)
-		); 
-		RobotMap.HumanInput.Driver.xbox.x.whenPressed(new CancelCurrent(RobotMap.Component.chassis));
 	}
 
 	@Override
