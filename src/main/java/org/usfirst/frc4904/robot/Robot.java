@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.sensors.SensorTimeBase;
 
 import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
+import org.usfirst.frc4904.robot.RobotMap.Component;
 import org.usfirst.frc4904.robot.commands.SendSplines;
 
 import org.usfirst.frc4904.standard.CommandRobotBase;
@@ -34,23 +35,35 @@ public class Robot extends CommandRobotBase {
     private RobotMap map = new RobotMap();
     private double maxL = 0;
     private double maxR = 0;
+    private double setpoint = 100.0;
     // new CANCoder
 
     @Override
     public void initialize() {
         driverChooser.setDefaultOption(new NathanGain());
         RobotMap.Component.navx.zeroYaw();
+        SmartDashboard.putNumber("Test P", RobotMap.PID.Drive.P);
+        SmartDashboard.putNumber("Test I", RobotMap.PID.Drive.I);
+        SmartDashboard.putNumber("Test D", RobotMap.PID.Drive.D);
+        SmartDashboard.putNumber("Test Setpoint", setpoint);
     }
 
     @Override
     public void teleopInitialize() {
-        RobotMap.Component.leftWheelEncoder.setPosition(0);
-        RobotMap.Component.rightWheelEncoder.setPosition(0);
+        RobotMap.Component.leftWheelEncoder.reset();
+        RobotMap.Component.rightWheelEncoder.reset();
         teleopCommand = new ChassisMove(RobotMap.Component.chassis, driverChooser.getSelected());
+        RobotMap.Component.testMotor.enableMotionController();
+        RobotMap.Component.drivePID.setPID(SmartDashboard.getNumber("Test P", RobotMap.Component.drivePID.getP()),
+                SmartDashboard.getNumber("Test I", RobotMap.Component.drivePID.getI()),
+                SmartDashboard.getNumber("Test D", RobotMap.Component.drivePID.getD()));
+        setpoint = SmartDashboard.getNumber("Test Setpoint", setpoint);
+
     }
 
     @Override
     public void teleopExecute() {
+        RobotMap.Component.testMotor.set(setpoint);
 
     }
 
@@ -79,6 +92,17 @@ public class Robot extends CommandRobotBase {
     }
 
     @Override
-    public void alwaysExecute() {}
+    public void alwaysExecute() {
+        // LogKitten.wtf();
+       
+
+        SmartDashboard.putNumber("Test Encoder", RobotMap.Component.testEncoder.getRate());
+        LogKitten.wtf("Test Encoder Speed: " + Component.testEncoder.getRate());
+        LogKitten.wtf("Setpoint: " + setpoint);
+        // LogKitten.wtf("Left Encod er Speed: " +
+        // Component.leftWheelEncoder.getRate());
+        // LogKitten.wtf("DistancePerPulse: " +
+        // Component.leftWheelEncoder.getDistancePerPulse());
+    }
 
 }
