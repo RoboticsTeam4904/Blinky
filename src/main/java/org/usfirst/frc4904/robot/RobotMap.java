@@ -1,5 +1,8 @@
 package org.usfirst.frc4904.robot;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.SerialPort;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
@@ -10,6 +13,7 @@ import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonFX;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CustomPIDController;
 import org.usfirst.frc4904.standard.custom.sensors.CANTalonEncoder;
+import org.usfirst.frc4904.standard.custom.sensors.ChassisEncoders;
 import org.usfirst.frc4904.standard.custom.sensors.CustomCANCoder;
 import org.usfirst.frc4904.standard.custom.sensors.EncoderPair;
 import org.usfirst.frc4904.standard.custom.sensors.NavX;
@@ -67,6 +71,13 @@ public class RobotMap {
         }
     }
 
+    public static class NetworkTables {
+        public static NetworkTableInstance inst;
+        public static NetworkTable table;
+        public static NetworkTableEntry netDisplacement;
+        public static NetworkTableEntry netDisplacementAngle;
+    }
+
     public static class Component {
         public static PDP pdp;
         public static NavX navx;
@@ -75,7 +86,7 @@ public class RobotMap {
         public static CustomCANCoder leftWheelCANCoder;
         public static CustomCANCoder rightWheelCANCoder;
         public static EncoderPair chassisTalonEncoders;
-        public static EncoderPair chassisCANCoders;
+        public static ChassisEncoders chassisCANCoders;
         public static Motor rightWheelA;
         public static Motor rightWheelB;
         public static Motor leftWheelA;
@@ -130,11 +141,17 @@ public class RobotMap {
                 Metrics.Chassis.CAN_CODER_METERS_PER_TICK);
 
         Component.chassisTalonEncoders = new EncoderPair(Component.leftWheelTalonEncoder, Component.rightWheelCANCoder);
-        Component.chassisCANCoders = new EncoderPair(Component.leftWheelCANCoder, Component.rightWheelCANCoder);
+        Component.chassisCANCoders = new ChassisEncoders(Component.leftWheelCANCoder, Component.rightWheelCANCoder, Metrics.Chassis.DISTANCE_SIDE_SIDE);
 
         // General Chassis
         Component.chassis = new TankDrive("Blinky-Chassis", Component.leftWheelA, Component.leftWheelB,
                 Component.rightWheelA, Component.rightWheelB);
         Component.chassis.setDefaultCommand(new ChassisMove(Component.chassis, new NathanGain()));
+
+        /** Network Tables */
+        NetworkTables.inst = NetworkTableInstance.getDefault();
+        NetworkTables.table = NetworkTables.inst.getTable("localization");
+        NetworkTables.netDisplacement = NetworkTables.table.getEntry("netDisplacement");
+        NetworkTables.netDisplacementAngle = NetworkTables.table.getEntry("netDisplacementAngle");
     }
 }

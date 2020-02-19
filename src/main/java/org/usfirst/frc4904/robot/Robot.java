@@ -59,6 +59,8 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void alwaysExecute() {
+        RobotMap.NetworkTables.netDisplacement.setDouble(RobotMap.Component.chassisCANCoders.getNetDisplacement());
+        RobotMap.NetworkTables.netDisplacement.setDouble(RobotMap.Component.chassisCANCoders.getNetDisplacementAngle());
     }
 
 }
