@@ -73,9 +73,15 @@ public class RobotMap {
 
     public static class NetworkTables {
         public static NetworkTableInstance inst;
-        public static NetworkTable table;
-        public static NetworkTableEntry netDisplacement;
-        public static NetworkTableEntry netDisplacementAngle;
+        public static class Encoders {
+            public static NetworkTable table;
+            public static NetworkTableEntry netDisplacement;
+            public static NetworkTableEntry netDisplacementAngle;
+        }
+        public static class NavX {
+            public static NetworkTable table;
+            public static NetworkTableEntry yaw;
+        }
     }
 
     public static class Component {
@@ -141,7 +147,8 @@ public class RobotMap {
                 Metrics.Chassis.CAN_CODER_METERS_PER_TICK);
 
         Component.chassisTalonEncoders = new EncoderPair(Component.leftWheelTalonEncoder, Component.rightWheelCANCoder);
-        Component.chassisCANCoders = new ChassisEncoders(Component.leftWheelCANCoder, Component.rightWheelCANCoder, Metrics.Chassis.DISTANCE_SIDE_SIDE);
+        Component.chassisCANCoders = new ChassisEncoders(Component.leftWheelCANCoder, Component.rightWheelCANCoder,
+                Metrics.Chassis.DISTANCE_SIDE_SIDE);
 
         // General Chassis
         Component.chassis = new TankDrive("Blinky-Chassis", Component.leftWheelA, Component.leftWheelB,
@@ -150,8 +157,12 @@ public class RobotMap {
 
         /** Network Tables */
         NetworkTables.inst = NetworkTableInstance.getDefault();
-        NetworkTables.table = NetworkTables.inst.getTable("localization");
-        NetworkTables.netDisplacement = NetworkTables.table.getEntry("netDisplacement");
-        NetworkTables.netDisplacementAngle = NetworkTables.table.getEntry("netDisplacementAngle");
+
+        NetworkTables.Encoders.table = NetworkTables.inst.getTable("encoders");
+        NetworkTables.Encoders.netDisplacement = NetworkTables.Encoders.table.getEntry("netDisplacement");
+        NetworkTables.Encoders.netDisplacementAngle = NetworkTables.Encoders.table.getEntry("netDisplacementAngle");
+        
+        NetworkTables.NavX.table = NetworkTables.inst.getTable("navx");
+        NetworkTables.NavX.yaw = NetworkTables.NavX.table.getEntry("yaw");
     }
 }
