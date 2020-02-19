@@ -6,30 +6,10 @@
 /*----------------------------------------------------------------------------*/
 package org.usfirst.frc4904.robot;
 
-import java.util.List;
-
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.sensors.SensorTimeBase;
-
 import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
 import org.usfirst.frc4904.robot.humaninterface.operators.DefaultOperator;
-import org.usfirst.frc4904.robot.RobotMap.Component;
-import org.usfirst.frc4904.robot.commands.SendSplines;
-
 import org.usfirst.frc4904.standard.CommandRobotBase;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.networktables.*;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.util.Units;
-
-import org.usfirst.frc4904.standard.LogKitten;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
-import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
-import org.usfirst.frc4904.standard.subsystems.chassis.SensorDrive;
 
 public class Robot extends CommandRobotBase {
 
