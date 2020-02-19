@@ -73,11 +73,13 @@ public class RobotMap {
 
     public static class NetworkTables {
         public static NetworkTableInstance inst;
+
         public static class Encoders {
             public static NetworkTable table;
             public static NetworkTableEntry netDisplacement;
             public static NetworkTableEntry netDisplacementAngle;
         }
+
         public static class NavX {
             public static NetworkTable table;
             public static NetworkTableEntry yaw;
@@ -125,7 +127,7 @@ public class RobotMap {
         /* Drive Train */
 
         // Wheels
-        CANTalonFX leftWheelATalon = new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_A);
+        CANTalonFX leftWheelATalon = new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A);
         CANTalonFX rightWheelATalon = new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_A);
 
         Component.rightWheelA = new Motor("rightWheelA", false, rightWheelATalon);
@@ -161,7 +163,7 @@ public class RobotMap {
         NetworkTables.Encoders.table = NetworkTables.inst.getTable("encoders");
         NetworkTables.Encoders.netDisplacement = NetworkTables.Encoders.table.getEntry("netDisplacement");
         NetworkTables.Encoders.netDisplacementAngle = NetworkTables.Encoders.table.getEntry("netDisplacementAngle");
-        
+
         NetworkTables.NavX.table = NetworkTables.inst.getTable("navx");
         NetworkTables.NavX.yaw = NetworkTables.NavX.table.getEntry("yaw");
     }

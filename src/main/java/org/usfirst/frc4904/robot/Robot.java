@@ -12,6 +12,7 @@ import org.usfirst.frc4904.standard.CommandRobotBase;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
 
 public class Robot extends CommandRobotBase {
+    private RobotMap map = new RobotMap();
 
     @Override
     public void initialize() {
@@ -59,8 +60,10 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void alwaysExecute() {
-        RobotMap.NetworkTables.Encoders.netDisplacement.setDouble(RobotMap.Component.chassisCANCoders.getNetDisplacement());
-        RobotMap.NetworkTables.Encoders.netDisplacement.setDouble(RobotMap.Component.chassisCANCoders.getNetDisplacementAngle());
+        RobotMap.NetworkTables.Encoders.netDisplacement
+                .setDouble(RobotMap.Component.chassisCANCoders.getNetDisplacement());
+        RobotMap.NetworkTables.Encoders.netDisplacementAngle
+                .setDouble(RobotMap.Component.chassisCANCoders.getNetDisplacementAngle());
         RobotMap.NetworkTables.NavX.yaw.setDouble(Math.toRadians(RobotMap.Component.navx.getYaw()));
     }
 
