@@ -53,17 +53,23 @@ public class RobotMap {
             public static final double DISTANCE_FRONT_BACK = 0.6604;
             public static final double WHEEL_CIRCUMFERENCE_METERS = Metrics.Chassis.DIAMETER_METERS * Math.PI;
             public static final double DEGREES_PER_REVOLUTION = 360.0;
-            public static final double CAN_CODER_TICKS_PER_REVOLUTION = 4096.0;
-            public static final double TALON_ENCODER_TICKS_PER_REVOLUTION = 2048.0;
-
-            public static final double TALON_ENCODER_REVOLUTIONS_PER_TICK = 1 / TALON_ENCODER_TICKS_PER_REVOLUTION;
 
             public static final double CAN_CODER_DEGREES_PER_TICK = DEGREES_PER_REVOLUTION
-                    / CAN_CODER_TICKS_PER_REVOLUTION;
-            public static final double CAN_CODER_REVOLUTIONS_PER_TICK = 1 / CAN_CODER_TICKS_PER_REVOLUTION;
+                    / Metrics.Encoders.CANCoders.TICKS_PER_REVOLUTION;
             public static final double CAN_CODER_METERS_PER_TICK = WHEEL_CIRCUMFERENCE_METERS
-                    / CAN_CODER_TICKS_PER_REVOLUTION;
+                    / Metrics.Encoders.CANCoders.TICKS_PER_REVOLUTION;
+        }
 
+        public static class Encoders {
+            public static class TalonEncoders {
+                public static final double TICKS_PER_REVOLUTION = 2048.0;
+                public static final double REVOLUTIONS_PER_TICK = 1 / TICKS_PER_REVOLUTION;
+            }
+
+            public static class CANCoders {
+                public static final double TICKS_PER_REVOLUTION = 4096.0;
+                public static final double REVOLUTIONS_PER_TICK = 1 / TICKS_PER_REVOLUTION;
+            }
         }
     }
 
@@ -108,7 +114,7 @@ public class RobotMap {
         /* Drive Train */
 
         // Wheels
-        CANTalonFX leftWheelATalon = new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_A);
+        CANTalonFX leftWheelATalon = new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A);
         CANTalonFX rightWheelATalon = new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_A);
 
         Component.rightWheelA = new Motor("rightWheelA", false, rightWheelATalon);
@@ -118,10 +124,10 @@ public class RobotMap {
 
         // Wheel Encoders
         Component.leftWheelTalonEncoder = new CANTalonEncoder("Leftwheel", leftWheelATalon, true,
-                Metrics.Chassis.TALON_ENCODER_REVOLUTIONS_PER_TICK, CustomPIDSourceType.kDisplacement,
+                Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK, CustomPIDSourceType.kDisplacement,
                 FeedbackDevice.IntegratedSensor);
         Component.rightWheelTalonEncoder = new CANTalonEncoder("rightWheel", rightWheelATalon, true,
-                Metrics.Chassis.TALON_ENCODER_REVOLUTIONS_PER_TICK, CustomPIDSourceType.kDisplacement,
+                Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK, CustomPIDSourceType.kDisplacement,
                 FeedbackDevice.IntegratedSensor);
 
         Component.leftWheelCANCoder = new CustomCANCoder(Port.CAN.LEFT_WHEEL_ENCODER,

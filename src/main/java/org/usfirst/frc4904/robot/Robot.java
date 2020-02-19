@@ -12,6 +12,7 @@ import org.usfirst.frc4904.standard.CommandRobotBase;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
 
 public class Robot extends CommandRobotBase {
+    public RobotMap map = new RobotMap();
 
     @Override
     public void initialize() {
