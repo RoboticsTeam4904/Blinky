@@ -13,8 +13,8 @@ import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonFX;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CustomPIDController;
 import org.usfirst.frc4904.standard.custom.sensors.CANTalonEncoder;
-import org.usfirst.frc4904.standard.custom.sensors.ChassisEncoders;
 import org.usfirst.frc4904.standard.custom.sensors.CustomCANCoder;
+import org.usfirst.frc4904.standard.custom.sensors.DisplacementEncoders;
 import org.usfirst.frc4904.standard.custom.sensors.EncoderPair;
 import org.usfirst.frc4904.standard.custom.sensors.NavX;
 import org.usfirst.frc4904.standard.custom.sensors.PDP;
@@ -78,6 +78,8 @@ public class RobotMap {
             public static NetworkTable table;
             public static NetworkTableEntry netDisplacement;
             public static NetworkTableEntry netDisplacementAngle;
+            public static NetworkTableEntry leftDistance;
+            public static NetworkTableEntry rightDistance;
         }
 
         public static class NavX {
@@ -93,8 +95,8 @@ public class RobotMap {
         public static CANTalonEncoder rightWheelTalonEncoder;
         public static CustomCANCoder leftWheelCANCoder;
         public static CustomCANCoder rightWheelCANCoder;
-        public static EncoderPair chassisTalonEncoders;
-        public static ChassisEncoders chassisCANCoders;
+        public static DisplacementEncoders chassisTalonEncoders;
+        public static DisplacementEncoders chassisCANCoders;
         public static Motor rightWheelA;
         public static Motor rightWheelB;
         public static Motor leftWheelA;
@@ -146,10 +148,11 @@ public class RobotMap {
         Component.leftWheelCANCoder = new CustomCANCoder(Port.CAN.LEFT_WHEEL_ENCODER,
                 Metrics.Chassis.CAN_CODER_METERS_PER_TICK);
         Component.rightWheelCANCoder = new CustomCANCoder(Port.CAN.RIGHT_WHEEL_ENCODER,
-                Metrics.Chassis.CAN_CODER_METERS_PER_TICK);
+                Metrics.Chassis.CAN_CODER_METERS_PER_TICK, CustomPIDSourceType.kDisplacement, true);
 
-        Component.chassisTalonEncoders = new EncoderPair(Component.leftWheelTalonEncoder, Component.rightWheelCANCoder);
-        Component.chassisCANCoders = new ChassisEncoders(Component.leftWheelCANCoder, Component.rightWheelCANCoder,
+        Component.chassisTalonEncoders = new DisplacementEncoders(Component.leftWheelTalonEncoder,
+                Component.rightWheelCANCoder, Metrics.Chassis.DISTANCE_SIDE_SIDE);
+        Component.chassisCANCoders = new DisplacementEncoders(Component.leftWheelCANCoder, Component.rightWheelCANCoder,
                 Metrics.Chassis.DISTANCE_SIDE_SIDE);
 
         // General Chassis
@@ -163,6 +166,8 @@ public class RobotMap {
         NetworkTables.Encoders.table = NetworkTables.inst.getTable("encoders");
         NetworkTables.Encoders.netDisplacement = NetworkTables.Encoders.table.getEntry("netDisplacement");
         NetworkTables.Encoders.netDisplacementAngle = NetworkTables.Encoders.table.getEntry("netDisplacementAngle");
+        NetworkTables.Encoders.leftDistance = NetworkTables.Encoders.table.getEntry("leftDistance");
+        NetworkTables.Encoders.rightDistance = NetworkTables.Encoders.table.getEntry("rightDistance");
 
         NetworkTables.NavX.table = NetworkTables.inst.getTable("navx");
         NetworkTables.NavX.yaw = NetworkTables.NavX.table.getEntry("yaw");

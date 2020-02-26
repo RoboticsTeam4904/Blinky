@@ -27,6 +27,7 @@ public class Robot extends CommandRobotBase {
     @Override
     public void teleopInitialize() {
         teleopCommand = new ChassisMove(RobotMap.Component.chassis, driverChooser.getSelected());
+        teleopCommand.schedule();
     }
 
     @Override
@@ -65,6 +66,9 @@ public class Robot extends CommandRobotBase {
         RobotMap.NetworkTables.Encoders.netDisplacementAngle
                 .setDouble(RobotMap.Component.chassisCANCoders.getNetDisplacementAngle());
         RobotMap.NetworkTables.NavX.yaw.setDouble(Math.toRadians(RobotMap.Component.navx.getYaw()));
+        RobotMap.NetworkTables.Encoders.leftDistance.setDouble(RobotMap.Component.leftWheelCANCoder.getDistance());
+        RobotMap.NetworkTables.Encoders.rightDistance.setDouble(RobotMap.Component.rightWheelCANCoder.getDistance());
+
     }
 
 }
