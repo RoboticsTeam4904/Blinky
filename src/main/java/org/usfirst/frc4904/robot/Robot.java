@@ -22,12 +22,19 @@ public class Robot extends CommandRobotBase {
         RobotMap.Component.navx.zeroYaw();
         RobotMap.Component.chassisTalonEncoders.reset();
         RobotMap.Component.chassisCANCoders.reset();
+        RobotMap.Component.rightWheelCANCoder.reset();
+        RobotMap.Component.leftWheelCANCoder.reset();
     }
 
     @Override
     public void teleopInitialize() {
         teleopCommand = new ChassisMove(RobotMap.Component.chassis, driverChooser.getSelected());
         teleopCommand.schedule();
+        RobotMap.Component.navx.zeroYaw();
+        RobotMap.Component.chassisTalonEncoders.reset();
+        RobotMap.Component.chassisCANCoders.reset();
+        RobotMap.Component.rightWheelCANCoder.reset();
+        RobotMap.Component.leftWheelCANCoder.reset();
     }
 
     @Override
@@ -64,8 +71,8 @@ public class Robot extends CommandRobotBase {
         RobotMap.NetworkTables.Encoders.netDisplacement
                 .setDouble(RobotMap.Component.chassisCANCoders.getNetDisplacement());
         RobotMap.NetworkTables.Encoders.netDisplacementAngle
-                .setDouble(RobotMap.Component.chassisCANCoders.getNetDisplacementAngle());
-        RobotMap.NetworkTables.NavX.yaw.setDouble(Math.toRadians(RobotMap.Component.navx.getYaw()));
+                .setDouble(Math.toDegrees(RobotMap.Component.chassisCANCoders.getNetDisplacementAngle()) % 360.0);
+        RobotMap.NetworkTables.NavX.yaw.setDouble(RobotMap.Component.navx.getYaw());
         RobotMap.NetworkTables.Encoders.leftDistance.setDouble(RobotMap.Component.leftWheelCANCoder.getDistance());
         RobotMap.NetworkTables.Encoders.rightDistance.setDouble(RobotMap.Component.rightWheelCANCoder.getDistance());
 
