@@ -1,7 +1,5 @@
-Blinky/README.md:Blinky is a repository which contains the code for FRC Team 4904’s 2020 Practice Robot.
-Blinky/README.md:git clone --recursive https://github.com/RoboticsTeam4904/Blinky.git
-Blinky/.git/config:	url = https://github.com/RoboticsTeam4904/Blinky.git
-Blinky/.git/logs/HEAD:0000000000000000000000000000000000000000 ac6b83d1858bc478fe8b282bc2c2b5613c68da0c zbuster05 <zakary.saya@gmail.com> 1641749410 -0800	clone: from https://github.com/RoboticsTeam4904/Blinky.git
-Blinky/.git/logs/refs/heads/master:0000000000000000000000000000000000000000 ac6b83d1858bc478fe8b282bc2c2b5613c68da0c zbuster05 <zakary.saya@gmail.com> 1641749410 -0800	clone: from https://github.com/RoboticsTeam4904/Blinky.git
-Blinky/.git/logs/refs/remotes/origin/HEAD:0000000000000000000000000000000000000000 ac6b83d1858bc478fe8b282bc2c2b5613c68da0c zbuster05 <zakary.saya@gmail.com> 1641749410 -0800	clone: from https://github.com/RoboticsTeam4904/Blinky.git
-Blinky/src/main/java/org/usfirst/frc4904/robot/RobotMap.java:        Component.chassis = new TankDrive("Blinky-Chassis", Component.leftWheelA, Component.leftWheelB,
+src/main/java/org/usfirst/frc4904/standard/subsystems/motor/ServoSubsystem.java:	 * <p>
+src/main/java/org/usfirst/frc4904/standard/subsystems/motor/ServoSubsystem.java:	 * <p>
+src/main/java/org/usfirst/frc4904/standard/subsystems/motor/ServoSubsystem.java:	 * <p>
+src/main/java/org/usfirst/frc4904/standard/subsystems/motor/ServoSubsystem.java:	 * <p>
+src/main/java/org/usfirst/frc4904/standard/custom/sensors/NativeDerivativeSensor.java: * <p>
