@@ -26,9 +26,9 @@ public class RobotMap {
 
         public static class CANMotor {
             public static int RIGHT_DRIVE_A = 2;
-            public static int RIGHT_DRIVE_B = 3;
+            //public static int RIGHT_DRIVE_B = 3;
             public static int LEFT_DRIVE_A = 4;
-            public static int LEFT_DRIVE_B = 5;
+            //public static int LEFT_DRIVE_B = 5;
         }
 
         public static class PWM {
@@ -83,9 +83,9 @@ public class RobotMap {
         public static EncoderPair chassisTalonEncoders;
         public static EncoderPair chassisCANCoders;
         public static Motor rightWheelA;
-        public static Motor rightWheelB;
+        //public static Motor rightWheelB;
         public static Motor leftWheelA;
-        public static Motor leftWheelB;
+        //public static Motor leftWheelB;
         public static TankDrive chassis;
         public static CustomPIDController drivePID;
     }
@@ -118,9 +118,9 @@ public class RobotMap {
         CANTalonFX rightWheelATalon = new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_A);
 
         Component.rightWheelA = new Motor("rightWheelA", false, rightWheelATalon);
-        Component.rightWheelB = new Motor("rightWheelB", false, new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B));
+        //Component.rightWheelB = new Motor("rightWheelB", false, new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B));
         Component.leftWheelA = new Motor("leftWheelA", true, leftWheelATalon);
-        Component.leftWheelB = new Motor("leftWheelB", true, new CANTalonFX(Port.CANMotor.LEFT_DRIVE_B));
+        //Component.leftWheelB = new Motor("leftWheelB", true, new CANTalonFX(Port.CANMotor.LEFT_DRIVE_B));
 
         // Wheel Encoders
         Component.leftWheelTalonEncoder = new CANTalonEncoder("Leftwheel", leftWheelATalon, true,
@@ -139,8 +139,8 @@ public class RobotMap {
         Component.chassisCANCoders = new EncoderPair(Component.leftWheelCANCoder, Component.rightWheelCANCoder);
 
         // General Chassis
-        Component.chassis = new TankDrive("Blinky-Chassis", Component.leftWheelA, Component.leftWheelB,
-                Component.rightWheelA, Component.rightWheelB);
+        Component.chassis = new TankDrive("Blinky-Chassis", Component.leftWheelA/*,Component.leftWheelB*/,
+                Component.rightWheelA/*, Component.rightWheelB*/);
         Component.chassis.setDefaultCommand(new ChassisMove(Component.chassis, new NathanGain()));
     }
 }
