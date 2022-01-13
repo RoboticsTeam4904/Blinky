@@ -10,6 +10,8 @@ import org.usfirst.frc4904.standard.commands.KittenCommand;
 import org.usfirst.frc4904.standard.commands.RunIf;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
 import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
+import org.usfirst.frc4904.standard.commands.solenoid.SolenoidExtend;
+import org.usfirst.frc4904.standard.commands.solenoid.SolenoidRetract;
 import org.usfirst.frc4904.standard.humaninput.Driver;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -35,6 +37,8 @@ public class NathanGain extends Driver {
 
 	@Override
 	public void bindCommands() {
+		RobotMap.HumanInput.Driver.xbox.a.whenPressed(new SolenoidExtend(RobotMap.Component.solenoid));
+		RobotMap.HumanInput.Driver.xbox.b.whenPressed(new SolenoidRetract(RobotMap.Component.solenoid));
 	}
 
 	@Override

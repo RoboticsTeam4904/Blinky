@@ -1,10 +1,12 @@
 package org.usfirst.frc4904.robot;
 
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.SerialPort;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
 import org.usfirst.frc4904.standard.custom.CustomPIDSourceType;
+import org.usfirst.frc4904.standard.custom.PCMPort;
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonFX;
@@ -14,6 +16,7 @@ import org.usfirst.frc4904.standard.custom.sensors.CustomCANCoder;
 import org.usfirst.frc4904.standard.custom.sensors.EncoderPair;
 import org.usfirst.frc4904.standard.custom.sensors.NavX;
 import org.usfirst.frc4904.standard.custom.sensors.PDP;
+import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem;
 import org.usfirst.frc4904.standard.subsystems.chassis.TankDrive;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 
@@ -40,6 +43,7 @@ public class RobotMap {
         }
 
         public static class Pneumatics {
+            public static final PCMPort SOLENOID = new PCMPort(0, PneumaticsModuleType.CTREPCM, 1, 2);
         }
 
         public static class Digital {
@@ -86,6 +90,7 @@ public class RobotMap {
         public static Motor rightWheelB;
         public static Motor leftWheelA;
         public static Motor leftWheelB;
+        public static SolenoidSubsystem solenoid;
         public static TankDrive chassis;
         public static CustomPIDController drivePID;
     }
@@ -137,6 +142,9 @@ public class RobotMap {
 
         Component.chassisTalonEncoders = new EncoderPair(Component.leftWheelTalonEncoder, Component.rightWheelCANCoder);
         Component.chassisCANCoders = new EncoderPair(Component.leftWheelCANCoder, Component.rightWheelCANCoder);
+
+        // Solenoid
+        Component.solenoid = new SolenoidSubsystem(Port.Pneumatics.SOLENOID.buildDoubleSolenoid());
 
         // General Chassis
         Component.chassis = new TankDrive("Blinky-Chassis", Component.leftWheelA, Component.leftWheelB,
