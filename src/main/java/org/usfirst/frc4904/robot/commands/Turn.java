@@ -1,7 +1,7 @@
-package org.usfirst.frc4904.standard.commands.motor;
+package org.usfirst.frc4904.robot.commands;
 
+import org.usfirst.frc4904.standard.commands.motor.MotorConstant;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  * Constantly turns motor at specified speed.
