@@ -38,8 +38,8 @@ public class NathanGain extends Driver {
 
 	@Override
 	public void bindCommands() {
-		RobotMap.HumanInput.Driver.xbox.a.whenPressed(new SolenoidExtend(RobotMap.Component.solenoid));
-		RobotMap.HumanInput.Driver.xbox.b.whenPressed(new SolenoidRetract(RobotMap.Component.solenoid));
+		// RobotMap.HumanInput.Driver.xbox.a.whenPressed(new SolenoidExtend(RobotMap.Component.solenoid));
+		// RobotMap.HumanInput.Driver.xbox.b.whenPressed(new SolenoidRetract(RobotMap.Component.solenoid));
 		RobotMap.HumanInput.Driver.xbox.dPad.down.whenPressed(new Turn(RobotMap.Component.extraMotor, 0.0/3.0)); // off
 		RobotMap.HumanInput.Driver.xbox.dPad.left.whenPressed(new Turn(RobotMap.Component.extraMotor, 1.0/3.0)); // slow
 		RobotMap.HumanInput.Driver.xbox.dPad.left.whenPressed(new Turn(RobotMap.Component.extraMotor, 2.0/3.0)); // medium
