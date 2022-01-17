@@ -11,6 +11,7 @@ import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonFX;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CustomPIDController;
+import org.usfirst.frc4904.standard.custom.motioncontrollers.MotionController;
 import org.usfirst.frc4904.standard.custom.sensors.CANTalonEncoder;
 import org.usfirst.frc4904.standard.custom.sensors.CustomCANCoder;
 import org.usfirst.frc4904.standard.custom.sensors.EncoderPair;
@@ -19,6 +20,7 @@ import org.usfirst.frc4904.standard.custom.sensors.PDP;
 import org.usfirst.frc4904.standard.subsystems.SolenoidSubsystem;
 import org.usfirst.frc4904.standard.subsystems.chassis.TankDrive;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
+import org.usfirst.frc4904.standard.subsystems.motor.PositionSensorMotor;
 
 public class RobotMap {
     public static class Port {
@@ -32,6 +34,7 @@ public class RobotMap {
             public static int RIGHT_DRIVE_B = 3;
             public static int LEFT_DRIVE_A = 4;
             public static int LEFT_DRIVE_B = 5;
+            public static int POSITION_MOTOR = 6; // TODO: check port
         }
 
         public static class PWM {
@@ -77,11 +80,21 @@ public class RobotMap {
         }
     }
 
+    public static class PID {
+        public static class PositionMotor {
+            public static final int P = -1;
+            public static final int I = -1;
+            public static final int D = -1;
+            public static final int F = -1;
+        }
+    }
+
     public static class Component {
         public static PDP pdp;
         public static NavX navx;
         public static CANTalonEncoder leftWheelTalonEncoder;
         public static CANTalonEncoder rightWheelTalonEncoder;
+        public static CANTalonEncoder positionMotorEncoder;
         public static CustomCANCoder leftWheelCANCoder;
         public static CustomCANCoder rightWheelCANCoder;
         public static EncoderPair chassisTalonEncoders;
@@ -93,6 +106,8 @@ public class RobotMap {
         public static SolenoidSubsystem solenoid;
         public static TankDrive chassis;
         public static CustomPIDController drivePID;
+        public static CustomPIDController positionMotorPID;
+        public static PositionSensorMotor motor;
     }
 
     public static class Input {
@@ -121,6 +136,7 @@ public class RobotMap {
         // Wheels
         CANTalonFX leftWheelATalon = new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A);
         CANTalonFX rightWheelATalon = new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B);
+        CANTalonFX positionMotorTalon = new CANTalonFX(Port.CANMotor.POSITION_MOTOR);
 
         Component.rightWheelA = new Motor("rightWheelA", false, rightWheelATalon);
         Component.rightWheelB = new Motor("rightWheelB", false, new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B));
@@ -134,6 +150,9 @@ public class RobotMap {
         Component.rightWheelTalonEncoder = new CANTalonEncoder("rightWheel", rightWheelATalon, true,
                 Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK, CustomPIDSourceType.kDisplacement,
                 FeedbackDevice.IntegratedSensor);
+        Component.positionMotorEncoder = new CANTalonEncoder("positionMotor", positionMotorTalon); // check
+        Component.positionMotorPID = new CustomPIDController(PID.PositionMotor.P, PID.PositionMotor.I, 
+            PID.PositionMotor.D, PID.PositionMotor.F, Component.positionMotorEncoder);
 
         Component.leftWheelCANCoder = new CustomCANCoder(Port.CAN.LEFT_WHEEL_ENCODER,
                 Metrics.Chassis.CAN_CODER_METERS_PER_TICK);
@@ -150,5 +169,11 @@ public class RobotMap {
         Component.chassis = new TankDrive("Blinky-Chassis", Component.leftWheelA, Component.leftWheelB,
                 Component.rightWheelA, Component.rightWheelB);
         Component.chassis.setDefaultCommand(new ChassisMove(Component.chassis, new NathanGain()));
-    }
+        
+        //Motor Component
+        Component.motor = new PositionSensorMotor("motor", true, Component.positionMotorPID, positionMotorTalon);
+            //MotorPositionSetSpeed(0);
+            //Motor.setSetpoint(0);
+    } 
+    
 }
