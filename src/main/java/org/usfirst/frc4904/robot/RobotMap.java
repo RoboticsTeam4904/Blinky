@@ -30,7 +30,8 @@ public class RobotMap {
         public static class CANMotor {
             public static int RIGHT_DRIVE_A = 3;
             public static int LEFT_DRIVE_A = 4;
-            public static int EXTRA_MOTOR = -1; // TODO: set port
+            public static int EXTRA_MOTOR_A = -1; // TODO: set port
+
         }
 
         public static class PWM {
@@ -122,7 +123,7 @@ public class RobotMap {
 
         Component.rightWheelA = new Motor("rightWheelA", false, rightWheelATalon);
         Component.leftWheelA = new Motor("leftWheelA", true, leftWheelATalon);
-        Component.extraMotor = new Motor("extraMotor", false, new CANTalonFX(Port.CANMotor.EXTRA_MOTOR));
+        Component.extraMotor = new Motor("extraMotor", true, new CANTalonFX(Port.CANMotor.EXTRA_MOTOR));
 
         // Wheel Encoders
         Component.leftWheelTalonEncoder = new CANTalonEncoder("Leftwheel", leftWheelATalon, true,
