@@ -31,7 +31,7 @@ public class RobotMap {
             public static int RIGHT_DRIVE_A = 3;
             public static int LEFT_DRIVE_A = 4;
             public static int EXTRA_MOTOR_A = -1; // TODO: set port
-
+            public static int EXTRA_MOTOR_B = -1;
         }
 
         public static class PWM {
@@ -91,7 +91,8 @@ public class RobotMap {
         // public static SolenoidSubsystem solenoid;
         public static TankDrive chassis;
         public static CustomPIDController drivePID;
-        public static Motor extraMotor;
+        public static Motor extraMotorA;
+        public static Motor extraMotorB;
     }
 
     public static class Input {
@@ -123,7 +124,8 @@ public class RobotMap {
 
         Component.rightWheelA = new Motor("rightWheelA", false, rightWheelATalon);
         Component.leftWheelA = new Motor("leftWheelA", true, leftWheelATalon);
-        Component.extraMotor = new Motor("extraMotor", true, new CANTalonFX(Port.CANMotor.EXTRA_MOTOR));
+        Component.extraMotorA = new Motor("extraMotorA", true, new CANTalonFX(Port.CANMotor.EXTRA_MOTOR_A));
+        Component.extraMotorB = new Motor("extraMotorB", false, new CANTalonFX(Port.CANMotor.EXTRA_MOTOR_B));
 
         // Wheel Encoders
         Component.leftWheelTalonEncoder = new CANTalonEncoder("Leftwheel", leftWheelATalon, true,

@@ -19,6 +19,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 public class NathanGain extends Driver {
 	public static final double SPEED_GAIN = 1;
@@ -40,10 +41,22 @@ public class NathanGain extends Driver {
 	public void bindCommands() {
 		// RobotMap.HumanInput.Driver.xbox.a.whenPressed(new SolenoidExtend(RobotMap.Component.solenoid));
 		// RobotMap.HumanInput.Driver.xbox.b.whenPressed(new SolenoidRetract(RobotMap.Component.solenoid));
-		RobotMap.HumanInput.Driver.xbox.dPad.down.whenPressed(new Turn(RobotMap.Component.extraMotor, 0.0/3.0)); // off
-		RobotMap.HumanInput.Driver.xbox.dPad.left.whenPressed(new Turn(RobotMap.Component.extraMotor, 1.0/3.0)); // slow
-		RobotMap.HumanInput.Driver.xbox.dPad.up.whenPressed(new Turn(RobotMap.Component.extraMotor, 2.0/3.0)); // medium
-		RobotMap.HumanInput.Driver.xbox.dPad.right.whenPressed(new Turn(RobotMap.Component.extraMotor, 3.0/3.0)); // max
+		RobotMap.HumanInput.Driver.xbox.dPad.down.whenPressed(new ParallelCommandGroup(
+			new Turn(RobotMap.Component.extraMotorA, 0.0/3.0),
+			new Turn(RobotMap.Component.extraMotorB, 0.0/3.0)
+		)); // off
+		RobotMap.HumanInput.Driver.xbox.dPad.left.whenPressed(new ParallelCommandGroup(
+			new Turn(RobotMap.Component.extraMotorA, 1.0/3.0),
+			new Turn(RobotMap.Component.extraMotorB, 1.0/3.0)
+		)); // low
+		RobotMap.HumanInput.Driver.xbox.dPad.up.whenPressed(new ParallelCommandGroup(
+			new Turn(RobotMap.Component.extraMotorA, 2.0/3.0),
+			new Turn(RobotMap.Component.extraMotorB, 2.0/3.0)
+		)); // medium
+		RobotMap.HumanInput.Driver.xbox.dPad.right.whenPressed(new ParallelCommandGroup(
+			new Turn(RobotMap.Component.extraMotorA, 3.0/3.0),
+			new Turn(RobotMap.Component.extraMotorB, 3.0/3.0)
+		)); // high
 	}
 
 	@Override
