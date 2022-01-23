@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 public class TestRoutine extends SequentialCommandGroup {
     public TestRoutine() {
         this.addCommands(
-            new ChassisMoveDistance(RobotMap.Component.chassis, 10, null),
-            new ChassisTurn(RobotMap.Component.chassis, 3.14d/2d, null, null),
-            new ChassisMoveDistance(RobotMap.Component.chassis, 10, null)
+            new ChassisMoveDistance(RobotMap.Component.chassis, 10D, null),
+            new ChassisTurn(RobotMap.Component.chassis, 3.14D/2D, null, null),
+            new ChassisMoveDistance(RobotMap.Component.chassis, 10D, null)
         );
     }
 }
