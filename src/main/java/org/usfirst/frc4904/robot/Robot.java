@@ -6,10 +6,13 @@
 /*----------------------------------------------------------------------------*/
 package org.usfirst.frc4904.robot;
 
+import org.usfirst.frc4904.auton.TestRoutine;
 import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
 import org.usfirst.frc4904.robot.humaninterface.operators.DefaultOperator;
 import org.usfirst.frc4904.standard.CommandRobotBase;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
+
+import edu.wpi.first.wpilibj2.command.Command;
 
 public class Robot extends CommandRobotBase {
     public RobotMap map = new RobotMap();
@@ -40,6 +43,8 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void autonomousExecute() {
+        Command testRoutine = new TestRoutine();
+        testRoutine.execute();
     }
 
     @Override
