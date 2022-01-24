@@ -13,6 +13,7 @@ import org.usfirst.frc4904.standard.CommandRobotBase;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class Robot extends CommandRobotBase {
     public RobotMap map = new RobotMap();
@@ -39,12 +40,12 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void autonomousInitialize() {
+        SequentialCommandGroup testRoutine = new TestRoutine();
+        testRoutine.schedule();
     }
 
     @Override
     public void autonomousExecute() {
-        Command testRoutine = new TestRoutine();
-        testRoutine.execute();
     }
 
     @Override
