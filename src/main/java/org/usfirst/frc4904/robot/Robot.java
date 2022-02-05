@@ -7,12 +7,15 @@
 package org.usfirst.frc4904.robot;
 
 import org.usfirst.frc4904.auton.TestRoutine;
+import org.usfirst.frc4904.auton.MotorRoutine;
 import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
 import org.usfirst.frc4904.robot.humaninterface.operators.DefaultOperator;
 import org.usfirst.frc4904.standard.CommandRobotBase;
+import org.usfirst.frc4904.standard.LogKitten;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class Robot extends CommandRobotBase {
@@ -40,6 +43,9 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void autonomousInitialize() {
+        CommandScheduler.getInstance()
+            .onCommandInitialize(command -> LogKitten.wtf(command.getName() + command.getRequirements()));
+
         SequentialCommandGroup testRoutine = new TestRoutine();
         testRoutine.schedule();
     }
