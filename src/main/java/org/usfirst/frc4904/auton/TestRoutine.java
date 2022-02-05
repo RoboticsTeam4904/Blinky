@@ -14,8 +14,15 @@ public class TestRoutine extends SequentialCommandGroup {
             // new ChassisTurn(RobotMap.Component.chassis, 3.14D/2D, null, null),
             // new ChassisMoveDistance(RobotMap.Component.chassis, 10D, null)
             new ChassisConstant(RobotMap.Component.chassis, 0, 0.2, 0, 4),
-            new ChassisConstant(RobotMap.Component.chassis, 0, -0.2, 0, 5),
-            new ChassisConstant(RobotMap.Component.chassis, 0, 0.2, 0, 1)
+            new ChassisConstant(RobotMap.Component.chassis, 0, 0, .25, 5),
+            new ChassisConstant(RobotMap.Component.chassis, 0, 0.2, 0, 4),
+            new ChassisConstant(RobotMap.Component.chassis, 0, 0, .25, 5),
+            new ChassisConstant(RobotMap.Component.chassis, 0, 0.2, 0, 4),
+            new ChassisConstant(RobotMap.Component.chassis, 0, 0, .25, 5),
+            new ChassisConstant(RobotMap.Component.chassis, 0, 0.2, 0, 4),
+            new ChassisConstant(RobotMap.Component.chassis, 0, 0, .25, 5),
+            new ChassisConstant(RobotMap.Component.chassis, 0, 0.4, 0, 8)
+
         );
     }
 }
