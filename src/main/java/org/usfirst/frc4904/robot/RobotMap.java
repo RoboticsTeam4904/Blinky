@@ -124,7 +124,7 @@ public class RobotMap {
         Component.leftWheelA = new Motor("leftWheelA", true, leftWheelATalon);
         Component.leftWheelB = new Motor("leftWheelB", true, new CANTalonFX(Port.CANMotor.LEFT_DRIVE_B));
 
-        CANTalonFX testTalon = new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A);
+        CANTalonFX testTalon = new CANTalonFX(Port.CANMotor.TEST);
         Component.testMotor = new Motor("testMotor", false, testTalon);
 
         // Wheel Encoders
