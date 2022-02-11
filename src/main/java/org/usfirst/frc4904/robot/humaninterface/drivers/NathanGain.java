@@ -8,6 +8,7 @@ import org.usfirst.frc4904.standard.LogKitten.KittenLevel;
 import org.usfirst.frc4904.standard.commands.Cancel;
 import org.usfirst.frc4904.standard.commands.KittenCommand;
 import org.usfirst.frc4904.standard.commands.RunIf;
+import org.usfirst.frc4904.robot.commands.Turn;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
 import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
 import org.usfirst.frc4904.standard.humaninput.Driver;
@@ -35,6 +36,7 @@ public class NathanGain extends Driver {
 
 	@Override
 	public void bindCommands() {
+		RobotMap.HumanInput.Driver.xbox.a.whenPressed(new Turn(RobotMap.Component.testMotor, 0.1));
 	}
 
 	@Override
