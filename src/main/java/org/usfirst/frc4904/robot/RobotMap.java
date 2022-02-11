@@ -29,6 +29,7 @@ public class RobotMap {
             public static int RIGHT_DRIVE_B = 3;
             public static int LEFT_DRIVE_A = 4;
             public static int LEFT_DRIVE_B = 5;
+            public static int TEST = 12;
         }
 
         public static class PWM {
@@ -86,6 +87,7 @@ public class RobotMap {
         public static Motor rightWheelB;
         public static Motor leftWheelA;
         public static Motor leftWheelB;
+        public static Motor testMotor;
         public static TankDrive chassis;
         public static CustomPIDController drivePID;
     }
@@ -121,6 +123,9 @@ public class RobotMap {
         Component.rightWheelB = new Motor("rightWheelB", false, new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B));
         Component.leftWheelA = new Motor("leftWheelA", true, leftWheelATalon);
         Component.leftWheelB = new Motor("leftWheelB", true, new CANTalonFX(Port.CANMotor.LEFT_DRIVE_B));
+
+        CANTalonFX testTalon = new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A);
+        Component.testMotor = new Motor("testMotor", false, testTalon);
 
         // Wheel Encoders
         Component.leftWheelTalonEncoder = new CANTalonEncoder("Leftwheel", leftWheelATalon, true,
