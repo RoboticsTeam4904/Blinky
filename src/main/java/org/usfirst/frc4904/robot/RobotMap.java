@@ -29,7 +29,7 @@ public class RobotMap {
             public static int RIGHT_DRIVE_B = 3;
             public static int LEFT_DRIVE_A = 4;
             public static int LEFT_DRIVE_B = 5;
-            public static int TEST = 12;
+            public static int TEST = -1; // TODO: tbd
         }
 
         public static class PWM {
