@@ -13,6 +13,7 @@ import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
 import org.usfirst.frc4904.standard.commands.solenoid.SolenoidExtend;
 import org.usfirst.frc4904.standard.commands.solenoid.SolenoidRetract;
 import org.usfirst.frc4904.standard.humaninput.Driver;
+import org.usfirst.frc4904.standard.commands.motor.MotorPositionConstant;
 import org.usfirst.frc4904.standard.commands.motor.MotorPositionSet;
 //added this
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
@@ -44,8 +45,8 @@ public class NathanGain extends Driver {
 		// RobotMap.HumanInput.Driver.xbox.a.whenPressed(new SolenoidExtend(RobotMap.Component.solenoid));
 		// RobotMap.HumanInput.Driver.xbox.b.whenPressed(new SolenoidRetract(RobotMap.Component.solenoid));
 
-		RobotMap.HumanInput.Driver.xbox.a.whenPressed(new MotorPositionSet(RobotMap.Component.motor));
-		RobotMap.HumanInput.Driver.xbox.b.whenPressed(new MotorPositionSet(RobotMap.Component.motor));
+		RobotMap.HumanInput.Driver.xbox.a.whenPressed(new MotorPositionConstant(RobotMap.Component.motor, 4096, true));
+		RobotMap.HumanInput.Driver.xbox.b.whenPressed(new MotorPositionConstant(RobotMap.Component.motor, -4096, true));
 	}
 
 	@Override

@@ -46,7 +46,6 @@ public class RobotMap {
         }
 
         public static class Pneumatics {
-            public static final PCMPort SOLENOID = new PCMPort(0, PneumaticsModuleType.CTREPCM, 1, 2);
         }
 
         public static class Digital {
@@ -103,7 +102,6 @@ public class RobotMap {
         public static Motor rightWheelB;
         public static Motor leftWheelA;
         public static Motor leftWheelB;
-        public static SolenoidSubsystem solenoid;
         public static TankDrive chassis;
         public static CustomPIDController drivePID;
         public static CustomPIDController positionMotorPID;
@@ -161,9 +159,6 @@ public class RobotMap {
 
         Component.chassisTalonEncoders = new EncoderPair(Component.leftWheelTalonEncoder, Component.rightWheelCANCoder);
         Component.chassisCANCoders = new EncoderPair(Component.leftWheelCANCoder, Component.rightWheelCANCoder);
-
-        // Solenoid
-        Component.solenoid = new SolenoidSubsystem(Port.Pneumatics.SOLENOID.buildDoubleSolenoid());
 
         // General Chassis
         Component.chassis = new TankDrive("Blinky-Chassis", Component.leftWheelA, Component.leftWheelB,
