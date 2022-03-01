@@ -148,7 +148,9 @@ public class RobotMap {
         Component.rightWheelTalonEncoder = new CANTalonEncoder("rightWheel", rightWheelATalon, true,
                 Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK, CustomPIDSourceType.kDisplacement,
                 FeedbackDevice.IntegratedSensor);
-        Component.positionMotorEncoder = new CANTalonEncoder("positionMotor", positionMotorTalon); // check
+        Component.positionMotorEncoder = new CANTalonEncoder("positionMotor", positionMotorTalon, true,
+                Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK, CustomPIDSourceType.kDisplacement,
+                FeedbackDevice.IntegratedSensor); // check
         Component.positionMotorPID = new CustomPIDController(PID.PositionMotor.P, PID.PositionMotor.I, 
             PID.PositionMotor.D, PID.PositionMotor.F, Component.positionMotorEncoder);
 
