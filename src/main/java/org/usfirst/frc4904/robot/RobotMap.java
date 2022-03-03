@@ -91,13 +91,7 @@ public class RobotMap {
     public static class Component {
         public static PDP pdp;
         public static NavX navx;
-        public static CANTalonEncoder leftWheelTalonEncoder;
-        public static CANTalonEncoder rightWheelTalonEncoder;
         public static CANTalonEncoder positionMotorEncoder;
-        public static CustomCANCoder leftWheelCANCoder;
-        public static CustomCANCoder rightWheelCANCoder;
-        public static EncoderPair chassisTalonEncoders;
-        public static EncoderPair chassisCANCoders;
         public static Motor rightWheelA;
         public static Motor rightWheelB;
         public static Motor leftWheelA;
@@ -141,26 +135,11 @@ public class RobotMap {
         Component.leftWheelA = new Motor("leftWheelA", true, leftWheelATalon);
         Component.leftWheelB = new Motor("leftWheelB", true, new CANTalonFX(Port.CANMotor.LEFT_DRIVE_B));
 
-        // Wheel Encoders
-        Component.leftWheelTalonEncoder = new CANTalonEncoder("Leftwheel", leftWheelATalon, true,
-                Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK, CustomPIDSourceType.kDisplacement,
-                FeedbackDevice.IntegratedSensor);
-        Component.rightWheelTalonEncoder = new CANTalonEncoder("rightWheel", rightWheelATalon, true,
-                Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK, CustomPIDSourceType.kDisplacement,
-                FeedbackDevice.IntegratedSensor);
         Component.positionMotorEncoder = new CANTalonEncoder("positionMotor", positionMotorTalon, true,
                 Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK, CustomPIDSourceType.kDisplacement,
                 FeedbackDevice.IntegratedSensor); // check
         Component.positionMotorPID = new CustomPIDController(PID.PositionMotor.P, PID.PositionMotor.I, 
             PID.PositionMotor.D, PID.PositionMotor.F, Component.positionMotorEncoder);
-
-        Component.leftWheelCANCoder = new CustomCANCoder(Port.CAN.LEFT_WHEEL_ENCODER,
-                Metrics.Chassis.CAN_CODER_METERS_PER_TICK);
-        Component.rightWheelCANCoder = new CustomCANCoder(Port.CAN.RIGHT_WHEEL_ENCODER,
-                Metrics.Chassis.CAN_CODER_METERS_PER_TICK);
-
-        Component.chassisTalonEncoders = new EncoderPair(Component.leftWheelTalonEncoder, Component.rightWheelCANCoder);
-        Component.chassisCANCoders = new EncoderPair(Component.leftWheelCANCoder, Component.rightWheelCANCoder);
 
         // General Chassis
         Component.chassis = new TankDrive("Blinky-Chassis", Component.leftWheelA, Component.leftWheelB,

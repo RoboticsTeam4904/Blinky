@@ -20,8 +20,6 @@ public class Robot extends CommandRobotBase {
         operatorChooser.setDefaultOption(new DefaultOperator());
 
         RobotMap.Component.navx.zeroYaw();
-        RobotMap.Component.chassisTalonEncoders.reset();
-        RobotMap.Component.chassisCANCoders.reset();
     }
 
     @Override
