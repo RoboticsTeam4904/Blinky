@@ -3,6 +3,7 @@ package org.usfirst.frc4904.robot.humaninterface.drivers;
 import java.util.List;
 
 import org.usfirst.frc4904.robot.RobotMap;
+import org.usfirst.frc4904.robot.commands.PositionSet;
 import org.usfirst.frc4904.standard.LogKitten;
 import org.usfirst.frc4904.standard.LogKitten.KittenLevel;
 import org.usfirst.frc4904.standard.commands.Cancel;
@@ -45,8 +46,8 @@ public class NathanGain extends Driver {
 		// RobotMap.HumanInput.Driver.xbox.a.whenPressed(new SolenoidExtend(RobotMap.Component.solenoid));
 		// RobotMap.HumanInput.Driver.xbox.b.whenPressed(new SolenoidRetract(RobotMap.Component.solenoid));
 
-		RobotMap.HumanInput.Driver.xbox.a.whenPressed(new MotorPositionConstant(RobotMap.Component.motor, 4096, true));
-		RobotMap.HumanInput.Driver.xbox.b.whenPressed(new MotorPositionConstant(RobotMap.Component.motor, -4096, true));
+		RobotMap.HumanInput.Driver.xbox.a.whenPressed(new PositionSet(4096));
+		RobotMap.HumanInput.Driver.xbox.b.whenPressed(new PositionSet(-4096));
 	}
 
 	@Override

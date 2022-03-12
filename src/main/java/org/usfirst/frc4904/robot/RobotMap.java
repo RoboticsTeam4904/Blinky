@@ -91,15 +91,13 @@ public class RobotMap {
     public static class Component {
         public static PDP pdp;
         public static NavX navx;
-        public static CANTalonEncoder positionMotorEncoder;
         public static Motor rightWheelA;
         public static Motor rightWheelB;
         public static Motor leftWheelA;
         public static Motor leftWheelB;
         public static TankDrive chassis;
         public static CustomPIDController drivePID;
-        public static CustomPIDController positionMotorPID;
-        public static PositionSensorMotor motor;
+        public static CANTalonFX positionMotor;
     }
 
     public static class Input {
@@ -128,28 +126,18 @@ public class RobotMap {
         // Wheels
         CANTalonFX leftWheelATalon = new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A);
         CANTalonFX rightWheelATalon = new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B);
-        CANTalonFX positionMotorTalon = new CANTalonFX(Port.CANMotor.POSITION_MOTOR);
+        Component.positionMotor = new CANTalonFX(Port.CANMotor.POSITION_MOTOR);
 
         Component.rightWheelA = new Motor("rightWheelA", false, rightWheelATalon);
         Component.rightWheelB = new Motor("rightWheelB", false, new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B));
         Component.leftWheelA = new Motor("leftWheelA", true, leftWheelATalon);
         Component.leftWheelB = new Motor("leftWheelB", true, new CANTalonFX(Port.CANMotor.LEFT_DRIVE_B));
 
-        Component.positionMotorEncoder = new CANTalonEncoder("positionMotor", positionMotorTalon, true,
-                Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK, CustomPIDSourceType.kDisplacement,
-                FeedbackDevice.IntegratedSensor); // check
-        Component.positionMotorPID = new CustomPIDController(PID.PositionMotor.P, PID.PositionMotor.I, 
-            PID.PositionMotor.D, PID.PositionMotor.F, Component.positionMotorEncoder);
-
         // General Chassis
         Component.chassis = new TankDrive("Blinky-Chassis", Component.leftWheelA, Component.leftWheelB,
                 Component.rightWheelA, Component.rightWheelB);
         Component.chassis.setDefaultCommand(new ChassisMove(Component.chassis, new NathanGain()));
-        
-        //Motor Component
-        Component.motor = new PositionSensorMotor("motor", true, Component.positionMotorPID, positionMotorTalon);
-            //MotorPositionSetSpeed(0);
-            //Motor.setSetpoint(0);
+    
     } 
     
 }
