@@ -97,7 +97,7 @@ public class RobotMap {
         public static Motor leftWheelB;
         public static TankDrive chassis;
         public static CustomPIDController drivePID;
-        public static CANTalonFX positionMotor;
+        public static CANTalonFX positionTalon;
     }
 
     public static class Input {
@@ -126,7 +126,7 @@ public class RobotMap {
         // Wheels
         CANTalonFX leftWheelATalon = new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A);
         CANTalonFX rightWheelATalon = new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B);
-        Component.positionMotor = new CANTalonFX(Port.CANMotor.POSITION_MOTOR);
+        Component.positionTalon = new CANTalonFX(Port.CANMotor.POSITION_MOTOR);
 
         Component.rightWheelA = new Motor("rightWheelA", false, rightWheelATalon);
         Component.rightWheelB = new Motor("rightWheelB", false, new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B));

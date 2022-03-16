@@ -14,6 +14,12 @@ public class PositionSet extends CommandBase {
 
     @Override
     public void initialize() {
-        RobotMap.Component.positionMotor.setSelectedSensorPosition(this.position);
+        RobotMap.Component.positionTalon.setSelectedSensorPosition(this.position);
+        
+    }
+    
+    @Override
+    public boolean isFinished() {
+        return true;
     }
 }
