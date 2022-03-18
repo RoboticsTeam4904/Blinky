@@ -25,8 +25,7 @@ import org.usfirst.frc4904.standard.subsystems.motor.PositionSensorMotor;
 public class RobotMap {
     public static class Port {
         public static class HumanInput {
-            public static final int JOYSTICK = 0;
-            public static final int XBOX_CONTROLLER = 1;
+            public static final int XBOX_CONTROLLER = 0;
         }
 
         public static class CANMotor {
@@ -34,7 +33,7 @@ public class RobotMap {
             public static int RIGHT_DRIVE_B = 3;
             public static int LEFT_DRIVE_A = 4;
             public static int LEFT_DRIVE_B = 5;
-            public static int POSITION_MOTOR = 6; // TODO: check port
+            public static int POSITION_MOTOR = 1; // TODO: check port
         }
 
         public static class PWM {
@@ -98,6 +97,9 @@ public class RobotMap {
         public static TankDrive chassis;
         public static CustomPIDController drivePID;
         public static CANTalonFX positionTalon;
+        public static CANTalonEncoder positionEncoder;
+        public static CustomPIDController positionPID;
+        public static PositionSensorMotor positionMotor;
     }
 
     public static class Input {
@@ -116,7 +118,6 @@ public class RobotMap {
     public RobotMap() {
         HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.XBOX_CONTROLLER);
         HumanInput.Driver.xbox.setDeadZone(0.0);
-        HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.JOYSTICK);
 
         /* General */
         Component.pdp = new PDP();
@@ -126,7 +127,11 @@ public class RobotMap {
         // Wheels
         CANTalonFX leftWheelATalon = new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A);
         CANTalonFX rightWheelATalon = new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B);
+
         Component.positionTalon = new CANTalonFX(Port.CANMotor.POSITION_MOTOR);
+        Component.positionEncoder = new CANTalonEncoder(Component.positionTalon);
+        Component.positionPID = new CustomPIDController(0.0000030, 0, 0, 0.01, Component.positionEncoder);
+        Component.positionMotor = new PositionSensorMotor(Component.positionPID, Component.positionTalon);
 
         Component.rightWheelA = new Motor("rightWheelA", false, rightWheelATalon);
         Component.rightWheelB = new Motor("rightWheelB", false, new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B));
