@@ -81,15 +81,17 @@ public class RobotMap {
         public static NavX navx;
         public static CANTalonEncoder leftWheelTalonEncoder;
         public static CANTalonEncoder rightWheelTalonEncoder;
+        public static CANTalonEncoder extraMotorEncoder;
         public static CustomCANCoder leftWheelCANCoder;
         public static CustomCANCoder rightWheelCANCoder;
         public static EncoderPair chassisTalonEncoders;
         public static EncoderPair chassisCANCoders;
         public static Motor rightWheelA;
         public static Motor leftWheelA;
+        public static Motor extraMotor;
         public static TankDrive chassis;
         public static CustomPIDController drivePID;
-        public static Motor extraMotor;
+        
     }
 
     public static class Input {
@@ -118,16 +120,22 @@ public class RobotMap {
         // Wheels
         CANTalonFX leftWheelATalon = new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A);
         CANTalonFX rightWheelATalon = new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_A);
+        CANTalonFX extraMotor = new CANTalonFX(Port.CANMotor.EXTRA_MOTOR);
 
         Component.rightWheelA = new Motor("rightWheelA", false, rightWheelATalon);
         Component.leftWheelA = new Motor("leftWheelA", true, leftWheelATalon);
-        Component.extraMotor = new Motor("extraMotor", false, new CANTalonFX(Port.CANMotor.EXTRA_MOTOR));
+        Component.extraMotor = new Motor("extraMotor", false, extraMotor);
 
         // Wheel Encoders
         Component.leftWheelTalonEncoder = new CANTalonEncoder("Leftwheel", leftWheelATalon, true,
                 Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK, CustomPIDSourceType.kDisplacement,
                 FeedbackDevice.IntegratedSensor);
         Component.rightWheelTalonEncoder = new CANTalonEncoder("rightWheel", rightWheelATalon, true,
+                Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK, CustomPIDSourceType.kDisplacement,
+                FeedbackDevice.IntegratedSensor);
+
+        // Limit Switch Test Encoder
+        Component.extraMotorEncoder = new CANTalonEncoder("LimitSwitchTestEncoder", extraMotor, true,
                 Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK, CustomPIDSourceType.kDisplacement,
                 FeedbackDevice.IntegratedSensor);
 

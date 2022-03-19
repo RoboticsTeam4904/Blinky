@@ -3,6 +3,7 @@ package org.usfirst.frc4904.robot.humaninterface.drivers;
 import java.util.List;
 
 import org.usfirst.frc4904.robot.RobotMap;
+import org.usfirst.frc4904.robot.commands.CheckStopped;
 import org.usfirst.frc4904.robot.commands.Turn;
 import org.usfirst.frc4904.standard.LogKitten;
 import org.usfirst.frc4904.standard.LogKitten.KittenLevel;
@@ -42,6 +43,7 @@ public class NathanGain extends Driver {
 		RobotMap.HumanInput.Driver.xbox.dPad.left.whenPressed(new Turn(RobotMap.Component.extraMotor, 1.0/3.0)); // slow
 		RobotMap.HumanInput.Driver.xbox.dPad.up.whenPressed(new Turn(RobotMap.Component.extraMotor, 2.0/3.0)); // medium
 		RobotMap.HumanInput.Driver.xbox.dPad.right.whenPressed(new Turn(RobotMap.Component.extraMotor, 3.0/3.0)); // max
+		RobotMap.HumanInput.Driver.xbox.y.whenPressed(new CheckStopped(RobotMap.Component.extraMotorEncoder));
 	}
 
 	@Override
