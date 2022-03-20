@@ -120,11 +120,11 @@ public class RobotMap {
         // Wheels
         CANTalonFX leftWheelATalon = new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A);
         CANTalonFX rightWheelATalon = new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_A);
-        CANTalonFX extraMotor = new CANTalonFX(Port.CANMotor.EXTRA_MOTOR);
+        CANTalonFX extraTalon = new CANTalonFX(Port.CANMotor.EXTRA_MOTOR);
 
         Component.rightWheelA = new Motor("rightWheelA", false, rightWheelATalon);
         Component.leftWheelA = new Motor("leftWheelA", true, leftWheelATalon);
-        Component.extraMotor = new Motor("extraMotor", false, extraMotor);
+        Component.extraMotor = new Motor("extraMotor", false, extraTalon);
 
         // Wheel Encoders
         Component.leftWheelTalonEncoder = new CANTalonEncoder("Leftwheel", leftWheelATalon, true,
@@ -135,7 +135,7 @@ public class RobotMap {
                 FeedbackDevice.IntegratedSensor);
 
         // Limit Switch Test Encoder
-        Component.extraMotorEncoder = new CANTalonEncoder("LimitSwitchTestEncoder", extraMotor, true,
+        Component.extraMotorEncoder = new CANTalonEncoder("LimitSwitchTestEncoder", extraTalon, true,
                 Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK, CustomPIDSourceType.kDisplacement,
                 FeedbackDevice.IntegratedSensor);
 

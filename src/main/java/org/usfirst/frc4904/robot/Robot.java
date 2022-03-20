@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 package org.usfirst.frc4904.robot;
 
+import org.usfirst.frc4904.robot.commands.CheckStopped;
 import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
 import org.usfirst.frc4904.robot.humaninterface.operators.DefaultOperator;
 import org.usfirst.frc4904.standard.CommandRobotBase;
@@ -31,7 +32,7 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void teleopExecute() {
-
+        new CheckStopped(RobotMap.Component.extraMotorEncoder).schedule();
     }
 
     @Override
