@@ -30,7 +30,7 @@ public class RobotMap {
         public static class CANMotor {
             public static int RIGHT_DRIVE_A = 3;
             public static int LEFT_DRIVE_A = 4;
-            public static int EXTRA_MOTOR = -1; // TODO: set port
+            public static int EXTRA_MOTOR = 1; // TODO: set port
         }
 
         public static class PWM {

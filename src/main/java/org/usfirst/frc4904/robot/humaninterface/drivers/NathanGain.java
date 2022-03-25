@@ -31,12 +31,12 @@ public class NathanGain extends Driver {
 
 	public NathanGain() {
 		super("NathanGain");
-	}
+	} 
 
 	protected double scaleGain(double input, double gain, double exp) {
 		return Math.pow(Math.abs(input), exp) * gain * Math.signum(input);
 	}
-
+  
 	@Override
 	public void bindCommands() {
 		RobotMap.HumanInput.Driver.xbox.dPad.down.whenPressed(new Turn(RobotMap.Component.extraMotor, 0.0/3.0)); // off

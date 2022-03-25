@@ -12,8 +12,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class CheckStopped extends CommandBase {
     public CheckStopped(CANTalonEncoder talon) {
-        boolean stopped = talon.getStopped();
-        LogKitten.wtf(String.valueOf(stopped));
+        int stoppedFwd = talon.getFwdLimitSwitchClosed();
+        int stoppedRev = talon.getRevLimitSwitchClosed();
+        LogKitten.wtf("Forward: " + String.valueOf(stoppedFwd));
+        LogKitten.wtf("Reverse: " + String.valueOf(stoppedRev));
     }
 
 
