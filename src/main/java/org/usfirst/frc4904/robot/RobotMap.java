@@ -26,8 +26,8 @@ public class RobotMap {
 
         public static class CANMotor {
             public static int RIGHT_DRIVE_A = 2;
-            public static int RIGHT_DRIVE_B = 3;
-            public static int LEFT_DRIVE_A = 4;
+            public static int RIGHT_DRIVE_B = 4;
+            public static int LEFT_DRIVE_A = 3;
             public static int LEFT_DRIVE_B = 5;
         }
 
