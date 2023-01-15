@@ -13,9 +13,16 @@ import org.usfirst.frc4904.standard.custom.sensors.CANTalonEncoder;
 import org.usfirst.frc4904.standard.custom.sensors.CustomCANCoder;
 import org.usfirst.frc4904.standard.custom.sensors.EncoderPair;
 import org.usfirst.frc4904.standard.custom.sensors.NavX;
+import org.usfirst.frc4904.standard.custom.sensors.IMU;
 import org.usfirst.frc4904.standard.custom.sensors.PDP;
 import org.usfirst.frc4904.standard.subsystems.chassis.TankDrive;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
+import org.usfirst.frc4904.standard.subsystems.chassis.SplinesDrive;
+import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
+import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines.AutoConstants;
+import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines.DriveConstants;
+import edu.wpi.first.math.geometry.Pose2d;
+
 
 public class RobotMap {
     public static class Port {
@@ -87,7 +94,12 @@ public class RobotMap {
         public static Motor leftWheelA;
         public static Motor leftWheelB;
         public static TankDrive chassis;
+        public static SplinesDrive SplinesDrive;
+        public static AutoConstants splineConst;
+        public static DriveConstants driveConst;
+        public static NavX gyro;
         public static CustomPIDController drivePID;
+        public static Pose2d initialPose;
     }
 
     public static class Input {
@@ -141,6 +153,11 @@ public class RobotMap {
         // General Chassis
         Component.chassis = new TankDrive("Blinky-Chassis", Component.leftWheelA, Component.leftWheelB,
                 Component.rightWheelA, Component.rightWheelB);
+        Component.initialPose = new Pose2d(); // TODO double x, double y, rotation2d
+        Component.gyro = new NavX(SerialPort.Port.kMXP); //needs to change to port of gyro | also uses serialport, could change to i2c
+        Component.splineConst = new AutoConstants(1.25,1,2,0.7); //need tuning
+        Component.driveConst = new DriveConstants(0.42202,1.8504,0.1192,0.7,1.9508); //need tuning
+        Component.SplinesDrive = new SplinesDrive(Component.chassis,Component.splineConst,Component.driveConst,Component.leftWheelTalonEncoder,Component.rightWheelTalonEncoder, Component.gyro);
         Component.chassis.setDefaultCommand(new ChassisMove(Component.chassis, new NathanGain()));
     }
 }
