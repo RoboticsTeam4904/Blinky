@@ -39,6 +39,10 @@ public class Robot extends CommandRobotBase {
     }
 
     @Override
+    public void autonomousInitialize() {
+    }
+
+    @Override
     public void disabledInitialize() {
     }
 

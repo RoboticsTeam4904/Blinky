@@ -25,6 +25,11 @@ import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines.DriveConstant
 import edu.wpi.first.math.geometry.Pose2d;
 
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
+import edu.wpi.first.wpilibj.SerialPort;
+
 public class RobotMap {
     public static class Port {
         public static class HumanInput {
@@ -128,12 +133,19 @@ public class RobotMap {
 
         // Wheels
         CANTalonFX leftWheelATalon = new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A);
+        leftWheelATalon.setNeutralMode(NeutralMode.Brake);
         CANTalonFX rightWheelATalon = new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_A);
+        rightWheelATalon.setNeutralMode(NeutralMode.Brake);
+        CANTalonFX leftWheelBTalon = new CANTalonFX(Port.CANMotor.LEFT_DRIVE_B);
+        leftWheelBTalon.setNeutralMode(NeutralMode.Brake);
+        CANTalonFX rightWheelBTalon = new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B);
+        rightWheelBTalon.setNeutralMode(NeutralMode.Brake);
+
 
         Component.rightWheelA = new Motor("rightWheelA", false, rightWheelATalon);
-        Component.rightWheelB = new Motor("rightWheelB", false, new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B));
+        Component.rightWheelB = new Motor("rightWheelB", false, rightWheelBTalon);
         Component.leftWheelA = new Motor("leftWheelA", true, leftWheelATalon);
-        Component.leftWheelB = new Motor("leftWheelB", true, new CANTalonFX(Port.CANMotor.LEFT_DRIVE_B));
+        Component.leftWheelB = new Motor("leftWheelB", true, leftWheelBTalon);
 
         // Wheel Encoders
         Component.leftWheelTalonEncoder = new CANTalonEncoder("Leftwheel", leftWheelATalon, true,
