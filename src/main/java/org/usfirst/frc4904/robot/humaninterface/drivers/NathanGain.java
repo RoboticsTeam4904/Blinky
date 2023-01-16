@@ -2,6 +2,7 @@ package org.usfirst.frc4904.robot.humaninterface.drivers;
 
 import java.util.List;
 
+import org.usfirst.frc4904.robot.Robot;
 import org.usfirst.frc4904.robot.RobotMap;
 import org.usfirst.frc4904.standard.LogKitten;
 import org.usfirst.frc4904.standard.LogKitten.KittenLevel;
@@ -11,12 +12,14 @@ import org.usfirst.frc4904.standard.commands.RunIf;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
 import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
 import org.usfirst.frc4904.standard.humaninput.Driver;
+import org.usfirst.frc4904.standard.subsystems.chassis.SensorDrive;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+
 
 public class NathanGain extends Driver {
 	public static final double SPEED_GAIN = 0.5;
@@ -37,7 +40,7 @@ public class NathanGain extends Driver {
 	@Override
 	public void bindCommands() {
 		RobotMap.HumanInput.Driver.xbox.a.whenPressed(new SimpleSplines(RobotMap.Component.SplinesDrive,RobotMap.Component.SplinesDrive.getPose(), List.of(new Translation2d(1, 1), new Translation2d(-1, 2)), new Pose2d(0, 3, new Rotation2d(0)),5)); //change max voltage
-
+		RobotMap.HumanInput.Driver.xbox.b.whenPressed(new InstantCommand (() -> LogKitten.wtf(RobotMap.Component.SplinesDrive.getHeading())));
 	}
 
 	@Override
