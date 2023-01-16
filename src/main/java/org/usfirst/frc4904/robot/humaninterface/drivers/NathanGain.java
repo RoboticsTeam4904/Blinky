@@ -14,6 +14,7 @@ import org.usfirst.frc4904.standard.humaninput.Driver;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
@@ -35,6 +36,8 @@ public class NathanGain extends Driver {
 
 	@Override
 	public void bindCommands() {
+		RobotMap.HumanInput.Driver.xbox.a.whenPressed(new SimpleSplines(RobotMap.Component.SplinesDrive,RobotMap.Component.SplinesDrive.getPose(), List.of(new Translation2d(1, 1), new Translation2d(-1, 2)), new Pose2d(0, 3, new Rotation2d(0)),5)); //change max voltage
+
 	}
 
 	@Override

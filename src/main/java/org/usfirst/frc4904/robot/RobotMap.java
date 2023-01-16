@@ -1,6 +1,7 @@
 package org.usfirst.frc4904.robot;
 
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.I2C;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
@@ -122,7 +123,7 @@ public class RobotMap {
 
         /* General */
         Component.pdp = new PDP();
-        Component.navx = new NavX(SerialPort.Port.kMXP);
+        Component.navx = new NavX(I2C.Port.kMXP);
         /* Drive Train */
 
         // Wheels
@@ -154,10 +155,9 @@ public class RobotMap {
         Component.chassis = new TankDrive("Blinky-Chassis", Component.leftWheelA, Component.leftWheelB,
                 Component.rightWheelA, Component.rightWheelB);
         Component.initialPose = new Pose2d(); // TODO double x, double y, rotation2d
-        Component.gyro = new NavX(SerialPort.Port.kMXP); //needs to change to port of gyro | also uses serialport, could change to i2c
         Component.splineConst = new AutoConstants(1.25,1,2,0.7); //need tuning
         Component.driveConst = new DriveConstants(0.42202,1.8504,0.1192,0.7,1.9508); //need tuning
-        Component.SplinesDrive = new SplinesDrive(Component.chassis,Component.splineConst,Component.driveConst,Component.leftWheelTalonEncoder,Component.rightWheelTalonEncoder, Component.gyro, Component.initialPose);
+        Component.SplinesDrive = new SplinesDrive(Component.chassis,Component.splineConst,Component.driveConst,Component.leftWheelTalonEncoder,Component.rightWheelTalonEncoder, Component.navx, Component.initialPose);
         Component.chassis.setDefaultCommand(new ChassisMove(Component.chassis, new NathanGain()));
     }
 }
