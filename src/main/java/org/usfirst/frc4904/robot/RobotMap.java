@@ -155,9 +155,9 @@ public class RobotMap {
         Component.chassis = new TankDrive("Blinky-Chassis", Component.leftWheelA, Component.leftWheelB,
                 Component.rightWheelA, Component.rightWheelB);
         Component.initialPose = new Pose2d(); // TODO double x, double y, rotation2d
-        Component.splineConst = new AutoConstants(1.25,1,2,0.7); //need tuning
-        Component.driveConst = new DriveConstants(0.42202,1.8504,0.1192,0.7,1.9508); //need tuning
-        Component.SplinesDrive = new SplinesDrive(Component.chassis,Component.splineConst,Component.driveConst,Component.leftWheelTalonEncoder,Component.rightWheelTalonEncoder, Component.navx, Component.initialPose);
+        Component.splineConst = new AutoConstants(1.25, 1, 2, 0.7); //need tuning
+        Component.driveConst = new DriveConstants(0.42202, 1.8504, 0.1192, 0.7, 1.9508); //need tuning
+        Component.SplinesDrive = new SplinesDrive(Component.chassis, Component.splineConst, Component.driveConst, Component.leftWheelTalonEncoder, Component.rightWheelTalonEncoder, Component.navx, Component.initialPose);
         Component.chassis.setDefaultCommand(new ChassisMove(Component.chassis, new NathanGain()));
     }
 }
