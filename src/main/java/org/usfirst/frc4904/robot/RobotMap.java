@@ -123,14 +123,14 @@ public class RobotMap {
         rightWheelATalon.setNeutralMode(NeutralMode.Brake);
         CANTalonFX leftWheelBTalon = new CANTalonFX(Port.CANMotor.LEFT_DRIVE_B);
         leftWheelBTalon.setNeutralMode(NeutralMode.Brake);
-        CANTalonFX rightWheelBTalon = new CANTalonFX(Port.CANMotor.LEFT_DRIVE_B);
+        CANTalonFX rightWheelBTalon = new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B);
         rightWheelBTalon.setNeutralMode(NeutralMode.Brake);
 
 
         Component.rightWheelA = new Motor("rightWheelA", false, rightWheelATalon);
-        Component.rightWheelB = new Motor("rightWheelB", false, leftWheelBTalon);
+        Component.rightWheelB = new Motor("rightWheelB", false, rightWheelBTalon);
         Component.leftWheelA = new Motor("leftWheelA", true, leftWheelATalon);
-        Component.leftWheelB = new Motor("leftWheelB", true, rightWheelBTalon);
+        Component.leftWheelB = new Motor("leftWheelB", true, leftWheelBTalon);
 
         // Wheel Encoders
         Component.leftWheelTalonEncoder = new CANTalonEncoder("Leftwheel", leftWheelATalon, true,
