@@ -157,7 +157,7 @@ public class RobotMap {
         Component.leftWheelTalonEncoder = new CANTalonEncoder("Leftwheel", leftWheelATalon, true,
                 Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK, CustomPIDSourceType.kDisplacement,
                 FeedbackDevice.IntegratedSensor);
-        Component.rightWheelTalonEncoder = new CANTalonEncoder("rightWheel", rightWheelATalon, true,
+        Component.rightWheelTalonEncoder = new CANTalonEncoder("rightWheel", rightWheelATalon, false,
                 Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK, CustomPIDSourceType.kDisplacement,
                 FeedbackDevice.IntegratedSensor);
 
