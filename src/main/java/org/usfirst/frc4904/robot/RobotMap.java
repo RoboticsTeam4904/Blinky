@@ -133,13 +133,7 @@ public class RobotMap {
         Component.pdp = new PDP();
         Component.navx = new NavX(I2C.Port.kMXP);
         //testing navx register callback -- not going to work, should comment out
-        Component.navx.registerCallback( new ITimestampedDataSubscriber() {
-            @Override
-            public void timestampedDataReceived(long system_timestamp, long sensor_timestamp, AHRSUpdateBase sensor_data, Object smartdashboard_source) {
-                System.out.println("NavX Data Received"); // probably should delete this line
-                SmartDashboard.putNumber("CallbackTest", (double) sensor_timestamp);
-            }
-        }, SmartDashboard.class);
+
 
         /* Drive Train */
 
@@ -183,6 +177,19 @@ public class RobotMap {
         Component.driveConst = new DriveConstants(0.42202, 1.8504, 0.1192, 0.593, 1.9508); //need tuning
         Component.SplinesDrive = new SplinesDrive(Component.chassis, Component.splineConst, Component.driveConst, Component.leftWheelTalonEncoder, Component.rightWheelTalonEncoder, Component.navx, Component.initialPose);
 
+        Component.navx.registerCallback( new ITimestampedDataSubscriber() {
+            @Override
+            public void timestampedDataReceived(long system_timestamp, long sensor_timestamp, AHRSUpdateBase sensor_data, Object smartdashboard_source) {
+                SmartDashboard.putBoolean("Is Calibrating", RobotMap.Component.navx.isCalibrating());
+                SmartDashboard.putNumber("NavX Yaw Angle", RobotMap.Component.navx.getAngle());
+                SmartDashboard.putNumber("NavX Pitch Angle", RobotMap.Component.navx.getPitch());
+                SmartDashboard.putNumber("NavX Roll Angle", RobotMap.Component.navx.getRoll());
+                SmartDashboard.putNumber("Drive Yaw Angle", RobotMap.Component.SplinesDrive.getHeading());
+                SmartDashboard.putString("Wheel Speeds", RobotMap.Component.SplinesDrive.getWheelSpeeds().toString());
+                SmartDashboard.putString("Pose", RobotMap.Component.SplinesDrive.getPose().toString());
+                SmartDashboard.putNumber("Turn Rate", RobotMap.Component.navx.getRate());
+            }
+        }, SmartDashboard.class);
         Component.chassis.setDefaultCommand(new ChassisMove(Component.chassis, new NathanGain()));
     }
 }

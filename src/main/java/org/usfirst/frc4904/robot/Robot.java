@@ -36,6 +36,7 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void teleopExecute() {
+        System.out.println("Teleop Execute");
         SmartDashboard.putBoolean("Is Calibrating", RobotMap.Component.navx.isCalibrating());
         SmartDashboard.putNumber("NavX Yaw Angle", RobotMap.Component.navx.getAngle());
         SmartDashboard.putNumber("NavX Pitch Angle", RobotMap.Component.navx.getPitch());
