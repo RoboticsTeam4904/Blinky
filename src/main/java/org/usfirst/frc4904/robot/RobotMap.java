@@ -1,6 +1,7 @@
 package org.usfirst.frc4904.robot;
 
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.I2C;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
@@ -27,6 +28,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.kauailabs.navx.AHRSProtocol.AHRSUpdateBase;
+import com.kauailabs.navx.frc.ITimestampedDataSubscriber;
 
 import edu.wpi.first.wpilibj.SerialPort;
 
@@ -129,6 +132,15 @@ public class RobotMap {
         /* General */
         Component.pdp = new PDP();
         Component.navx = new NavX(I2C.Port.kMXP);
+        //testing navx register callback -- not going to work, should comment out
+        Component.navx.registerCallback( new ITimestampedDataSubscriber() {
+            @Override
+            public void timestampedDataReceived(long system_timestamp, long sensor_timestamp, AHRSUpdateBase sensor_data, Object smartdashboard_source) {
+                System.out.println("NavX Data Received"); // probably should delete this line
+                SmartDashboard.putNumber("CallbackTest", (double) sensor_timestamp);
+            }
+        }, SmartDashboard.class);
+
         /* Drive Train */
 
         // Wheels

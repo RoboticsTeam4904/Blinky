@@ -12,6 +12,8 @@ import org.usfirst.frc4904.standard.CommandRobotBase;
 import org.usfirst.frc4904.standard.LogKitten;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class Robot extends CommandRobotBase {
     public RobotMap map = new RobotMap();
 
@@ -28,11 +30,20 @@ public class Robot extends CommandRobotBase {
     @Override
     public void teleopInitialize() {
         teleopCommand = new ChassisMove(RobotMap.Component.chassis, driverChooser.getSelected());
+        LogKitten.v(RobotMap.Component.navx.isConnected() ? "NavX Connected" : "NavX Not Connected");
+        LogKitten.v(RobotMap.Component.navx.isMagnetometerCalibrated() ? "Magnetometer Calibrated" : "Magnetometer Not Calibrated");
     }
 
     @Override
     public void teleopExecute() {
-        LogKitten.v(RobotMap.Component.navx.getAngle());
+        SmartDashboard.putBoolean("Is Calibrating", RobotMap.Component.navx.isCalibrating());
+        SmartDashboard.putNumber("NavX Yaw Angle", RobotMap.Component.navx.getAngle());
+        SmartDashboard.putNumber("NavX Pitch Angle", RobotMap.Component.navx.getPitch());
+        SmartDashboard.putNumber("NavX Roll Angle", RobotMap.Component.navx.getRoll());
+        SmartDashboard.putNumber("Drive Yaw Angle", RobotMap.Component.SplinesDrive.getHeading());
+        SmartDashboard.putString("Wheel Speeds", RobotMap.Component.SplinesDrive.getWheelSpeeds().toString());
+        SmartDashboard.putString("Pose", RobotMap.Component.SplinesDrive.getPose().toString());
+        SmartDashboard.putNumber("Turn Rate", RobotMap.Component.navx.getRate());
     }
     @Override
     public void autonomousExecute() {
