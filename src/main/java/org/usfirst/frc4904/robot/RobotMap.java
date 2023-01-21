@@ -69,7 +69,7 @@ public class RobotMap {
             public static final double DISTANCE_FRONT_BACK = 0.6604;
             public static final double WHEEL_CIRCUMFERENCE_METERS = Metrics.Chassis.DIAMETER_METERS * Math.PI;
             public static final double DEGREES_PER_REVOLUTION = 360.0;
-
+            public static final double GEAR_RATIO = 17.0; //inverted, 1:GearRatio, in this case 1:17
             public static final double CAN_CODER_DEGREES_PER_TICK = DEGREES_PER_REVOLUTION
                     / Metrics.Encoders.CANCoders.TICKS_PER_REVOLUTION;
             public static final double CAN_CODER_METERS_PER_TICK = WHEEL_CIRCUMFERENCE_METERS
@@ -80,6 +80,8 @@ public class RobotMap {
             public static class TalonEncoders {
                 public static final double TICKS_PER_REVOLUTION = 2048.0;
                 public static final double REVOLUTIONS_PER_TICK = 1 / TICKS_PER_REVOLUTION;
+                public static final double DISTANCE_PER_PULSE = Metrics.Chassis.WHEEL_CIRCUMFERENCE_METERS
+                    / 4 / Metrics.Chassis.GEAR_RATIO;
             }
 
             public static class CANCoders {
@@ -160,6 +162,9 @@ public class RobotMap {
         Component.rightWheelTalonEncoder = new CANTalonEncoder("rightWheel", rightWheelATalon, false,
                 Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK, CustomPIDSourceType.kDisplacement,
                 FeedbackDevice.IntegratedSensor);
+        //set talon encoder distance per pulse
+        Component.leftWheelTalonEncoder.setDistancePerPulse(Metrics.Encoders.TalonEncoders.DISTANCE_PER_PULSE);
+        Component.rightWheelTalonEncoder.setDistancePerPulse(Metrics.Encoders.TalonEncoders.DISTANCE_PER_PULSE);
 
         Component.leftWheelCANCoder = new CustomCANCoder(Port.CAN.LEFT_WHEEL_ENCODER,
                 Metrics.Chassis.CAN_CODER_METERS_PER_TICK);
