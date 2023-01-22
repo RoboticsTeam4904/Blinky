@@ -179,7 +179,7 @@ public class RobotMap {
                 Component.rightWheelA, Component.rightWheelB);
         Component.initialPose = new Pose2d(); // TODO double x, double y, rotation2d
         Component.splineConst = new AutoConstants(1.25, 1, 2, 0.7); //need tuning
-        Component.driveConst = new DriveConstants(0.42202, 1.8504, 0.1192, 0.593, 1.9508); //need tuning
+        Component.driveConst = new DriveConstants(0.4129, 5.8035, 0.32416, 0.593, 5.7152); //need tuning
         Component.SplinesDrive = new SplinesDrive(Component.chassis, Component.splineConst, Component.driveConst, Component.leftWheelTalonEncoder, Component.rightWheelTalonEncoder, Component.navx, Component.initialPose);
 
         Component.navx.registerCallback( new ITimestampedDataSubscriber() {
