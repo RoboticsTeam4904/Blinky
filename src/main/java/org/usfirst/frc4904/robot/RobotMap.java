@@ -2,7 +2,13 @@ package org.usfirst.frc4904.robot;
 
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj.I2C;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
@@ -186,9 +192,9 @@ public class RobotMap {
             @Override
             public void timestampedDataReceived(long system_timestamp, long sensor_timestamp, AHRSUpdateBase sensor_data, Object smartdashboard_source) {
                 SmartDashboard.putBoolean("Is Calibrating", RobotMap.Component.navx.isCalibrating());
-                SmartDashboard.putNumber("NavX Yaw Angle", RobotMap.Component.navx.getAngle());
-                SmartDashboard.putNumber("NavX Pitch Angle", RobotMap.Component.navx.getPitch());
-                SmartDashboard.putNumber("NavX Roll Angle", RobotMap.Component.navx.getRoll());
+                // SmartDashboard.putNumber("NavX Yaw Angle", RobotMap.Component.navx.getAngle());
+                // SmartDashboard.putNumber("NavX Pitch Angle", RobotMap.Component.navx.getPitch());
+                // SmartDashboard.putNumber("NavX Roll Angle", RobotMap.Component.navx.getRoll());
                 SmartDashboard.putNumber("Drive Yaw Angle", RobotMap.Component.SplinesDrive.getHeading());
                 SmartDashboard.putString("Wheel Speeds", RobotMap.Component.SplinesDrive.getWheelSpeeds().toString());
                 SmartDashboard.putNumber("Rotation Rate", RobotMap.Component.rightWheelTalonEncoder.getRateSafely());
@@ -196,6 +202,12 @@ public class RobotMap {
                 SmartDashboard.putNumber("Turn Rate", RobotMap.Component.navx.getRate());
             }
         }, SmartDashboard.class);
+        ScheduledExecutorService logger = Executors.newScheduledThreadPool(1);
+        logger.schedule(() -> {
+            var wheel_speeds = RobotMap.Component.SplinesDrive.getWheelSpeeds();
+            SmartDashboard.putNumber("Left Wheel Velocity", wheel_speeds.leftMetersPerSecond);
+            SmartDashboard.putNumber("Right Wheel Velocity", wheel_speeds.rightMetersPerSecond);
+        }, 20, TimeUnit.MILLISECONDS);
         Component.chassis.setDefaultCommand(new ChassisMove(Component.chassis, new NathanGain()));
     }
 }
