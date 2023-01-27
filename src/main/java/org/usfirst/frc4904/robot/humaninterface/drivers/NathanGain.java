@@ -39,7 +39,7 @@ public class NathanGain extends Driver {
 
 	@Override
 	public void bindCommands() {
-		RobotMap.HumanInput.Driver.xbox.a.whenPressed(new SimpleSplines(RobotMap.Component.SplinesDrive,RobotMap.Component.SplinesDrive.getPose(), List.of(new Translation2d(1, 1), new Translation2d(-1, 2)), new Pose2d(0, 3, new Rotation2d(0)),5)); //change max voltage
+		RobotMap.HumanInput.Driver.xbox.a.whenPressed(new SimpleSplines(RobotMap.Component.SplinesDrive,RobotMap.Component.SplinesDrive.getPose(), List.of(new Translation2d(1, 0), new Translation2d(2, 0)), new Pose2d(5, 0, new Rotation2d(0)), 12)); //change max voltage
 		RobotMap.HumanInput.Driver.xbox.b.whenPressed(new InstantCommand (() -> LogKitten.wtf(RobotMap.Component.SplinesDrive.getPose())));
 	}
 

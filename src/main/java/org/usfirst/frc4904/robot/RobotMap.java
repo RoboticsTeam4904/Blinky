@@ -81,7 +81,7 @@ public class RobotMap {
                 public static final double TICKS_PER_REVOLUTION = 2048.0;
                 public static final double REVOLUTIONS_PER_TICK = 1 / TICKS_PER_REVOLUTION;
                 public static final double DISTANCE_PER_PULSE = Metrics.Chassis.WHEEL_CIRCUMFERENCE_METERS
-                    / 4 / Metrics.Chassis.GEAR_RATIO;
+                    / TICKS_PER_REVOLUTION / Metrics.Chassis.GEAR_RATIO;
             }
 
             public static class CANCoders {
@@ -157,10 +157,10 @@ public class RobotMap {
 
         // Wheel Encoders
         Component.leftWheelTalonEncoder = new CANTalonEncoder("Leftwheel", leftWheelATalon, true,
-                Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK, CustomPIDSourceType.kDisplacement,
+        Metrics.Encoders.TalonEncoders.DISTANCE_PER_PULSE, CustomPIDSourceType.kDisplacement,
                 FeedbackDevice.IntegratedSensor);
         Component.rightWheelTalonEncoder = new CANTalonEncoder("rightWheel", rightWheelATalon, false,
-                Metrics.Encoders.TalonEncoders.REVOLUTIONS_PER_TICK, CustomPIDSourceType.kDisplacement,
+        Metrics.Encoders.TalonEncoders.DISTANCE_PER_PULSE, CustomPIDSourceType.kDisplacement,
                 FeedbackDevice.IntegratedSensor);
         //set talon encoder distance per pulse
         Component.leftWheelTalonEncoder.setDistancePerPulse(Metrics.Encoders.TalonEncoders.DISTANCE_PER_PULSE);
@@ -179,7 +179,7 @@ public class RobotMap {
                 Component.rightWheelA, Component.rightWheelB);
         Component.initialPose = new Pose2d(); // TODO double x, double y, rotation2d
         Component.splineConst = new AutoConstants(1.25, 1, 2, 0.7); //need tuning
-        Component.driveConst = new DriveConstants(0.4129, 5.8035, 0.32416, 0.593, 5.7152); //need tuning
+        Component.driveConst = new DriveConstants(0.44521, 5.7732, 0.45139, 0.50367, 6.5897); //need tuning
         Component.SplinesDrive = new SplinesDrive(Component.chassis, Component.splineConst, Component.driveConst, Component.leftWheelTalonEncoder, Component.rightWheelTalonEncoder, Component.navx, Component.initialPose);
 
         Component.navx.registerCallback( new ITimestampedDataSubscriber() {
@@ -191,6 +191,7 @@ public class RobotMap {
                 SmartDashboard.putNumber("NavX Roll Angle", RobotMap.Component.navx.getRoll());
                 SmartDashboard.putNumber("Drive Yaw Angle", RobotMap.Component.SplinesDrive.getHeading());
                 SmartDashboard.putString("Wheel Speeds", RobotMap.Component.SplinesDrive.getWheelSpeeds().toString());
+                SmartDashboard.putNumber("Rotation Rate", RobotMap.Component.rightWheelTalonEncoder.getRateSafely());
                 SmartDashboard.putString("Pose", RobotMap.Component.SplinesDrive.getPose().toString());
                 SmartDashboard.putNumber("Turn Rate", RobotMap.Component.navx.getRate());
             }

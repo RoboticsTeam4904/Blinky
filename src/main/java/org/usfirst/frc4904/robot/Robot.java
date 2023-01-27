@@ -36,15 +36,14 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void teleopExecute() {
-        System.out.println("Teleop Execute");
-        SmartDashboard.putBoolean("Is Calibrating", RobotMap.Component.navx.isCalibrating());
-        SmartDashboard.putNumber("NavX Yaw Angle", RobotMap.Component.navx.getAngle());
-        SmartDashboard.putNumber("NavX Pitch Angle", RobotMap.Component.navx.getPitch());
-        SmartDashboard.putNumber("NavX Roll Angle", RobotMap.Component.navx.getRoll());
-        SmartDashboard.putNumber("Drive Yaw Angle", RobotMap.Component.SplinesDrive.getHeading());
-        SmartDashboard.putString("Wheel Speeds", RobotMap.Component.SplinesDrive.getWheelSpeeds().toString());
-        SmartDashboard.putString("Pose", RobotMap.Component.SplinesDrive.getPose().toString());
-        SmartDashboard.putNumber("Turn Rate", RobotMap.Component.navx.getRate());
+        // SmartDashboard.putBoolean("Is Calibrating", RobotMap.Component.navx.isCalibrating());
+        // SmartDashboard.putNumber("NavX Yaw Angle", RobotMap.Component.navx.getAngle());
+        // SmartDashboard.putNumber("NavX Pitch Angle", RobotMap.Component.navx.getPitch());
+        // SmartDashboard.putNumber("NavX Roll Angle", RobotMap.Component.navx.getRoll());
+        // SmartDashboard.putNumber("Drive Yaw Angle", RobotMap.Component.SplinesDrive.getHeading());
+        // SmartDashboard.putString("Wheel Speeds", RobotMap.Component.SplinesDrive.getWheelSpeeds().toString());
+        // SmartDashboard.putString("Pose", RobotMap.Component.SplinesDrive.getPose().toString());
+        // SmartDashboard.putNumber("Turn Rate", RobotMap.Component.navx.getRate());
     }
     @Override
     public void autonomousExecute() {
