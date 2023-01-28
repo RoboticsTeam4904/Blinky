@@ -203,11 +203,13 @@ public class RobotMap {
             }
         }, SmartDashboard.class);
         ScheduledExecutorService logger = Executors.newScheduledThreadPool(1);
-        logger.schedule(() -> {
+        logger.scheduleAtFixedRate(() -> {
             var wheel_speeds = RobotMap.Component.SplinesDrive.getWheelSpeeds();
             SmartDashboard.putNumber("Left Wheel Velocity", wheel_speeds.leftMetersPerSecond);
             SmartDashboard.putNumber("Right Wheel Velocity", wheel_speeds.rightMetersPerSecond);
-        }, 20, TimeUnit.MILLISECONDS);
+        }, 0, 20, TimeUnit.MILLISECONDS);
+        //schedule logging of wheel velocity every 20 milliseconds
+
         Component.chassis.setDefaultCommand(new ChassisMove(Component.chassis, new NathanGain()));
     }
 }
