@@ -67,13 +67,10 @@ public class RamseteCommandDebug extends RamseteCommand{
     public void end(boolean interrupted) {
         super.end(interrupted);
         try {
-            FileWriter writer = new FileWriter("/home/lvuser/actualdata.csv");
-            for (ArrayList<Double> row : actualdata) {
-              writer.write(String.join(",", row.stream().map(Object::toString).collect(Collectors.toList())));
-              writer.write("\n");
-            }
-            writer.close();
-          } catch (IOException e) {
+            FileWriter myWriter = new FileWriter("actualdata.json");
+            myWriter.write(actualdata.stream().map(Object::toString).collect(Collectors.joining(", ", "[", "]")));
+            myWriter.close();
+        } catch (IOException e) {
             LogKitten.ex(e);
         }
         logger.shutdownNow();
