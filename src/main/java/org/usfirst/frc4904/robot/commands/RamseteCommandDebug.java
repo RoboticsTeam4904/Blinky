@@ -13,6 +13,8 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.Executors;
@@ -20,23 +22,33 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import org.usfirst.frc4904.robot.RobotMap;
+import org.usfirst.frc4904.standard.LogKitten;
 
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
 public class RamseteCommandDebug extends RamseteCommand{
     double elapsed = 0; 
+    ScheduledExecutorService logger = Executors.newScheduledThreadPool(1);
+    ArrayList<ArrayList> actualdata = new ArrayList<ArrayList>();
 
-    public RamseteCommandDebug(Trajectory trajectory, Supplier<Pose2d> pose, RamseteController follower,
-            DifferentialDriveKinematics kinematics, BiConsumer<Double, Double> outputMetersPerSecond,
-            Subsystem[] requirements) {
-        super(trajectory, pose, follower, kinematics, outputMetersPerSecond, requirements);
+    public RamseteCommandDebug(Trajectory trajectory,
+    Supplier<Pose2d> pose,
+    RamseteController controller,
+    SimpleMotorFeedforward feedforward,
+    DifferentialDriveKinematics kinematics,
+    Supplier<DifferentialDriveWheelSpeeds> wheelSpeeds,
+    PIDController leftController,
+    PIDController rightController,
+    BiConsumer<Double, Double> outputVolts,
+    Subsystem... requirements) {
+        super(trajectory, pose, controller, feedforward, kinematics, wheelSpeeds, leftController, rightController, outputVolts, requirements);
     }
     public void initialize() {
         super.initialize();
-        ScheduledExecutorService logger = Executors.newScheduledThreadPool(1);
         logger.scheduleAtFixedRate(() -> {
             DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(RobotMap.Component.driveConst.kTrackwidthMeters);
             var wheel_speeds = RobotMap.Component.SplinesDrive.getWheelSpeeds();
@@ -45,8 +57,7 @@ public class RamseteCommandDebug extends RamseteCommand{
             var actual_curvature = chassis_speeds.omegaRadiansPerSecond/actual_velocity;
             var actual_x = RobotMap.Component.SplinesDrive.getPose().getX();
             var actual_y = RobotMap.Component.SplinesDrive.getPose().getY();
-            ArrayList<ArrayList> actualdata = new ArrayList<ArrayList>();
-            actualdata.add(new ArrayList<Double>(Arrays.asList(elapsed, actual_velocity, actual_x, actual_y)));
+            actualdata.add(new ArrayList<Double>(Arrays.asList(elapsed, actual_velocity, actual_curvature, actual_x, actual_y)));
             elapsed += 0.02;
         }, 0, 20, TimeUnit.MILLISECONDS);
     }
@@ -55,7 +66,17 @@ public class RamseteCommandDebug extends RamseteCommand{
     }
     public void end(boolean interrupted) {
         super.end(interrupted);
-        //logger.shutdownNow();
+        try {
+            FileWriter writer = new FileWriter("/home/lvuser/actualdata.csv");
+            for (ArrayList<Double> row : actualdata) {
+              writer.write(String.join(",", row.stream().map(Object::toString).collect(Collectors.toList())));
+              writer.write("\n");
+            }
+            writer.close();
+          } catch (IOException e) {
+            LogKitten.ex(e);
+        }
+        logger.shutdownNow();
     }
     public boolean isFinished() {
         return super.isFinished();
