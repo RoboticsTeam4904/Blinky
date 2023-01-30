@@ -76,6 +76,7 @@ public class RamseteCommandDebug extends RamseteCommand{
         logger.shutdownNow();
     }
     public boolean isFinished() {
+        System.out.println("Finished: " + super.isFinished());
         return super.isFinished();
     }   
 }
