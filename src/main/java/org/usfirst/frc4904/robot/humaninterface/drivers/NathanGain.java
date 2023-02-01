@@ -35,6 +35,8 @@ public class NathanGain extends Driver {
 
 	@Override
 	public void bindCommands() {
+		// eg. RobotMap.HumanInput.Driver.xbox.y().onTrue(new SimpleSplines(...))
+		// eg. RobotMap.HumanInput.Driver.xbox.y().whileTrue(new setIntakeSpeed(...))
 	}
 
 	@Override
@@ -44,7 +46,7 @@ public class NathanGain extends Driver {
 
 	@Override
 	public double getY() {
-		double rawSpeed = RobotMap.HumanInput.Driver.xbox.rt.getX() - RobotMap.HumanInput.Driver.xbox.lt.getX();
+		double rawSpeed = RobotMap.HumanInput.Driver.xbox.getRightX() - RobotMap.HumanInput.Driver.xbox.getLeftX();
 		double speed = scaleGain(rawSpeed, NathanGain.SPEED_GAIN, NathanGain.SPEED_EXP) * NathanGain.Y_SPEED_SCALE;
 		// return 0.5;
 		return speed;
@@ -52,7 +54,7 @@ public class NathanGain extends Driver {
 
 	@Override
 	public double getTurnSpeed() {
-		double rawTurnSpeed = RobotMap.HumanInput.Driver.xbox.leftStick.getX();
+		double rawTurnSpeed = RobotMap.HumanInput.Driver.xbox.getLeftX();
 		double turnSpeed = scaleGain(rawTurnSpeed, NathanGain.TURN_GAIN, NathanGain.TURN_EXP)
 				* NathanGain.TURN_SPEED_SCALE;
 		return turnSpeed;

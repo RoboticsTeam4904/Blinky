@@ -19,6 +19,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class RobotMap {
     public static class Port {
@@ -98,7 +99,8 @@ public class RobotMap {
 
     public static class HumanInput {
         public static class Driver {
-            public static CustomXbox xbox;
+            // public static CustomXbox xbox;
+            public static CommandXboxController xbox;
         }
 
         public static class Operator {
@@ -107,8 +109,9 @@ public class RobotMap {
     }
 
     public RobotMap() {
-        HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.XBOX_CONTROLLER);
-        HumanInput.Driver.xbox.setDeadZone(0.0);
+        // HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.XBOX_CONTROLLER);
+        // HumanInput.Driver.xbox.setDeadZone(0.0);
+        HumanInput.Driver.xbox = new CommandXboxController(Port.HumanInput.XBOX_CONTROLLER);
         HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.JOYSTICK);
 
         /* General */
