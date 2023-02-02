@@ -6,16 +6,27 @@
 /*----------------------------------------------------------------------------*/
 package org.usfirst.frc4904.robot;
 
+import java.util.List;
+
+import org.usfirst.frc4904.robot.commands.DebugTankDriveVolts;
 import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
 import org.usfirst.frc4904.robot.humaninterface.operators.DefaultOperator;
 import org.usfirst.frc4904.standard.CommandRobotBase;
 import org.usfirst.frc4904.standard.LogKitten;
 import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
+import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends CommandRobotBase {
     public RobotMap map = new RobotMap();
+    private static double MAX_VOLTAGE = 12; // MAX VOLTAGE for splines
+
 
     @Override
     public void initialize() {
@@ -36,6 +47,7 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void teleopExecute() {
+        SmartDashboard.putBoolean("Test?", true);
         // SmartDashboard.putBoolean("Is Calibrating", RobotMap.Component.navx.isCalibrating());
         // SmartDashboard.putNumber("NavX Yaw Angle", RobotMap.Component.navx.getAngle());
         // SmartDashboard.putNumber("NavX Pitch Angle", RobotMap.Component.navx.getPitch());
@@ -51,6 +63,17 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void autonomousInitialize() {
+        final SimpleSplines spline = new SimpleSplines(RobotMap.Component.SplinesDrive,
+            new Pose2d(0,0, new Rotation2d(0)),
+            List.of(
+                new Translation2d(1, 0),
+                new Translation2d(2, 0)),
+                new Pose2d(5, 0, new Rotation2d(0)
+            ), 
+        MAX_VOLTAGE);
+        spline.schedule();
+        // final DebugTankDriveVolts voltageTest = new DebugTankDriveVolts(RobotMap.Component.chassis, 5, 5);
+        // voltageTest.schedule();
     }
 
     @Override
