@@ -30,8 +30,8 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void initialize() {
-        driverChooser.setDefaultOption(new NathanGain());
-        operatorChooser.setDefaultOption(new DefaultOperator());
+        // driverChooser.setDefaultOption(new NathanGain());
+        // operatorChooser.setDefaultOption(new DefaultOperator());
 
         RobotMap.Component.navx.zeroYaw();
         RobotMap.Component.chassisTalonEncoders.reset();
@@ -72,7 +72,7 @@ public class Robot extends CommandRobotBase {
         //     new Pose2d(5, 0, new Rotation2d(0)), 
         // MAX_VOLTAGE);
         // spline.schedule();
-        DebugTankDriveVolts voltageTest = new DebugTankDriveVolts(RobotMap.Component.chassis, 5, 5);
+        DebugTankDriveVolts voltageTest = new DebugTankDriveVolts(RobotMap.Component.chassis, 12, 12);
         voltageTest.schedule();
     }
 

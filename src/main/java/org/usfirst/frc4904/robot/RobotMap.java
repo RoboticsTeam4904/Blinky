@@ -147,13 +147,13 @@ public class RobotMap {
 
         // Wheels
         CANTalonFX leftWheelATalon = new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A);
-        leftWheelATalon.setNeutralMode(NeutralMode.Brake);
+        // leftWheelATalon.setNeutralMode(NeutralMode.Brake);
         CANTalonFX rightWheelATalon = new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_A);
-        rightWheelATalon.setNeutralMode(NeutralMode.Brake);
+        // rightWheelATalon.setNeutralMode(NeutralMode.Brake);
         CANTalonFX leftWheelBTalon = new CANTalonFX(Port.CANMotor.LEFT_DRIVE_B);
-        leftWheelBTalon.setNeutralMode(NeutralMode.Brake);
+        // leftWheelBTalon.setNeutralMode(NeutralMode.Brake);
         CANTalonFX rightWheelBTalon = new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B);
-        rightWheelBTalon.setNeutralMode(NeutralMode.Brake);
+        // rightWheelBTalon.setNeutralMode(NeutralMode.Brake);
 
 
         Component.rightWheelA = new Motor("rightWheelA", false, rightWheelATalon);
@@ -210,6 +210,6 @@ public class RobotMap {
         }, 0, 20, TimeUnit.MILLISECONDS);
         //schedule logging of wheel velocity every 20 milliseconds
 
-        Component.chassis.setDefaultCommand(new ChassisMove(Component.chassis, new NathanGain()));
+        // Component.chassis.setDefaultCommand(new ChassisMove(Component.chassis, new NathanGain()));
     }
 }

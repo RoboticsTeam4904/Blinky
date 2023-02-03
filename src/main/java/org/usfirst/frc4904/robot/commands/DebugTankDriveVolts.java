@@ -1,33 +1,48 @@
 package org.usfirst.frc4904.robot.commands;
 
+import java.io.Console;
+
+import org.usfirst.frc4904.standard.commands.motor.MotorSet;
 import org.usfirst.frc4904.standard.custom.sensors.InvalidSensorException;
 import org.usfirst.frc4904.standard.subsystems.chassis.Chassis;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
-public class DebugTankDriveVolts extends CommandBase{
+public class DebugTankDriveVolts extends ParallelCommandGroup {
     private final Chassis driveBase;
     private final double left;
     private final double right;
+    protected final MotorSet[] motorSpins;
+	  protected double[] motorSpeeds;
+	  protected final Motor[] motors;
 
     public DebugTankDriveVolts(Chassis chassis, double left, double right) {
         super();
         this.driveBase = chassis;
         this.left = left;
         this.right = right;
+        motors = chassis.getMotors();        
+        addRequirements(chassis);
+		    motorSpins = new MotorSet[motors.length];
+		    for (int i = 0; i < motors.length; i++) {
+			    motorSpins[i] = new MotorSet(motors[i].getName(), motors[i]);
+	    	}
+		    addCommands(motorSpins);
     }
 
     public void tankDriveVolts(double leftVolts, double rightVolts) throws InvalidSensorException {
         Motor[] motors = driveBase.getMotors();
         if (motors.length == 2) {
-          driveBase.getMotors()[0].setVoltage(leftVolts);
-          driveBase.getMotors()[1].setVoltage(rightVolts);
+          motorSpins[0].setVoltage(leftVolts);
+          motorSpins[1].setVoltage(rightVolts);
+          System.out.println("We have 4 motors wtf are you doing");
         } else if (motors.length == 4) {
-          driveBase.getMotors()[0].setVoltage(leftVolts);
-          driveBase.getMotors()[1].setVoltage(leftVolts);
-          driveBase.getMotors()[2].setVoltage(rightVolts);
-          driveBase.getMotors()[3].setVoltage(rightVolts);
+          motorSpins[0].setVoltage(leftVolts);
+          motorSpins[1].setVoltage(leftVolts);
+          motorSpins[2].setVoltage(rightVolts);
+          motorSpins[3].setVoltage(rightVolts);
         } else {
           throw new InvalidSensorException("Invalid number of motors in drivebase");
         }
