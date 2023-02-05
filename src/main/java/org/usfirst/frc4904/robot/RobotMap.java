@@ -10,8 +10,10 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+
+import org.usfirst.frc4904.robot.commands.DebugTankDriveVolts;
 import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
-import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
+// import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
 import org.usfirst.frc4904.standard.custom.CustomPIDSourceType;
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
@@ -25,10 +27,10 @@ import org.usfirst.frc4904.standard.custom.sensors.IMU;
 import org.usfirst.frc4904.standard.custom.sensors.PDP;
 import org.usfirst.frc4904.standard.subsystems.chassis.TankDrive;
 import org.usfirst.frc4904.standard.subsystems.motor.Motor;
-import org.usfirst.frc4904.standard.subsystems.chassis.SplinesDrive;
-import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
-import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines.AutoConstants;
-import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines.DriveConstants;
+// import org.usfirst.frc4904.standard.subsystems.chassis.SplinesDrive;
+// import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
+// import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines.AutoConstants;
+// import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines.DriveConstants;
 import edu.wpi.first.math.geometry.Pose2d;
 
 
@@ -111,9 +113,9 @@ public class RobotMap {
         public static Motor leftWheelA;
         public static Motor leftWheelB;
         public static TankDrive chassis;
-        public static SplinesDrive SplinesDrive;
-        public static AutoConstants splineConst;
-        public static DriveConstants driveConst;
+        // public static SplinesDrive SplinesDrive;
+        // public static AutoConstants splineConst;
+        // public static DriveConstants driveConst;
         public static NavX gyro;
         public static CustomPIDController drivePID;
         public static Pose2d initialPose;
@@ -184,30 +186,30 @@ public class RobotMap {
         Component.chassis = new TankDrive("Blinky-Chassis", Component.leftWheelA, Component.leftWheelB,
                 Component.rightWheelA, Component.rightWheelB);
         Component.initialPose = new Pose2d(); // TODO double x, double y, rotation2d
-        Component.splineConst = new AutoConstants(1.25, 1, 2, 0.7); //need tuning
-        Component.driveConst = new DriveConstants(0.44521, 5.7732, 0.45139, 0.50367, 6.5897); //need tuning
-        Component.SplinesDrive = new SplinesDrive(Component.chassis, Component.splineConst, Component.driveConst, Component.leftWheelTalonEncoder, Component.rightWheelTalonEncoder, Component.navx, Component.initialPose);
+        // Component.splineConst = new AutoConstants(1.25, 1, 2, 0.7); //need tuning
+        // Component.driveConst = new DriveConstants(0.44521, 5.7732, 0.45139, 0.50367, 6.5897); //need tuning
+        // Component.SplinesDrive = new SplinesDrive(Component.chassis, Component.splineConst, Component.driveConst, Component.leftWheelTalonEncoder, Component.rightWheelTalonEncoder, Component.navx, Component.initialPose);
 
-        Component.navx.registerCallback( new ITimestampedDataSubscriber() {
-            @Override
-            public void timestampedDataReceived(long system_timestamp, long sensor_timestamp, AHRSUpdateBase sensor_data, Object smartdashboard_source) {
-                SmartDashboard.putBoolean("Is Calibrating", RobotMap.Component.navx.isCalibrating());
-                // SmartDashboard.putNumber("NavX Yaw Angle", RobotMap.Component.navx.getAngle());
-                // SmartDashboard.putNumber("NavX Pitch Angle", RobotMap.Component.navx.getPitch());
-                // SmartDashboard.putNumber("NavX Roll Angle", RobotMap.Component.navx.getRoll());
-                SmartDashboard.putNumber("Drive Yaw Angle", RobotMap.Component.SplinesDrive.getHeading());
-                SmartDashboard.putString("Wheel Speeds", RobotMap.Component.SplinesDrive.getWheelSpeeds().toString());
-                SmartDashboard.putNumber("Rotation Rate", RobotMap.Component.rightWheelTalonEncoder.getRateSafely());
-                SmartDashboard.putString("Pose", RobotMap.Component.SplinesDrive.getPose().toString());
-                SmartDashboard.putNumber("Turn Rate", RobotMap.Component.navx.getRate());
-            }
-        }, SmartDashboard.class);
-        ScheduledExecutorService logger = Executors.newScheduledThreadPool(1);
-        logger.scheduleAtFixedRate(() -> {
-            var wheel_speeds = RobotMap.Component.SplinesDrive.getWheelSpeeds();
-            SmartDashboard.putNumber("Left Wheel Velocity", wheel_speeds.leftMetersPerSecond);
-            SmartDashboard.putNumber("Right Wheel Velocity", wheel_speeds.rightMetersPerSecond);
-        }, 0, 20, TimeUnit.MILLISECONDS);
+        // Component.navx.registerCallback( new ITimestampedDataSubscriber() {
+        //     @Override
+        //     public void timestampedDataReceived(long system_timestamp, long sensor_timestamp, AHRSUpdateBase sensor_data, Object smartdashboard_source) {
+        //         SmartDashboard.putBoolean("Is Calibrating", RobotMap.Component.navx.isCalibrating());
+        //         // SmartDashboard.putNumber("NavX Yaw Angle", RobotMap.Component.navx.getAngle());
+        //         // SmartDashboard.putNumber("NavX Pitch Angle", RobotMap.Component.navx.getPitch());
+        //         // SmartDashboard.putNumber("NavX Roll Angle", RobotMap.Component.navx.getRoll());
+        //         SmartDashboard.putNumber("Drive Yaw Angle", RobotMap.Component.SplinesDrive.getHeading());
+        //         SmartDashboard.putString("Wheel Speeds", RobotMap.Component.SplinesDrive.getWheelSpeeds().toString());
+        //         SmartDashboard.putNumber("Rotation Rate", RobotMap.Component.rightWheelTalonEncoder.getRateSafely());
+        //         SmartDashboard.putString("Pose", RobotMap.Component.SplinesDrive.getPose().toString());
+        //         SmartDashboard.putNumber("Turn Rate", RobotMap.Component.navx.getRate());
+        //     }
+        // }, SmartDashboard.class);
+        // ScheduledExecutorService logger = Executors.newScheduledThreadPool(1);
+        // logger.scheduleAtFixedRate(() -> {
+        //     var wheel_speeds = RobotMap.Component.SplinesDrive.getWheelSpeeds();
+        //     SmartDashboard.putNumber("Left Wheel Velocity", wheel_speeds.leftMetersPerSecond);
+        //     SmartDashboard.putNumber("Right Wheel Velocity", wheel_speeds.rightMetersPerSecond);
+        // }, 0, 20, TimeUnit.MILLISECONDS);
         //schedule logging of wheel velocity every 20 milliseconds
 
         // Component.chassis.setDefaultCommand(new ChassisMove(Component.chassis, new NathanGain()));

@@ -43,6 +43,8 @@ public class DebugTankDriveVolts extends ParallelCommandGroup {
           motorSpins[1].setVoltage(leftVolts);
           motorSpins[2].setVoltage(rightVolts);
           motorSpins[3].setVoltage(rightVolts);
+          System.out.println("voltage should be set");
+          System.out.println(motorSpins[3].getVoltage());
         } else {
           throw new InvalidSensorException("Invalid number of motors in drivebase");
         }

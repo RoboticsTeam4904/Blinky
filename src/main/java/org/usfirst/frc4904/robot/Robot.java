@@ -13,8 +13,8 @@ import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
 import org.usfirst.frc4904.robot.humaninterface.operators.DefaultOperator;
 import org.usfirst.frc4904.standard.CommandRobotBase;
 import org.usfirst.frc4904.standard.LogKitten;
-import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
-import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
+// import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
+// import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -40,7 +40,7 @@ public class Robot extends CommandRobotBase {
 
     @Override
     public void teleopInitialize() {
-        teleopCommand = new ChassisMove(RobotMap.Component.chassis, driverChooser.getSelected());
+        // teleopCommand = new ChassisMove(RobotMap.Component.chassis, driverChooser.getSelected());
         LogKitten.v(RobotMap.Component.navx.isConnected() ? "NavX Connected" : "NavX Not Connected");
         LogKitten.v(RobotMap.Component.navx.isMagnetometerCalibrated() ? "Magnetometer Calibrated" : "Magnetometer Not Calibrated");
     }

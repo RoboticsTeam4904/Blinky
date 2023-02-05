@@ -10,8 +10,8 @@ import org.usfirst.frc4904.standard.LogKitten.KittenLevel;
 import org.usfirst.frc4904.standard.commands.Cancel;
 import org.usfirst.frc4904.standard.commands.KittenCommand;
 import org.usfirst.frc4904.standard.commands.RunIf;
-import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
-import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
+// import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
+// import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
 import org.usfirst.frc4904.standard.humaninput.Driver;
 import org.usfirst.frc4904.standard.subsystems.chassis.SensorDrive;
 
@@ -40,9 +40,9 @@ public class NathanGain extends Driver {
 
 	@Override
 	public void bindCommands() {
-		RobotMap.HumanInput.Driver.xbox.a.whenPressed(new SimpleSplines(RobotMap.Component.SplinesDrive, new Pose2d(0,0, new Rotation2d(0)), List.of(new Translation2d(1, 0), new Translation2d(2, 0)), new Pose2d(5, 0, new Rotation2d(0)), 12)); //change max voltage
-		RobotMap.HumanInput.Driver.xbox.b.whenPressed(new InstantCommand (() -> LogKitten.wtf(RobotMap.Component.SplinesDrive.getPose())));
-		RobotMap.HumanInput.Driver.xbox.y.whenPressed(new DebugTankDriveVolts(RobotMap.Component.chassis, 5, 5));
+		// RobotMap.HumanInput.Driver.xbox.a.whenPressed(new SimpleSplines(RobotMap.Component.SplinesDrive, new Pose2d(0,0, new Rotation2d(0)), List.of(new Translation2d(1, 0), new Translation2d(2, 0)), new Pose2d(5, 0, new Rotation2d(0)), 12)); //change max voltage
+		// RobotMap.HumanInput.Driver.xbox.b.whenPressed(new InstantCommand (() -> LogKitten.wtf(RobotMap.Component.SplinesDrive.getPose())));
+		// RobotMap.HumanInput.Driver.xbox.y.whenPressed(new DebugTankDriveVolts(RobotMap.Component.chassis, 5, 5));
 	}
 
 	@Override
