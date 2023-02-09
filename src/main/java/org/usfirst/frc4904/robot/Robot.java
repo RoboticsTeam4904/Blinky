@@ -8,6 +8,7 @@ package org.usfirst.frc4904.robot;
 
 import java.util.List;
 
+import org.usfirst.frc4904.robot.RobotMap.Component;
 import org.usfirst.frc4904.robot.commands.DebugTankDriveVolts;
 import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
 import org.usfirst.frc4904.robot.humaninterface.operators.DefaultOperator;
@@ -22,6 +23,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class Robot extends CommandRobotBase {
     public RobotMap map = new RobotMap();
@@ -72,8 +74,11 @@ public class Robot extends CommandRobotBase {
         //     new Pose2d(5, 0, new Rotation2d(0)), 
         // MAX_VOLTAGE);
         // spline.schedule();
-        DebugTankDriveVolts voltageTest = new DebugTankDriveVolts(RobotMap.Component.chassis, 12, 12);
-        voltageTest.schedule();
+        // (new InstantCommand(() -> RobotMap.Component.leftWheelA.set(1))).schedule();
+        // DebugTankDriveVolts voltageTest = new DebugTankDriveVolts(RobotMap.Component.chassis, 12, 12);
+        // voltageTest.schedule();
+        
+        RobotMap.Component.ceilingTalon;
     }
 
     @Override

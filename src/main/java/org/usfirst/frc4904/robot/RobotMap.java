@@ -53,6 +53,7 @@ public class RobotMap {
             public static int RIGHT_DRIVE_B = 4;
             public static int LEFT_DRIVE_A = 3;
             public static int LEFT_DRIVE_B = 5;
+            public static int CEILING_TALON = 13;
         }
 
         public static class PWM {
@@ -108,6 +109,7 @@ public class RobotMap {
         public static CustomCANCoder rightWheelCANCoder;
         public static EncoderPair chassisTalonEncoders;
         public static EncoderPair chassisCANCoders;
+        public static CANTalonFX ceilingTalon;
         public static Motor rightWheelA;
         public static Motor rightWheelB;
         public static Motor leftWheelA;
@@ -157,6 +159,7 @@ public class RobotMap {
         CANTalonFX rightWheelBTalon = new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_B);
         // rightWheelBTalon.setNeutralMode(NeutralMode.Brake);
 
+        Component.ceilingTalon = new CANTalonFX(Port.CANMotor.CEILING_TALON);
 
         Component.rightWheelA = new Motor("rightWheelA", false, rightWheelATalon);
         Component.rightWheelB = new Motor("rightWheelB", false, rightWheelBTalon);
