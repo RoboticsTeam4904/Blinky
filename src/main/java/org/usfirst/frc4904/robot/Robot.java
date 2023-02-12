@@ -8,6 +8,8 @@ package org.usfirst.frc4904.robot;
 
 import java.util.List;
 
+import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
@@ -34,6 +36,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 public class Robot extends CommandRobotBase {
     // public RobotMap map = new RobotMap();
     private static CANTalonFX ceilingTalon;
+    private static CANTalonFX leftDriveFrontTalon;
+    private static CANTalonFX leftDriveBackTalon;
     private static double MAX_VOLTAGE = 12; // MAX VOLTAGE for splines
 
 
@@ -46,13 +50,25 @@ public class Robot extends CommandRobotBase {
         // RobotMap.Component.chassisTalonEncoders.reset();
         // RobotMap.Component.chassisCANCoders.reset();
         Robot.ceilingTalon = new CANTalonFX(1);
+        Robot.leftDriveBackTalon = new CANTalonFX(3, NeutralMode.Brake);
+        Robot.leftDriveFrontTalon = new CANTalonFX(5, NeutralMode.Brake);
     }
 
     @Override
     public void teleopInitialize() {
         // teleopCommand = new ChassisMove(RobotMap.Component.chassis, driverChooser.getSelected());
-        LogKitten.v(RobotMap.Component.navx.isConnected() ? "NavX Connected" : "NavX Not Connected");
-        LogKitten.v(RobotMap.Component.navx.isMagnetometerCalibrated() ? "Magnetometer Calibrated" : "Magnetometer Not Calibrated");
+        //LogKitten.v(RobotMap.Component.navx.isConnected() ? "NavX Connected" : "NavX Not Connected");
+        //LogKitten.v(RobotMap.Component.navx.isMagnetometerCalibrated() ? "Magnetometer Calibrated" : "Magnetometer Not Calibrated");
+
+        // TEST FOLLOW MODE
+        // the front motor will follow the back motor
+        Robot.leftDriveFrontTalon.configFactoryDefault();
+        Robot.leftDriveBackTalon.configFactoryDefault();
+        // Robot.leftDriveFrontTalon.set(TalonFXControlMode.Follower, 0);
+        Robot.leftDriveFrontTalon.follow(Robot.leftDriveBackTalon);
+        Robot.leftDriveBackTalon.setInverted(true);
+        Robot.leftDriveFrontTalon.setInverted(InvertType.FollowMaster);
+        Robot.leftDriveBackTalon.set(TalonFXControlMode.PercentOutput, 0.1);
     }
 
     @Override
