@@ -34,20 +34,21 @@ public class DebugTankDriveVolts extends ParallelCommandGroup {
 
     public void tankDriveVolts(double leftVolts, double rightVolts) throws InvalidSensorException {
         Motor[] motors = driveBase.getMotors();
-        if (motors.length == 2) {
-          motorSpins[0].setVoltage(leftVolts);
-          motorSpins[1].setVoltage(rightVolts);
-          System.out.println("We have 4 motors wtf are you doing");
-        } else if (motors.length == 4) {
-          motorSpins[0].setVoltage(leftVolts);
-          motorSpins[1].setVoltage(leftVolts);
-          motorSpins[2].setVoltage(rightVolts);
-          motorSpins[3].setVoltage(rightVolts);
-          System.out.println("voltage should be set");
-          System.out.println(motorSpins[3].getVoltage());
-        } else {
-          throw new InvalidSensorException("Invalid number of motors in drivebase");
-        }
+        // commenting bc it doesnt work
+        // if (motors.length == 2) {
+        //   motorSpins[0].setVoltage(leftVolts);
+        //   motorSpins[1].setVoltage(rightVolts);
+        //   System.out.println("We have 4 motors wtf are you doing");
+        // } else if (motors.length == 4) {
+        //   motorSpins[0].setVoltage(leftVolts);
+        //   motorSpins[1].setVoltage(leftVolts);
+        //   motorSpins[2].setVoltage(rightVolts);
+        //   motorSpins[3].setVoltage(rightVolts);
+        //   System.out.println("voltage should be set");
+        //   System.out.println(motorSpins[3].getVoltage());
+        // } else {
+        //   throw new InvalidSensorException("Invalid number of motors in drivebase");
+        // }
       }
 
     @Override

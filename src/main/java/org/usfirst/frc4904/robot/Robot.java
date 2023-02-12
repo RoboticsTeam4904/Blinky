@@ -8,7 +8,11 @@ package org.usfirst.frc4904.robot;
 
 import java.util.List;
 
-import org.usfirst.frc4904.robot.RobotMap.Component;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+
+// import org.usfirst.frc4904.robot.RobotMap.Component;
 import org.usfirst.frc4904.robot.commands.DebugTankDriveVolts;
 import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
 import org.usfirst.frc4904.robot.humaninterface.operators.DefaultOperator;
@@ -16,6 +20,8 @@ import org.usfirst.frc4904.standard.CommandRobotBase;
 import org.usfirst.frc4904.standard.LogKitten;
 // import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
 // import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
+import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonFX;
+import org.usfirst.frc4904.standard.custom.sensors.CANTalonEncoder;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -26,7 +32,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class Robot extends CommandRobotBase {
-    public RobotMap map = new RobotMap();
+    // public RobotMap map = new RobotMap();
+    private static CANTalonFX ceilingTalon;
     private static double MAX_VOLTAGE = 12; // MAX VOLTAGE for splines
 
 
@@ -35,9 +42,10 @@ public class Robot extends CommandRobotBase {
         // driverChooser.setDefaultOption(new NathanGain());
         // operatorChooser.setDefaultOption(new DefaultOperator());
 
-        RobotMap.Component.navx.zeroYaw();
-        RobotMap.Component.chassisTalonEncoders.reset();
-        RobotMap.Component.chassisCANCoders.reset();
+        // RobotMap.Component.navx.zeroYaw();
+        // RobotMap.Component.chassisTalonEncoders.reset();
+        // RobotMap.Component.chassisCANCoders.reset();
+        Robot.ceilingTalon = new CANTalonFX(1);
     }
 
     @Override
@@ -61,6 +69,12 @@ public class Robot extends CommandRobotBase {
     }
     @Override
     public void autonomousExecute() {
+        double targetPos = 4096;
+        LogKitten.wtf("Autonomous execute");
+        // TalonFXControlMode
+     //   Robot.ceilingTalon.set(TalonFXControlMode.PercentOutput, 0.5);
+        Robot.ceilingTalon.set(TalonFXControlMode.MotionMagic, 2048);
+
     }
 
     @Override
@@ -77,8 +91,47 @@ public class Robot extends CommandRobotBase {
         // (new InstantCommand(() -> RobotMap.Component.leftWheelA.set(1))).schedule();
         // DebugTankDriveVolts voltageTest = new DebugTankDriveVolts(RobotMap.Component.chassis, 12, 12);
         // voltageTest.schedule();
-        
-        RobotMap.Component.ceilingTalon;
+
+        LogKitten.wtf("autonomous initialize");
+        final class Constants {
+            public static final int pid_slot = 0; // primary pid loop on the falcon (they are cascading)
+            public static final int pid_idx = 0; // primary pid loop on the falcon (they are cascading)
+            public static final int timeout_ms = 30;
+            final class Gains {
+                public static final double kP = 0.5;
+                public static final double kI = 0;
+                public static final double kD = 0;
+                public static final double kF = 0;
+            }
+        }
+        Robot.ceilingTalon.configFactoryDefault();  // init commit
+        Robot.ceilingTalon.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, Constants.pid_idx, Constants.timeout_ms);
+        Robot.ceilingTalon.configNeutralDeadband(0.001, Constants.timeout_ms); // default deadband is 0.04 = 4%, this is 0.1%. thus it should do smt with neutral mode when it strays out of the deadband??
+        Robot.ceilingTalon.setSensorPhase(false); Robot.ceilingTalon.setInverted(false); // or something TODO
+        // apparently setSensorPhase can be false for the integrated sensor. must be true in other cases??
+
+        // set frame periods to be at least as fast as the periodic rate
+        Robot.ceilingTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, Constants.timeout_ms);
+        Robot.ceilingTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.timeout_ms);
+
+        Robot.ceilingTalon.configNominalOutputForward(0, Constants.timeout_ms);
+        Robot.ceilingTalon.configNominalOutputReverse(0, Constants.timeout_ms);
+        Robot.ceilingTalon.configPeakOutputForward( 1, Constants.timeout_ms);
+        Robot.ceilingTalon.configPeakOutputReverse(-1, Constants.timeout_ms);
+
+        // set configs
+        Robot.ceilingTalon.selectProfileSlot(Constants.pid_slot, Constants.pid_idx);
+        Robot.ceilingTalon.config_kP(Constants.pid_slot, Constants.Gains.kP, Constants.timeout_ms);
+        Robot.ceilingTalon.config_kI(Constants.pid_slot, Constants.Gains.kI, Constants.timeout_ms);
+        Robot.ceilingTalon.config_kD(Constants.pid_slot, Constants.Gains.kD, Constants.timeout_ms);
+        Robot.ceilingTalon.config_kF(Constants.pid_slot, Constants.Gains.kF, Constants.timeout_ms);
+
+        // set (presumably max?) acceleration and cruise velocity
+        Robot.ceilingTalon.configMotionCruiseVelocity(15000, Constants.timeout_ms);
+        Robot.ceilingTalon.configMotionAcceleration(6000, Constants.timeout_ms);
+
+        // zero sensor
+        Robot.ceilingTalon.setSelectedSensorPosition(0, Constants.pid_idx, Constants.timeout_ms);
     }
 
     @Override
