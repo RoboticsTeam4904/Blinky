@@ -5,6 +5,7 @@ import java.util.List;
 import org.usfirst.frc4904.robot.Robot;
 import org.usfirst.frc4904.robot.RobotMap;
 import org.usfirst.frc4904.robot.commands.DebugTankDriveVolts;
+import org.usfirst.frc4904.robot.commands.TrajectoryTest;
 import org.usfirst.frc4904.standard.LogKitten;
 import org.usfirst.frc4904.standard.LogKitten.KittenLevel;
 import org.usfirst.frc4904.standard.commands.Cancel;
@@ -43,6 +44,7 @@ public class NathanGain extends Driver {
 		RobotMap.HumanInput.Driver.xbox.a.whenPressed(new SimpleSplines(RobotMap.Component.SplinesDrive, new Pose2d(0,0, new Rotation2d(0)), List.of(new Translation2d(1, 0), new Translation2d(2, 0)), new Pose2d(5, 0, new Rotation2d(0)), 12)); //change max voltage
 		RobotMap.HumanInput.Driver.xbox.b.whenPressed(new InstantCommand (() -> LogKitten.wtf(RobotMap.Component.SplinesDrive.getPose())));
 		RobotMap.HumanInput.Driver.xbox.y.whenPressed(new DebugTankDriveVolts(RobotMap.Component.chassis, 5, 5));
+		RobotMap.HumanInput.Driver.xbox.x.whenPressed(new TrajectoryTest(RobotMap.Component.SplinesDrive, RobotMap.Component.SplinesDrive.getPose(), List.of(new Translation2d(1, 0), new Translation2d(2, 4)), new Pose2d(5, 1, new Rotation2d(0))));
 	}
 
 	@Override
