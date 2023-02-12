@@ -53,7 +53,7 @@ public class RobotMap {
             public static int RIGHT_DRIVE_B = 4;
             public static int LEFT_DRIVE_A = 3;
             public static int LEFT_DRIVE_B = 5;
-            public static int CEILING_TALON = 13;
+            public static int CEILING_TALON = 1;
         }
 
         public static class PWM {
