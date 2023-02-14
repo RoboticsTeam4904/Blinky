@@ -12,16 +12,31 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-public class TrajectoryTest extends SequentialCommandGroup{
+public class TrajectoryTest extends CommandBase {
+    public SplinesDrive robotDrive;
+    public Pose2d init_pos;
+    public List<Translation2d> inter_points;
+    public Pose2d final_pos;
     public TrajectoryTest(SplinesDrive robotDrive, Pose2d init_pos, List<Translation2d> inter_points, Pose2d final_pos){
-        long startTime = RobotController.getFPGATime();
+        this.robotDrive = robotDrive;
+        this.init_pos = init_pos;
+        this.inter_points = inter_points;
+        this.final_pos = final_pos;
+    }
+
+    @Override
+    public void initialize() {
+        LogKitten.wtf("init is running for trajectory");
+        super.initialize();
         int maxVoltage = 10;
         for (Translation2d point : inter_points) {
             point = point.plus(new Translation2d(init_pos.getX(), init_pos.getY()));
         }
         final_pos = new Pose2d(final_pos.getX()+init_pos.getX(), final_pos.getY()+init_pos.getY(), final_pos.getRotation());
+        long startTime = RobotController.getFPGATime();
         TrajectoryGenerator.generateTrajectory(
             init_pos,
             inter_points,
@@ -44,8 +59,8 @@ public class TrajectoryTest extends SequentialCommandGroup{
                 )
         );
         long endTime = RobotController.getFPGATime();
-        System.out.println("Trajectory generation time: " + (endTime - startTime) + "ms");
-        LogKitten.v("Trajectory generation time: " + (endTime - startTime) + "ms");
+        System.out.println("Trajectory generation time: " + (endTime - startTime) + "mcs");
+        LogKitten.wtf("Trajectory generation time: " + (endTime - startTime) + "mcs");
     }
     
 }

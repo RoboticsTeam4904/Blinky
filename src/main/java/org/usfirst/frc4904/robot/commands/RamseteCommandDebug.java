@@ -66,15 +66,15 @@ public class RamseteCommandDebug extends RamseteCommand{
     }
     public void end(boolean interrupted) {
         super.end(interrupted);
-        try {
-            FileWriter myWriter = new FileWriter("actualdata.json");
+        /*/try {
+            FileWriter myWriter = new FileWriter("/home/lvuser/actualdata.json");
             myWriter.write(actualdata.stream().map(Object::toString).collect(Collectors.joining(", ", "[", "]")));
             myWriter.close();
         } catch (IOException e) {
             LogKitten.ex(e);
         }
         logger.shutdownNow();
-    }
+    /*/}
     public boolean isFinished() {
         System.out.println("Finished: " + super.isFinished());
         return super.isFinished();
