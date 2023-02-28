@@ -1,6 +1,7 @@
 package org.usfirst.frc4904.robot;
 
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj.I2C;
@@ -10,15 +11,17 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.InvertType;
 
-import org.usfirst.frc4904.robot.commands.DebugTankDriveVolts;
+// import org.usfirst.frc4904.robot.commands.DebugTankDriveVolts;
 import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
 // import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
 import org.usfirst.frc4904.standard.custom.CustomPIDSourceType;
+import org.usfirst.frc4904.standard.custom.controllers.CustomCommandJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomJoystick;
 import org.usfirst.frc4904.standard.custom.controllers.CustomXbox;
-import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonFX;
 import org.usfirst.frc4904.standard.custom.motioncontrollers.CustomPIDController;
+import org.usfirst.frc4904.standard.custom.motorcontrollers.CANTalonFX;
 import org.usfirst.frc4904.standard.custom.sensors.CANTalonEncoder;
 import org.usfirst.frc4904.standard.custom.sensors.CustomCANCoder;
 import org.usfirst.frc4904.standard.custom.sensors.EncoderPair;
@@ -128,18 +131,18 @@ public class RobotMap {
 
     public static class HumanInput {
         public static class Driver {
-            public static CustomXbox xbox;
+            public static XboxController xbox;
         }
 
         public static class Operator {
-            public static CustomJoystick joystick;
+            public static CustomCommandJoystick joystick;
         }
     }
 
     public RobotMap() {
-        HumanInput.Driver.xbox = new CustomXbox(Port.HumanInput.XBOX_CONTROLLER);
-        HumanInput.Driver.xbox.setDeadZone(0.0);
-        HumanInput.Operator.joystick = new CustomJoystick(Port.HumanInput.JOYSTICK);
+        HumanInput.Driver.xbox = new XboxController(Port.HumanInput.XBOX_CONTROLLER);
+        // HumanInput.Driver.xbox.setDeadZone(0.0);
+        HumanInput.Operator.joystick = new CustomCommandJoystick(Port.HumanInput.JOYSTICK);
 
         /* General */
         Component.pdp = new PDP();
@@ -150,9 +153,9 @@ public class RobotMap {
         /* Drive Train */
 
         // Wheels
-        CANTalonFX leftWheelATalon = new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A);
+        CANTalonFX leftWheelATalon = new CANTalonFX(Port.CANMotor.LEFT_DRIVE_A, InvertType.None);
         // leftWheelATalon.setNeutralMode(NeutralMode.Brake);
-        CANTalonFX rightWheelATalon = new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_A);
+        CANTalonFX rightWheelATalon = new CANTalonFX(Port.CANMotor.RIGHT_DRIVE_A, );
         // rightWheelATalon.setNeutralMode(NeutralMode.Brake);
         CANTalonFX leftWheelBTalon = new CANTalonFX(Port.CANMotor.LEFT_DRIVE_B);
         // leftWheelBTalon.setNeutralMode(NeutralMode.Brake);
