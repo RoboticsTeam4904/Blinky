@@ -15,15 +15,18 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 
 // import org.usfirst.frc4904.robot.RobotMap.Component;
-import org.usfirst.frc4904.robot.commands.DebugTankDriveVolts;
+// import org.usfirst.frc4904.robot.commands.DebugTankDriveVolts;
 import org.usfirst.frc4904.robot.humaninterface.drivers.NathanGain;
 import org.usfirst.frc4904.robot.humaninterface.operators.DefaultOperator;
 import org.usfirst.frc4904.standard.CommandRobotBase;
 import org.usfirst.frc4904.standard.LogKitten;
+import org.usfirst.frc4904.standard.custom.controllers.CustomCommandJoystick;
+import org.usfirst.frc4904.standard.custom.motorcontrollers.CANTalonFX;
 // import org.usfirst.frc4904.standard.commands.chassis.ChassisMove;
 // import org.usfirst.frc4904.standard.commands.chassis.SimpleSplines;
-import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonFX;
+// import org.usfirst.frc4904.standard.custom.motioncontrollers.CANTalonFX;
 import org.usfirst.frc4904.standard.custom.sensors.CANTalonEncoder;
+import org.usfirst.frc4904.standard.subsystems.motor.TalonMotorSubsystem;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -38,6 +41,8 @@ public class Robot extends CommandRobotBase {
     private static CANTalonFX ceilingTalon;
     private static CANTalonFX leftDriveFrontTalon;
     private static CANTalonFX leftDriveBackTalon;
+    private static TalonMotorSubsystem ceilingTalonSubsystem;
+    private static CustomCommandJoystick joystick;
     private static double MAX_VOLTAGE = 12; // MAX VOLTAGE for splines
 
 
@@ -49,30 +54,20 @@ public class Robot extends CommandRobotBase {
         // RobotMap.Component.navx.zeroYaw();
         // RobotMap.Component.chassisTalonEncoders.reset();
         // RobotMap.Component.chassisCANCoders.reset();
-        Robot.ceilingTalon = new CANTalonFX(1);
-        Robot.leftDriveBackTalon = new CANTalonFX(3, NeutralMode.Brake);
-        Robot.leftDriveFrontTalon = new CANTalonFX(5, NeutralMode.Brake);
+        Robot.ceilingTalon = new CANTalonFX(1, InvertType.None);
+        Robot.leftDriveBackTalon = new CANTalonFX(3, InvertType.None);
+        Robot.leftDriveFrontTalon = new CANTalonFX(5, InvertType.FollowMaster);
+        Robot.ceilingTalonSubsystem = new TalonMotorSubsystem("Dave", NeutralMode.Brake, 10, Robot.ceilingTalon);
     }
 
     @Override
     public void teleopInitialize() {
-        // teleopCommand = new ChassisMove(RobotMap.Component.chassis, driverChooser.getSelected());
-        //LogKitten.v(RobotMap.Component.navx.isConnected() ? "NavX Connected" : "NavX Not Connected");
-        //LogKitten.v(RobotMap.Component.navx.isMagnetometerCalibrated() ? "Magnetometer Calibrated" : "Magnetometer Not Calibrated");
-
-        // TEST FOLLOW MODE
-        // the front motor will follow the back motor
-        Robot.leftDriveFrontTalon.configFactoryDefault();
-        Robot.leftDriveBackTalon.configFactoryDefault();
-        // Robot.leftDriveFrontTalon.set(TalonFXControlMode.Follower, 0);
-        Robot.leftDriveFrontTalon.follow(Robot.leftDriveBackTalon);
-        Robot.leftDriveBackTalon.setInverted(true);
-        Robot.leftDriveFrontTalon.setInverted(InvertType.FollowMaster);
-        Robot.leftDriveBackTalon.set(TalonFXControlMode.PercentOutput, 0.1);
+        Robot.joystick = new CustomCommandJoystick(0);
     }
 
     @Override
     public void teleopExecute() {
+        Robot.ceilingTalonSubsystem.set(Robot.joystick.getY());
         SmartDashboard.putBoolean("Test?", true);
         // SmartDashboard.putBoolean("Is Calibrating", RobotMap.Component.navx.isCalibrating());
         // SmartDashboard.putNumber("NavX Yaw Angle", RobotMap.Component.navx.getAngle());
