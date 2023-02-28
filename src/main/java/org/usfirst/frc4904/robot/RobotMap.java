@@ -28,18 +28,18 @@ public class RobotMap {
         }
 
         public static class CANMotor {
-            public static int RIGHT_DRIVE_A = 2;
+            public static int RIGHT_DRIVE_A = 3;
             public static int RIGHT_DRIVE_B = 4;
-            public static int LEFT_DRIVE_A = 3;
-            public static int LEFT_DRIVE_B = 5;
+            public static int LEFT_DRIVE_A = 1;
+            public static int LEFT_DRIVE_B = 2;
         }
 
         public static class PWM {
         }
 
         public static class CAN {
-            public static final int LEFT_WHEEL_ENCODER = 7;
-            public static final int RIGHT_WHEEL_ENCODER = 6;
+            public static final int LEFT_WHEEL_ENCODER = 1;
+            public static final int RIGHT_WHEEL_ENCODER = 3;
         }
 
         public static class Pneumatics {
